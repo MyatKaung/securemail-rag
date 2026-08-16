@@ -62,8 +62,21 @@ class PermissionTestRecord(EvaluationRecord):
 
 
 class GenerationEvaluationRecord(EvaluationRecord):
-    expected_source_ids: list[str] = Field(min_length=1)
+    expected_source_ids: list[str] = Field(default_factory=list)
     must_refuse_if_insufficient: bool = True
+    expected_answer_terms: list[str] = Field(default_factory=list)
+    sufficient_evidence: bool = True
+    principal: Principal = Field(
+        default_factory=lambda: Principal(
+            role="admin",
+            department="global",
+            access_level="global",
+            resource_scope="global",
+        )
+    )
+    restricted_email_ids: list[str] = Field(default_factory=list)
+    case_type: str = "direct_fact"
+    notes: str = ""
 
 
 RecordT = TypeVar("RecordT", bound=BaseModel)

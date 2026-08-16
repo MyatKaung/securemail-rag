@@ -146,6 +146,13 @@ class RerankedRetriever:
                 raise TypeError("candidate retriever must support pre-retrieval authorization")
             setter(authorization_filter)
 
+    def set_authorization_filter(self, authorization_filter: AuthorizationFilter) -> None:
+        setter = getattr(self.candidate_retriever, "set_authorization_filter", None)
+        if setter is None:
+            raise TypeError("candidate retriever must support pre-retrieval authorization")
+        setter(authorization_filter)
+        self.authorization_filter = authorization_filter
+
     def retrieve(self, question: str, top_k: int | None = None) -> list[RerankedSearchResult]:
         requested_k = self.final_k if top_k is None else top_k
         if requested_k <= 0:

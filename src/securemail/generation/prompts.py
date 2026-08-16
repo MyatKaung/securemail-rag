@@ -25,25 +25,7 @@ def build_grounded_prompt(
 
     if not question.strip():
         raise ValueError("question must not be empty")
-    if authorization_filter is not None:
-        authorization_filter.assert_allowed([result.document for result in evidence])
-    if evidence:
-        blocks = []
-        for result in evidence:
-            score = getattr(result, "score", getattr(result, "reranker_score", 0.0))
-            blocks.append(
-                "\n".join(
-                    [
-                        f"[SOURCE EMAIL ID: {result.email_id}]",
-                        f"[RETRIEVAL SCORE: {score:.6f}]",
-                        result.document.text,
-                        "[END SOURCE]",
-                    ]
-                )
-            )
-        evidence_text = "\n\n".join(blocks)
-    else:
-        evidence_text = "[NO RETRIEVED EVIDENCE]"
+    evidence_text = build_evidence_text(evidence, authorization_filter=authorization_filter)
     return (
         f"Question: {question.strip()}\n\n"
         "Retrieved email evidence:\n"
@@ -51,3 +33,30 @@ def build_grounded_prompt(
         "Answer using only this evidence. State when it is insufficient and cite "
         "supporting source email IDs."
     )
+
+
+def build_evidence_text(
+    evidence: Sequence[DenseSearchResult],
+    *,
+    authorization_filter: AuthorizationFilter | None = None,
+) -> str:
+    """Format evidence only after the optional permission boundary check."""
+
+    if authorization_filter is not None:
+        authorization_filter.assert_allowed([result.document for result in evidence])
+    if not evidence:
+        return "[NO RETRIEVED EVIDENCE]"
+    blocks = []
+    for result in evidence:
+        score = getattr(result, "score", getattr(result, "reranker_score", 0.0))
+        blocks.append(
+            "\n".join(
+                [
+                    f"[SOURCE EMAIL ID: {result.email_id}]",
+                    f"[RETRIEVAL SCORE: {score:.6f}]",
+                    result.document.text,
+                    "[END SOURCE]",
+                ]
+            )
+        )
+    return "\n\n".join(blocks)

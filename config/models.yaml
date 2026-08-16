@@ -16,3 +16,8 @@ reranker:
   baseline_model: cross-encoder/ms-marco-MiniLM-L-6-v2
   retrieve_k: 20
   final_k: 5
+
+generation_prompts:
+  default_strategy: null
+  basic_strategy: basic_grounded_v1
+  structured_strategy: structured_grounded_v1

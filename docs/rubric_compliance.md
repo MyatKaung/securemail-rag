@@ -28,7 +28,7 @@ Phase 01 documents the exact CMU source URL, RFC 2822/MIME raw format, manageabl
 - [ ] LLM used.
 - [ ] End-to-end RAG demonstrated.
 Evidence:
-Phase 02 indexes 500 normalized Enron emails and exercises question-to-dense-retrieval plus grounded prompt construction. No live LLM call was run, so LLM-used and end-to-end claims remain open.
+Phase 02 indexes 500 normalized Enron emails and exercises question-to-dense-retrieval plus grounded prompt construction. Phase 06 adds a permission-aware hybrid + reranker generation boundary and a 20-case dataset, but the first live OpenRouter request returned HTTP 401 before generation. LLM-used and end-to-end claims remain open until a valid live response is obtained.
 
 ### Retrieval Evaluation — target 2/2
 - [x] Ground-truth evaluation dataset exists.
@@ -44,7 +44,7 @@ Evidence:
 - [ ] Metrics/results documented.
 - [ ] Best approach used in final system.
 Evidence:
-Phase 00: no generation approach or LLM evaluation is claimed.
+Phase 06 implements two versioned prompts (`basic_grounded_v1` and `structured_grounded_v1`), deterministic metric code, and mocked/offline boundary tests in `src/securemail/generation/` and `tests/`. The required live comparison is not claimed: OpenRouter rejected the first request with HTTP 401, so no generation scores or default selection are recorded.
 
 ### Interface — target 2/2
 - [ ] FastAPI interface works.

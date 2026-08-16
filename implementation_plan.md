@@ -31,3 +31,8 @@
 
 ## Rule
 P1/P2/P3 must not delay or destabilize P0.
+
+Phase 06 implementation evidence exists for versioned grounded prompts,
+permission-safe generation boundaries, response parsing, and deterministic
+offline scoring. The phase remains unchecked because the required live
+OpenRouter comparison was blocked by an HTTP 401 authentication failure.
