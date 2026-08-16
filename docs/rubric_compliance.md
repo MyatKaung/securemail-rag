@@ -47,10 +47,10 @@ Evidence:
 Phase 06 evaluates `basic_grounded_v1` and `structured_grounded_v1` on the same 20 cases with deterministic groundedness, relevance, citation, and refusal metrics. Basic grounded scores `0.4875` overall versus `0.4500` for structured grounded and is configured as the default. Full per-question and aggregate results are in `evals/results/phase06_generation.json`.
 
 ### Interface — target 2/2
-- [ ] FastAPI interface works.
-- [ ] Minimal user-facing interface works.
+- [x] FastAPI interface works.
+- [x] Minimal user-facing interface works.
 Evidence:
-Phase 00: the `/health` endpoint is verified; the required FastAPI search interface and minimal UI remain future work.
+Phase 07 adds `POST /query` with validated question/principal schemas and a lazy production service using permission-aware hybrid + reranking + `basic_grounded_v1`. `tests/integration/test_phase07_interface.py` verifies health, successful mocked end-to-end queries, validation errors, authorization failures, missing OpenRouter configuration, and restricted-content exclusion. A dependency-free browser UI is served at `/` and its synthetic-principal labels are tested; the manual live UI smoke path is documented in `docs/interface.md` but was not run.
 
 ### Ingestion Pipeline — target 2/2
 - [x] Repeatable/automated ingestion pipeline exists.

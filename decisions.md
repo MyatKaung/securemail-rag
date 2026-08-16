@@ -149,3 +149,37 @@ overall versus `0.4500` for structured grounded, so `basic_grounded_v1` is
 selected as the default. The six insufficient-evidence cases had refusal
 correctness of `0.1667` for basic and `0.3333` for structured; this tradeoff is
 retained in the result artifact rather than hidden.
+
+## ADR-008 — Serve a lazy FastAPI API with a dependency-free demo UI
+**Status:** accepted
+**Date:** 2026-08-16
+
+### Context
+Phase 07 needs a usable end-to-end interface without changing the measured
+retrieval, authorization, or generation components. API tests must remain
+offline and must not load models or require an OpenRouter key merely to check
+health.
+
+### Decision
+Expose `GET /health`, `POST /query`, and a small HTML/JavaScript UI at `/` from
+FastAPI. Build the production RAG service lazily on the first query so health
+remains credential-independent. Create request-scoped dense, BM25, hybrid, and
+reranked wrappers around the shared index/model objects so each request carries
+its own `AuthorizationFilter`. Return answer text, source IDs, retrieval method,
+evidence count, and refusal metadata, but never return email bodies.
+
+Use explicit demo principals for finance, legal, shared/general, and admin. The
+RBAC overlay is labeled synthetic in the UI and documentation. Do not add a
+frontend dependency or expose credentials in browser state/code.
+
+### Alternatives
+
+Add Streamlit as a second application server, construct all models at module
+import time, or return retrieved email text for UI convenience. These would add
+unneeded dependency/startup coupling or weaken the interface security boundary.
+
+### Consequences
+
+The API and UI are easy to run locally and test with injected fakes. A live UI
+smoke command is documented but remains manual; the default suite makes no paid
+OpenRouter calls.
