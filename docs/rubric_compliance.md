@@ -17,11 +17,14 @@ Codex must update this file only when implementation evidence exists.
 ## Core
 
 ### Problem Description — target 2/2
-- [ ] Target user identified.
-- [ ] Problem clearly explained.
+- [x] Target user identified.
+- [x] Problem clearly explained.
 - [x] Dataset source and limitations documented.
 Evidence:
-Phase 01 documents the exact CMU source URL, RFC 2822/MIME raw format, manageable-subset strategy, and synthetic-permissions limitation in `docs/data_design.md` and `docs/ingestion.md`.
+`project_spec.md` identifies the target user as an enterprise knowledge worker
+and explains the relevance-versus-authorization problem. Phase 01 documents the
+exact CMU source URL, RFC 2822/MIME raw format, manageable-subset strategy, and
+synthetic-permissions limitation in `docs/data_design.md` and `docs/ingestion.md`.
 
 ### Retrieval Flow — target 2/2
 - [x] Knowledge base used.

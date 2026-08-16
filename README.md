@@ -70,8 +70,10 @@ Generation evaluation on 20 questions:
 | `basic_grounded_v1` | 0.4875 |
 | `structured_grounded` | 0.4500 |
 
-`basic_grounded_v1` remains the default. Machine-readable evaluation artifacts
-are under `evals/results/` locally; the full Enron corpus is never committed.
+`basic_grounded_v1` remains the default. The tracked machine-readable LLM
+evaluation artifact is `evals/results/phase06_generation.json`; other generated
+evaluation outputs remain ignored by default. The full Enron corpus is never
+committed.
 
 ## Local setup
 
