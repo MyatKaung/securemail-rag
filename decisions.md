@@ -97,3 +97,19 @@ Keep hybrid because reranking adds latency, use BM25 because it had the best Pha
 
 ### Consequences
 Reranking is a separately injectable component with deterministic tie handling and test doubles, and the original retrieval evidence remains inspectable. The measured mean added reranking time was 44.94 ms per question in the local evaluation run. Authorization is still intentionally deferred to Phase 05, so this decision does not authorize unrestricted retrieval in a production system.
+
+## ADR-006 — Enforce synthetic RBAC before every retrieval branch
+**Status:** accepted
+**Date:** 2026-08-16
+
+### Context
+Phase 05 must demonstrate that strong hybrid + reranker relevance can coexist with zero unauthorized retrieval. The Phase 01 overlay is synthetic and the current 500-record sample happens to contain global/admin-tagged resources, so permission cases must be explicit about that limitation.
+
+### Decision
+Use a `PrincipalContext` containing `role`, `department`, `access_level`, and `resource_scope`, and a versioned `SyntheticRBACPolicy`. Bind it through one `AuthorizationFilter` before dense or BM25 candidate scoring. Propagate the same filter through hybrid and reranking; reject unauthorized evidence again at grounded prompt construction. Keep the existing no-filter implementation only as an insecure evaluation baseline.
+
+### Alternatives
+Retrieve all documents and remove unauthorized results afterward, filter only the final top five, or trust prompt instructions to avoid disclosure. These violate the security invariant because restricted content could reach candidate or downstream context.
+
+### Consequences
+The filter is independently testable and all retrieval branches share the same policy path. On 24 permission cases, no-filter URR was `1.0000` and filtered URR was `0.0000`; authorization decision accuracy was `1.0000`. Authorized HitRate@5 was `1.0000` and MRR@5 `0.9167`. The policy is an experiment overlay, not a reconstruction of Enron permissions.

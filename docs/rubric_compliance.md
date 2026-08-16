@@ -12,6 +12,7 @@ Codex must update this file only when implementation evidence exists.
 - Phase 02 adds a modular dense embedding/index/retrieval path, a grounded OpenRouter client boundary, 20 real-email retrieval questions, and measured dense results over 500 indexed emails.
 - Phase 03 adds a tested `rank-bm25` sparse retriever and configurable RRF hybrid retriever. On the unchanged 500-email corpus and 20-question set, dense/BM25/hybrid HitRate@5 is `0.9500`/`1.0000`/`0.9500` and MRR@5 is `0.7267`/`0.8017`/`0.8667`; the machine-readable comparison is `evals/results/phase03_retrieval_comparison.json`.
 - Phase 04 adds an injected CrossEncoder reranker over 20 hybrid candidates. On the same corpus and questions, Hybrid + reranker reaches HitRate@5 `1.0000` and MRR@5 `0.9500`; `evals/results/phase04_reranking_comparison.json` records three improvements, 16 unchanged ranks, one regression, and measured latency.
+- Phase 05 adds pre-retrieval synthetic RBAC filtering shared by dense, BM25, hybrid, hybrid + reranker, and grounded prompt construction. On 24 permission cases over the 500-email corpus, no-filter URR is `1.0000`, filtered URR is `0.0000`, policy decision accuracy is `1.0000`, authorized HitRate@5 is `1.0000`, and authorized MRR@5 is `0.9167`.
 
 ## Core
 
@@ -96,10 +97,11 @@ Evidence:
 
 ## Project Differentiator — not a substitute for rubric
 ### Permission-Aware Retrieval
-- [ ] Pre-retrieval authorization implemented.
-- [ ] Unauthorized Retrieval Rate measured.
-- [ ] Prompt-injection security tests included.
+- [x] Pre-retrieval authorization implemented.
+- [x] Unauthorized Retrieval Rate measured.
+- [x] Prompt-injection security tests included.
 Evidence:
+`src/securemail/security/authorization.py` defines the principal and policy. Dense and BM25 restrict candidate scoring before retrieval, hybrid propagates the same filter, reranking receives only authorized candidates, and `build_grounded_prompt` rejects unauthorized evidence. `evals/results/phase05_permission.json` and `tests/unit/test_authorization.py` provide the measurement and adversarial evidence.
 
 ## Rule
 Never mark an item complete merely because code exists. Require a passing test, evaluation output, or reproducible runtime evidence.

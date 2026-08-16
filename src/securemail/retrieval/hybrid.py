@@ -4,9 +4,13 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 from .index import DenseSearchResult
 from .interfaces import Retriever
+
+if TYPE_CHECKING:
+    from securemail.security.authorization import AuthorizationFilter
 
 
 @dataclass(frozen=True)
@@ -71,6 +75,7 @@ class HybridRetriever:
         *,
         top_k: int = 5,
         config: RRFConfig | None = None,
+        authorization_filter: AuthorizationFilter | None = None,
     ) -> None:
         if top_k <= 0:
             raise ValueError("top_k must be greater than zero")
@@ -78,6 +83,17 @@ class HybridRetriever:
         self.bm25 = bm25
         self.top_k = top_k
         self.config = config or RRFConfig()
+        self.authorization_filter = authorization_filter
+        if authorization_filter is not None:
+            self.set_authorization_filter(authorization_filter)
+
+    def set_authorization_filter(self, authorization_filter: AuthorizationFilter) -> None:
+        for retriever in (self.dense, self.bm25):
+            setter = getattr(retriever, "set_authorization_filter", None)
+            if setter is None:
+                raise TypeError("all hybrid retrievers must support pre-retrieval authorization")
+            setter(authorization_filter)
+        self.authorization_filter = authorization_filter
 
     def retrieve(self, question: str, top_k: int | None = None) -> list[DenseSearchResult]:
         requested_k = self.top_k if top_k is None else top_k

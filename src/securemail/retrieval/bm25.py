@@ -3,14 +3,18 @@
 from __future__ import annotations
 
 import re
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Collection, Sequence
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 import numpy as np
 from rank_bm25 import BM25Okapi
 
 from .documents import RetrievalDocument
 from .index import DenseSearchResult
+
+if TYPE_CHECKING:
+    from securemail.security.authorization import AuthorizationFilter
 
 TOKEN_PATTERN = re.compile(r"\b\w+\b", re.UNICODE)
 Tokenizer = Callable[[str], list[str]]
@@ -60,7 +64,13 @@ class BM25Index:
             else None
         )
 
-    def search(self, query: str, *, top_k: int) -> list[DenseSearchResult]:
+    def search(
+        self,
+        query: str,
+        *,
+        top_k: int,
+        allowed_email_ids: Collection[str] | None = None,
+    ) -> list[DenseSearchResult]:
         if top_k <= 0:
             raise ValueError("top_k must be greater than zero")
         if self._bm25 is None:
@@ -68,18 +78,32 @@ class BM25Index:
         query_tokens = self.tokenizer(query)
         if not query_tokens:
             return []
-        scores = np.asarray(self._bm25.get_scores(query_tokens), dtype=float)
-        indexed_tokens = {token for document in self.tokenized_documents for token in document}
+        candidate_indices = [
+            index
+            for index, document in enumerate(self.documents)
+            if allowed_email_ids is None or document.email_id in allowed_email_ids
+        ]
+        if not candidate_indices:
+            return []
+        scores = np.asarray(
+            self._bm25.get_batch_scores(query_tokens, candidate_indices)
+            if allowed_email_ids is not None
+            else self._bm25.get_scores(query_tokens),
+            dtype=float,
+        )
+        indexed_tokens = {
+            token for index in candidate_indices for token in self.tokenized_documents[index]
+        }
         if scores.size == 0 or not indexed_tokens.intersection(query_tokens):
             return []
         # Input order is the deterministic tie-breaker. This is stable across runs
         # and keeps equal-score emails from being reordered by a hash/set operation.
-        ranked_indices = sorted(range(len(self.documents)), key=lambda i: (-scores[i], i))
+        ranked_indices = sorted(range(len(candidate_indices)), key=lambda i: (-scores[i], i))
         return [
             DenseSearchResult(
-                email_id=self.documents[index].email_id,
+                email_id=self.documents[candidate_indices[index]].email_id,
                 score=float(scores[index]),
-                document=self.documents[index],
+                document=self.documents[candidate_indices[index]],
             )
             for index in ranked_indices[:top_k]
         ]
@@ -96,6 +120,7 @@ class BM25Retriever:
         top_k: int = 5,
         config: BM25Config | None = None,
         tokenizer: Tokenizer = tokenize,
+        authorization_filter: AuthorizationFilter | None = None,
     ) -> None:
         if top_k <= 0:
             raise ValueError("top_k must be greater than zero")
@@ -103,7 +128,20 @@ class BM25Retriever:
             raise ValueError("provide documents or index, not both")
         self.index = index or BM25Index(documents or (), config=config, tokenizer=tokenizer)
         self.top_k = top_k
+        self.authorization_filter = authorization_filter
+
+    def set_authorization_filter(self, authorization_filter: AuthorizationFilter) -> None:
+        self.authorization_filter = authorization_filter
 
     def retrieve(self, question: str, top_k: int | None = None) -> list[DenseSearchResult]:
         requested_k = self.top_k if top_k is None else top_k
-        return self.index.search(question, top_k=requested_k)
+        allowed_ids = (
+            self.authorization_filter.allowed_email_ids(self.index.documents)
+            if self.authorization_filter is not None
+            else None
+        )
+        return self.index.search(
+            question,
+            top_k=requested_k,
+            allowed_email_ids=allowed_ids,
+        )

@@ -39,6 +39,8 @@ class Principal(BaseModel):
 
     role: str = Field(min_length=1)
     department: str = Field(min_length=1)
+    access_level: str = "standard"
+    resource_scope: str = "shared"
 
 
 class PermissionTestRecord(EvaluationRecord):
@@ -46,6 +48,8 @@ class PermissionTestRecord(EvaluationRecord):
     allowed_email_ids: list[str] = Field(default_factory=list)
     forbidden_email_ids: list[str] = Field(default_factory=list)
     expected: Literal["allow", "deny"]
+    case_type: str = "unspecified"
+    notes: str = ""
 
     @field_validator("allowed_email_ids", "forbidden_email_ids")
     @classmethod

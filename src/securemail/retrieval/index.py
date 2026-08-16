@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Collection
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -37,10 +38,20 @@ class DenseIndex:
     def build(cls, documents: list[RetrievalDocument], vectors: np.ndarray) -> DenseIndex:
         return cls(documents, vectors)
 
-    def search(self, query_vector: np.ndarray, top_k: int = 5) -> list[DenseSearchResult]:
+    def search(
+        self,
+        query_vector: np.ndarray,
+        top_k: int = 5,
+        allowed_email_ids: Collection[str] | None = None,
+    ) -> list[DenseSearchResult]:
         if top_k <= 0:
             raise ValueError("top_k must be greater than zero")
-        if not len(self.documents):
+        candidate_indices = [
+            index
+            for index, document in enumerate(self.documents)
+            if allowed_email_ids is None or document.email_id in allowed_email_ids
+        ]
+        if not candidate_indices:
             return []
         query = np.asarray(query_vector, dtype=np.float32)
         if query.ndim == 2:
@@ -50,13 +61,13 @@ class DenseIndex:
         if query.ndim != 1 or query.shape[0] != self.vectors.shape[1]:
             raise ValueError("query_vector dimensionality does not match the index")
         normalized_query = self._normalize(query.reshape(1, -1))[0]
-        scores = self.vectors @ normalized_query
-        order = np.argsort(-scores, kind="stable")[: min(top_k, len(self.documents))]
+        scores = self.vectors[candidate_indices] @ normalized_query
+        order = np.argsort(-scores, kind="stable")[: min(top_k, len(candidate_indices))]
         return [
             DenseSearchResult(
-                email_id=self.documents[index].email_id,
+                email_id=self.documents[candidate_indices[index]].email_id,
                 score=float(scores[index]),
-                document=self.documents[index],
+                document=self.documents[candidate_indices[index]],
             )
             for index in order
         ]

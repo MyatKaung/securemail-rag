@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Protocol
+from typing import TYPE_CHECKING, Protocol
 
 import numpy as np
 
@@ -14,6 +14,9 @@ from securemail.config import PROJECT_ROOT, ConfigurationError, load_yaml_config
 from .documents import RetrievalDocument
 from .index import DenseSearchResult
 from .interfaces import Retriever
+
+if TYPE_CHECKING:
+    from securemail.security.authorization import AuthorizationFilter
 
 
 class CrossEncoderModel(Protocol):
@@ -126,6 +129,7 @@ class RerankedRetriever:
         *,
         candidate_k: int = 20,
         final_k: int = 5,
+        authorization_filter: AuthorizationFilter | None = None,
     ) -> None:
         if candidate_k <= 0:
             raise ValueError("candidate_k must be greater than zero")
@@ -135,6 +139,12 @@ class RerankedRetriever:
         self.reranker = reranker
         self.candidate_k = candidate_k
         self.final_k = final_k
+        self.authorization_filter = authorization_filter
+        if authorization_filter is not None:
+            setter = getattr(candidate_retriever, "set_authorization_filter", None)
+            if setter is None:
+                raise TypeError("candidate retriever must support pre-retrieval authorization")
+            setter(authorization_filter)
 
     def retrieve(self, question: str, top_k: int | None = None) -> list[RerankedSearchResult]:
         requested_k = self.final_k if top_k is None else top_k

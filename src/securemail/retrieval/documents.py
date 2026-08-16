@@ -40,6 +40,10 @@ def prepare_document(email: NormalizedEmail, max_chars: int = 12_000) -> Retriev
             "sent_at": email.sent_at,
             "mailbox": email.mailbox,
             "source_path": email.source_path,
+            "synthetic_role": email.synthetic_role,
+            "department": email.department,
+            "access_level": email.access_level,
+            "resource_scope": email.resource_scope,
         },
     )
 
