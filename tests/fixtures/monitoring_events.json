@@ -1,0 +1,44 @@
+{
+  "requests": [
+    {
+      "request_id": "fixture-request-1",
+      "started_at": "2026-08-16T10:00:00+00:00",
+      "total_latency_ms": 100.0,
+      "retrieval_latency_ms": 20.0,
+      "reranking_latency_ms": 10.0,
+      "llm_latency_ms": 70.0,
+      "permission_denied": false,
+      "refused": false,
+      "insufficient_evidence": false,
+      "status_code": 200
+    },
+    {
+      "request_id": "fixture-request-2",
+      "started_at": "2026-08-17T10:00:00+00:00",
+      "total_latency_ms": 200.0,
+      "retrieval_latency_ms": 40.0,
+      "reranking_latency_ms": 20.0,
+      "llm_latency_ms": 140.0,
+      "permission_denied": true,
+      "refused": true,
+      "insufficient_evidence": true,
+      "status_code": 403
+    },
+    {
+      "request_id": "fixture-request-3",
+      "started_at": "2026-08-17T11:00:00+00:00",
+      "total_latency_ms": 300.0,
+      "retrieval_latency_ms": 60.0,
+      "reranking_latency_ms": 30.0,
+      "llm_latency_ms": 210.0,
+      "permission_denied": false,
+      "refused": true,
+      "insufficient_evidence": true,
+      "status_code": 200
+    }
+  ],
+  "feedback": [
+    {"request_id": "fixture-request-1", "positive": true, "comment": "useful"},
+    {"request_id": "fixture-request-2", "positive": false, "comment": "restricted"}
+  ]
+}

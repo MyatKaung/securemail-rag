@@ -34,6 +34,7 @@ def render_ui() -> str:
     input, select, textarea, button {{ box-sizing: border-box; width: 100%; padding: .65rem; margin-top: .3rem; font: inherit; }}
     textarea {{ min-height: 7rem; }}
     button {{ margin-top: 1rem; background: #1769aa; color: white; border: 0; border-radius: .4rem; cursor: pointer; }}
+    button.feedback {{ width: auto; margin-right: .5rem; background: #4b5563; }}
     .grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }}
     .result {{ margin-top: 1.5rem; border-top: 1px solid #ccd3dc; padding-top: 1rem; white-space: pre-wrap; }}
     .active {{ font-weight: 700; color: #1769aa; }}
@@ -57,10 +58,20 @@ def render_ui() -> str:
   <textarea id="question" placeholder="Ask about the authorized email evidence..."></textarea>
   <button id="submit">Query securely</button>
   <section id="result" class="result" hidden></section>
+  <section id="feedback" class="result" hidden>
+    <strong>Was this answer useful?</strong>
+    <button class="feedback" id="positive">👍 Yes</button>
+    <button class="feedback" id="negative">👎 No</button>
+    <input id="feedback-comment" maxlength="500" placeholder="Optional short comment">
+    <span id="feedback-status"></span>
+  </section>
+  <p><a href="/monitoring">Open aggregated monitoring dashboard</a></p>
   <script>
     const principals = {_demo_json()};
     const demo = document.getElementById('demo');
     const result = document.getElementById('result');
+    const feedback = document.getElementById('feedback');
+    let lastRequestId = null;
     function syncPrincipal() {{
       const p = principals[demo.value];
       for (const key of ['role', 'department', 'access_level', 'resource_scope']) document.getElementById(key).value = p[key];
@@ -75,8 +86,18 @@ def render_ui() -> str:
       const response = await fetch('/query', {{ method: 'POST', headers: {{'Content-Type': 'application/json'}}, body: JSON.stringify({{question: document.getElementById('question').value, principal}}) }});
       const data = await response.json();
       if (!response.ok) {{ result.textContent = `Error ${{response.status}}: ${{data.detail || 'request failed'}}`; return; }}
-      result.textContent = `Answer:\n${{data.answer}}\n\nSources: ${{data.source_email_ids.join(', ') || 'none'}}\nEvidence items: ${{data.retrieved_evidence_count}}\nRefused/insufficient: ${{data.refused || data.insufficient_evidence ? 'yes' : 'no'}}`;
+      lastRequestId = data.request_id;
+      result.textContent = `Answer:\n${{data.answer}}\n\nSources: ${{data.source_email_ids.join(', ') || 'none'}}\nEvidence items: ${{data.retrieved_evidence_count}}\nRefused/insufficient: ${{data.refused || data.insufficient_evidence ? 'yes' : 'no'}}\nRequest ID: ${{data.request_id}}`;
+      feedback.hidden = false;
     }});
+    async function sendFeedback(positive) {{
+      if (!lastRequestId) return;
+      const response = await fetch('/feedback', {{ method: 'POST', headers: {{'Content-Type': 'application/json'}}, body: JSON.stringify({{request_id: lastRequestId, positive, comment: document.getElementById('feedback-comment').value || null}}) }});
+      const data = await response.json();
+      document.getElementById('feedback-status').textContent = response.ok ? ' Thanks for the feedback.' : ` Error: ${{data.detail || 'feedback failed'}}`;
+    }}
+    document.getElementById('positive').addEventListener('click', () => sendFeedback(true));
+    document.getElementById('negative').addEventListener('click', () => sendFeedback(false));
   </script>
 </body>
 </html>"""

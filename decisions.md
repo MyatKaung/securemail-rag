@@ -183,3 +183,37 @@ unneeded dependency/startup coupling or weaken the interface security boundary.
 The API and UI are easy to run locally and test with injected fakes. A live UI
 smoke command is documented but remains manual; the default suite makes no paid
 OpenRouter calls.
+
+## ADR-009 — Use request-scoped SQLite telemetry with aggregate-only dashboards
+**Status:** accepted
+**Date:** 2026-08-16
+
+### Context
+Phase 08 needs operational visibility and user feedback without weakening the
+permission boundary or adding a production database dependency. Monitoring must
+remain useful in local development and replaceable later.
+
+### Decision
+Add a `MonitoringStore` protocol with a SQLite implementation. Record one
+telemetry row per RAG request containing a correlation ID, UTC timestamp,
+end-to-end/retrieval/reranking/LLM timings, status, permission-denial flag, and
+refusal flags. Store feedback separately by request ID. Add JSON structured logs
+with only safe aggregate fields and a dashboard that reads aggregate metrics,
+including request volume, latency, security, refusal, and feedback measures.
+
+Propagate a sanitized `X-Request-ID` through a context variable, response
+header, response body, service timing, logs, telemetry, and feedback. Never
+store questions, prompts, email bodies, or API keys; optional feedback comments
+are confined to the feedback table and omitted from logs and dashboards.
+
+### Alternatives
+
+Log raw requests for ad hoc debugging, store telemetry in a hosted database, or
+add a full dashboard framework. These would increase leakage risk, deployment
+scope, or dependency weight before the required local evidence exists.
+
+### Consequences
+
+The local dashboard and feedback flow are testable offline and the storage
+backend can be replaced behind the protocol. A manual live UI feedback flow
+remains optional and was not run for this phase.

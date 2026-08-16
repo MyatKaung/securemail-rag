@@ -9,7 +9,7 @@
 - [x] Phase 05 — permission-aware retrieval
 - [x] Phase 06 — generation + citations + LLM eval
 - [x] Phase 07 — FastAPI + minimal UI
-- [ ] Phase 08 — monitoring + feedback
+- [x] Phase 08 — monitoring + feedback
 - [ ] Phase 09 — Docker + reproducibility
 - [ ] Phase 10 — final rubric audit
 
@@ -39,3 +39,7 @@ evaluation. Basic grounded is selected from the 20-question comparison.
 Phase 07 adds a tested FastAPI `/query` boundary and a lightweight browser UI.
 The endpoint preserves the production retrieval/generation defaults, accepts an
 explicit synthetic principal, and returns source IDs without email bodies.
+
+Phase 08 adds request-level SQLite telemetry, correlation IDs, safe structured
+logs, feedback persistence, and an aggregated monitoring dashboard. No
+retrieval or generation behavior was changed.

@@ -59,9 +59,10 @@ Evidence:
 `src/securemail/ingestion/cli.py` and `src/securemail/ingestion/pipeline.py` stream or download the documented CMU archive, normalize a configurable subset, and write JSONL. Unit and end-to-end integration tests pass; a 25-record sample was generated from the public source.
 
 ### Monitoring — target 2/2
-- [ ] User feedback captured.
-- [ ] Dashboard/monitoring includes at least five useful charts/metrics.
+- [x] User feedback captured.
+- [x] Dashboard/monitoring includes at least five useful charts/metrics.
 Evidence:
+Phase 08 adds `POST /feedback` with request-ID validation and SQLite persistence, thumbs-up/down controls in the existing UI, and the aggregated `/monitoring` dashboard. `tests/integration/test_phase08_monitoring.py` verifies request IDs, telemetry timing fields, feedback persistence, permission-denial aggregation, refusal rate, latency metrics, request volume over time, and secret-safe JSON logs. The dashboard exposes more than five metrics without displaying prompts, email bodies, comments, or credentials.
 
 ### Containerization — target 2/2
 - [ ] Full application starts with Docker Compose.

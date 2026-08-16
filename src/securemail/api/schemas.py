@@ -28,6 +28,7 @@ class QueryRequest(BaseModel):
 class QueryResponse(BaseModel):
     """Authorization-safe response; email bodies are intentionally excluded."""
 
+    request_id: str
     answer: str
     source_email_ids: list[str]
     retrieval_method: str
@@ -35,6 +36,23 @@ class QueryResponse(BaseModel):
     refused: bool
     insufficient_evidence: bool
     uncertainty: str = ""
+
+
+class FeedbackRequest(BaseModel):
+    """User feedback tied to an existing request correlation ID."""
+
+    model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
+
+    request_id: str = Field(
+        min_length=1, max_length=64, pattern=r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$"
+    )
+    positive: bool
+    comment: str | None = Field(default=None, max_length=500)
+
+
+class FeedbackResponse(BaseModel):
+    request_id: str
+    recorded: bool
 
 
 DEMO_PRINCIPALS: dict[str, PrincipalRequest] = {

@@ -41,6 +41,10 @@ overlay documented in [docs/interface.md](docs/interface.md); it is not a
 reconstruction of Enron's historical permissions. `GET /health` is available
 without loading models or requiring an OpenRouter key.
 
+After a query, the UI offers thumbs-up/down feedback tied to the response
+request ID. Aggregated operational metrics are available at
+<http://127.0.0.1:8000/monitoring>.
+
 ## Project Principle
 A secure enterprise RAG system must decide both:
 1. what is relevant, and

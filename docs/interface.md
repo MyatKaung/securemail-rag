@@ -34,11 +34,18 @@ OpenRouter credentials.
 }
 ```
 
-The response contains the grounded answer, source email IDs, retrieval method,
-evidence count, refusal/insufficient-evidence flags, and uncertainty text. It
-never returns email bodies or retrieval candidates. The principal is converted
-to `PrincipalContext` before constructing the authorization filter; the query
-text cannot grant access.
+The response contains the request ID, grounded answer, source email IDs,
+retrieval method, evidence count, refusal/insufficient-evidence flags, and
+uncertainty text. It never returns email bodies or retrieval candidates. The
+principal is converted to `PrincipalContext` before constructing the
+authorization filter; the query text cannot grant access.
+
+`POST /feedback` accepts `request_id`, `positive`, and an optional short
+`comment`. The request ID must refer to a recorded query. The browser UI submits
+this ID from its in-memory response state; it does not store credentials.
+
+`/monitoring` is an aggregated dashboard for request volume, end-to-end/retrieval/
+reranking/LLM latency, permission denials, refusal rate, and feedback counts.
 
 Useful errors are returned without stack traces: `422` for malformed input,
 `403` for authorization failures, `502` for retrieval/generation failures, and
