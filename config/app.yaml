@@ -1,0 +1,21 @@
+app:
+  name: SecureMail RAG
+  environment_env: APP_ENV
+  log_level_env: LOG_LEVEL
+
+retrieval:
+  top_k: 5
+  candidate_k: 20
+  hybrid_fusion: rrf
+
+security:
+  enforce_pre_retrieval_authorization: true
+  target_unauthorized_retrieval_rate: 0.0
+
+features:
+  query_rewrite_env: ENABLE_QUERY_REWRITE
+  hyde_env: ENABLE_HYDE
+  crag_env: ENABLE_CRAG
+  self_rag_env: ENABLE_SELF_RAG
+  text2sql_env: ENABLE_TEXT2SQL
+  cache_env: ENABLE_CACHE

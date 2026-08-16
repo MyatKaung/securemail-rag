@@ -1,0 +1,18 @@
+llm:
+  provider: openrouter
+  base_url_env: OPENROUTER_BASE_URL
+  api_key_env: OPENROUTER_API_KEY
+  model_env: OPENROUTER_MODEL
+  default_model: qwen/qwen3.6-27b
+  temperature: 0.1
+  timeout_seconds: 60
+  max_retries: 3
+
+embeddings:
+  # Codex should keep the embedding layer swappable.
+  baseline_model: sentence-transformers/all-MiniLM-L6-v2
+
+reranker:
+  baseline_model: cross-encoder/ms-marco-MiniLM-L-6-v2
+  retrieve_k: 20
+  final_k: 5

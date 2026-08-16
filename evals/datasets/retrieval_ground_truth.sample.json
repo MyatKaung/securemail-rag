@@ -1,0 +1,10 @@
+[
+  {
+    "id": "ret-001",
+    "question": "PLACEHOLDER: replace with a question derived from an inspected Enron email",
+    "relevant_email_ids": [
+      "PLACEHOLDER_EMAIL_ID"
+    ],
+    "notes": "Do not use placeholder records in final evaluation."
+  }
+]

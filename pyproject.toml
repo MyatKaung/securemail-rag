@@ -1,0 +1,29 @@
+[project]
+name = "securemail-rag"
+version = "0.1.0"
+description = "Permission-aware enterprise email RAG over the Enron Email Dataset"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi",
+  "uvicorn[standard]",
+  "python-dotenv",
+  "pyyaml",
+  "openai",
+  "numpy>=1.26",
+  "sentence-transformers>=3.0,<6",
+  "pydantic>=2",
+  "pytest",
+]
+
+[project.optional-dependencies]
+dev = [
+  "ruff",
+  "pytest-cov",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100

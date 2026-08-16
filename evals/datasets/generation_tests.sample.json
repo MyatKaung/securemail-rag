@@ -1,0 +1,10 @@
+[
+  {
+    "id": "gen-001",
+    "question": "PLACEHOLDER grounded-generation question",
+    "expected_source_ids": [
+      "PLACEHOLDER_EMAIL_ID"
+    ],
+    "must_refuse_if_insufficient": true
+  }
+]

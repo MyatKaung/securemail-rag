@@ -1,0 +1,11 @@
+services:
+  # Intentionally skeletal.
+  # Codex should complete this in Phase 09, not before.
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: securemail
+      POSTGRES_PASSWORD: securemail
+      POSTGRES_DB: securemail
+    ports:
+      - "5432:5432"

@@ -1,0 +1,311 @@
+{
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "hit_rate_at_5": 0.95,
+  "indexed_documents": 500,
+  "k": 5,
+  "mrr_at_5": 0.7266666666666667,
+  "num_questions": 20,
+  "per_question": [
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-001",
+      "question": "Who expected to use the North Team tuition reimbursement in 2002?",
+      "relevant_email_ids": [
+        "enron-c8dc7660331da6e6002878df95abcb548b291287aefc150f89c4fc219546b809"
+      ],
+      "retrieved_email_ids": [
+        "enron-c8dc7660331da6e6002878df95abcb548b291287aefc150f89c4fc219546b809",
+        "enron-cd5b4fd3653e12b103d9a8ce33763fb1da23587db2267ae6b98c0b50ff8be6f8",
+        "enron-6dcd9fd8900fae3536f29c26a0d856976ae9a651703c608da0c4d6ac50b139d1",
+        "enron-8cb077ca002d74cb7704f73bcf697344360b28e43ccdb7b4ed5a84703bd614c3",
+        "enron-098ab1eeaba282b99f17936bc60bc475f46e00b2a11ed91242ba317cd4a89bba"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-002",
+      "question": "What was the list of proposed 2002 capital IT projects about?",
+      "relevant_email_ids": [
+        "enron-f7a10991323ff392297c2c87a3d0ac147f8fd08aa7c13b2ea53e2867e2b28eb2"
+      ],
+      "retrieved_email_ids": [
+        "enron-f7a10991323ff392297c2c87a3d0ac147f8fd08aa7c13b2ea53e2867e2b28eb2",
+        "enron-8e338e9fee5a4e4379817221bc66fc6e96e9561d92e0f94fd21d786d88c86cea",
+        "enron-a6e1518cc51f95a40944ccefb786b089b38f0d1a4b17d039fe00ef0db9a69263",
+        "enron-c5204e8528482e510efad3bc5633392ed4e8388877692f6dac66c834381601c4",
+        "enron-3d09c196a08d12e31c365d849e0b5ee5f26f295db704f3856f9230a023f10e76"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-003",
+      "question": "What did the NNG card list organize?",
+      "relevant_email_ids": [
+        "enron-4b42753015d2706c9dd2e2633a2e8d1abb3f02e8bc35a5983b44b0626b1815b6"
+      ],
+      "retrieved_email_ids": [
+        "enron-4b42753015d2706c9dd2e2633a2e8d1abb3f02e8bc35a5983b44b0626b1815b6",
+        "enron-d028524dee1c5d34ace65380ad1bfa48e64558f9beadea57815741836b67e581",
+        "enron-728c81fe58cddbdb5fc5eb7f418c751ef9c0d849acd1a17e6a1661d068a19072",
+        "enron-90788d8272b487537a21e13a8f4a5543496e623149f5786c0c4366100beaeeff",
+        "enron-914dd5bb08490736c191afcd1ce62cc7cda612ae62345eaea40e5c80086c392a"
+      ]
+    },
+    {
+      "first_relevant_rank": 5,
+      "id": "phase02-ret-004",
+      "question": "What were the proposed OneOk talking points intended for?",
+      "relevant_email_ids": [
+        "enron-6228a86998497f195bffda657a75d6fa6892b2d91def963ec39f38764edfc915"
+      ],
+      "retrieved_email_ids": [
+        "enron-971101592a3c04eb03d6d6f2ff000db2f3bd85eaf7196d487a4604ae9c740ae9",
+        "enron-eab370bd1bb73a1fa4bacabe51d22f02a228679ce2421ef15d3e70af19eae412",
+        "enron-1d17a26542f368f603f4909bd174507e682aad6b77e52ff29156a7859fb3f607",
+        "enron-a6ebba57710e52f38f21805ff0a9d484c3616da5698b847037cc1d465fd23046",
+        "enron-6228a86998497f195bffda657a75d6fa6892b2d91def963ec39f38764edfc915"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-005",
+      "question": "What did the proposed Fisher Roc letter concern?",
+      "relevant_email_ids": [
+        "enron-582756a3dcea9e9bb54e6e2950271dbb24de54bc4bc463bdca09b963a78f87e3"
+      ],
+      "retrieved_email_ids": [
+        "enron-582756a3dcea9e9bb54e6e2950271dbb24de54bc4bc463bdca09b963a78f87e3",
+        "enron-592c7837d8ce8e42671a88ffdb3fb387d3f8bf279eef6ffb117da378e42207b3",
+        "enron-eb45241b93dff0b0c5062b7fde1cb49a6e10e578065d685286e71a2ecb784099",
+        "enron-f182394f4459e5af879e2c46bc46bfd20a7652a8d2086ea6d3183b42f72659fe",
+        "enron-6b130dea8481dd0a0dc634741a5c956dea24d8ea962a3247a2a9666e3df77e81"
+      ]
+    },
+    {
+      "first_relevant_rank": 2,
+      "id": "phase02-ret-006",
+      "question": "What was attached to the letter to ONEOK about Fisher Roc?",
+      "relevant_email_ids": [
+        "enron-f182394f4459e5af879e2c46bc46bfd20a7652a8d2086ea6d3183b42f72659fe"
+      ],
+      "retrieved_email_ids": [
+        "enron-582756a3dcea9e9bb54e6e2950271dbb24de54bc4bc463bdca09b963a78f87e3",
+        "enron-f182394f4459e5af879e2c46bc46bfd20a7652a8d2086ea6d3183b42f72659fe",
+        "enron-9e308996ec5865cd0fb0898b328949860d6b014b07118f21b4e6caa057a247ce",
+        "enron-eb45241b93dff0b0c5062b7fde1cb49a6e10e578065d685286e71a2ecb784099",
+        "enron-51d8b66a31211a12b3c7dff57e6a933f358ef3e7f72edd85d58bbec4fcfb0c82"
+      ]
+    },
+    {
+      "first_relevant_rank": 2,
+      "id": "phase02-ret-007",
+      "question": "Who requested copies of the arbitration award in the Northern v. ONEOK matter?",
+      "relevant_email_ids": [
+        "enron-b9f9ab01ccf675b53d302d421cf817a4f120059407ffa6b6df316fee509458e0"
+      ],
+      "retrieved_email_ids": [
+        "enron-971101592a3c04eb03d6d6f2ff000db2f3bd85eaf7196d487a4604ae9c740ae9",
+        "enron-b9f9ab01ccf675b53d302d421cf817a4f120059407ffa6b6df316fee509458e0",
+        "enron-a14dfee3611f43fc7759798749880fac5e9c415b395d61786eb76e7fc56e27a3",
+        "enron-dd572d607fd98a66ef57c3a18a2b0fd1d30acfd22b3cf102ada956f7526a7e18",
+        "enron-3a2d3c2e9a342a3ae59363eefddb52e393e08f21fc9fa47189c7be514d072c59"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-008",
+      "question": "What payment issue was discussed for the Mt. Jesus drip?",
+      "relevant_email_ids": [
+        "enron-501292f3c74171057e89ee6a32b11fe1d94708240eac9ebc40550cf90c61e178"
+      ],
+      "retrieved_email_ids": [
+        "enron-501292f3c74171057e89ee6a32b11fe1d94708240eac9ebc40550cf90c61e178",
+        "enron-efd8c951ccfc73fdf6cfc8b0b197ea3c895e7ff6a82506968cf77260e5328c6d",
+        "enron-943fccc92266933d400272373b71d0b158e2f5f2895f00cc167fffb30c09773e",
+        "enron-a7651cb64ef6016154c9008c0bf7680c273947eecbf544212c0d674df0eddb3e",
+        "enron-19c9d3037b6097bbd9f81fb35dbfd124e52a766fb7d211d1f124701eb5e15f16"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-009",
+      "question": "What does the Helium Volumes email say ONEOK sends monthly?",
+      "relevant_email_ids": [
+        "enron-5ec7eb4fd618f6a2ef4b9aab58fb773c1235a82fb671e0481c5fd7b8b9424485"
+      ],
+      "retrieved_email_ids": [
+        "enron-5ec7eb4fd618f6a2ef4b9aab58fb773c1235a82fb671e0481c5fd7b8b9424485",
+        "enron-0cdb47abc25583ea77ed7bcbbcdea53f30eecb30c313351bb666d294b604c705",
+        "enron-9e308996ec5865cd0fb0898b328949860d6b014b07118f21b4e6caa057a247ce",
+        "enron-df6e922719ef81584f1302f7089880adf2a3630043b6685da4c4d2db276b81c0",
+        "enron-3a8a8aa770db289294c5aead1c8a2d82d9619e1dedc7651dadc6fd1d3c19d252"
+      ]
+    },
+    {
+      "first_relevant_rank": 2,
+      "id": "phase02-ret-010",
+      "question": "What was the cause of the Bushton chromatograph problem?",
+      "relevant_email_ids": [
+        "enron-4f6563b9339638ff622cb91f6a23a3d4d1e7af9e02df9a743421353932f60237"
+      ],
+      "retrieved_email_ids": [
+        "enron-ea8ac5b1d97317bc52235a648bc49917763105e872a297d00de9087adc5a1382",
+        "enron-4f6563b9339638ff622cb91f6a23a3d4d1e7af9e02df9a743421353932f60237",
+        "enron-2ad6c4980d1a41c9b577d36d859d495e36708d4dad52e7525fbb22cc4a4e3d02",
+        "enron-d2ae2d8c85452cf707972bd6555aa01587f55aa4c5fbb263ae5a92ee146ab969",
+        "enron-60793722fb73e8ae2e5625d9785c04577ed9b484df0e7a72a5f9aa06d260baf3"
+      ]
+    },
+    {
+      "first_relevant_rank": null,
+      "id": "phase02-ret-011",
+      "question": "What concern continued to affect the Northern v. ONEOK discussion?",
+      "relevant_email_ids": [
+        "enron-53f59bb96cc3c3343761e18a6bfd155f53aab4ede70806deadb0c379e49e7a0a"
+      ],
+      "retrieved_email_ids": [
+        "enron-971101592a3c04eb03d6d6f2ff000db2f3bd85eaf7196d487a4604ae9c740ae9",
+        "enron-3a2d3c2e9a342a3ae59363eefddb52e393e08f21fc9fa47189c7be514d072c59",
+        "enron-a6ebba57710e52f38f21805ff0a9d484c3616da5698b847037cc1d465fd23046",
+        "enron-9e308996ec5865cd0fb0898b328949860d6b014b07118f21b4e6caa057a247ce",
+        "enron-a7651cb64ef6016154c9008c0bf7680c273947eecbf544212c0d674df0eddb3e"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-012",
+      "question": "What kind of information was forwarded in the SCADA Data email?",
+      "relevant_email_ids": [
+        "enron-d1033a46f4c3c793dd5fadd6c2c4857ecf5679d3ed3b74238f41dee450968ace"
+      ],
+      "retrieved_email_ids": [
+        "enron-d1033a46f4c3c793dd5fadd6c2c4857ecf5679d3ed3b74238f41dee450968ace",
+        "enron-569e73779cd2b3f4be746970ef813c6f82169e3a537e647a6136eb16518acecc",
+        "enron-eb04b8ad57c67dd78ca29e2dc81c52d0861c56ad48430af564305d6fe2fdf804",
+        "enron-eab370bd1bb73a1fa4bacabe51d22f02a228679ce2421ef15d3e70af19eae412",
+        "enron-0cdb47abc25583ea77ed7bcbbcdea53f30eecb30c313351bb666d294b604c705"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-013",
+      "question": "What did the email say about DDVC charges at Cottage Grove?",
+      "relevant_email_ids": [
+        "enron-a6cc0996802fa9d309c157e48552bc5869755d55e4f8a33b54c6eed1b4e79ec4"
+      ],
+      "retrieved_email_ids": [
+        "enron-a6cc0996802fa9d309c157e48552bc5869755d55e4f8a33b54c6eed1b4e79ec4",
+        "enron-8e7b2f80067b6160736e1359e8a8654036f2d6e82d97ed5cc0e5caa13fb2b89a",
+        "enron-c36f716b81a70decb04b2d43134c10425fe4ff7dd8354a5396a51b4a9cfc6d81",
+        "enron-dd572d607fd98a66ef57c3a18a2b0fd1d30acfd22b3cf102ada956f7526a7e18",
+        "enron-1e7f1532af59e61b77a587aa5854ff1eb6962abfd3c2de7b2b732077e5e38d4e"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-014",
+      "question": "What did LS Power request in the FDD overrun analysis email?",
+      "relevant_email_ids": [
+        "enron-5a88dac83bef66b9370eeac48836045dcc2b2d1d2127afe393056d17333e262b"
+      ],
+      "retrieved_email_ids": [
+        "enron-5a88dac83bef66b9370eeac48836045dcc2b2d1d2127afe393056d17333e262b",
+        "enron-77db770cdb626725c77fef913249f8d23471ddb1dd51d19f8679c5272fa7aa88",
+        "enron-ad976c7a58522b0cd90b07cc2c72fcceab7e7905eb5849ec8300142f7cdf6026",
+        "enron-a8c2619e357e6bbef65227db05b74dfb7b6d60eff8741cf4db2d1b909cb62f03",
+        "enron-af81d0d1c6da25e1a867df7f6543c3574bc225ac3043a4c5a4c9c9faa1f67fba"
+      ]
+    },
+    {
+      "first_relevant_rank": 2,
+      "id": "phase02-ret-015",
+      "question": "What activity did the LSP storage analysis compare?",
+      "relevant_email_ids": [
+        "enron-830d563070540f2161582798bbef27eb4feb177005e18e4f797ff761a75197a3"
+      ],
+      "retrieved_email_ids": [
+        "enron-ade4840321b7c16ae27ca86a44496c61cf3ecea7e5753302f5a681042d9bf93b",
+        "enron-830d563070540f2161582798bbef27eb4feb177005e18e4f797ff761a75197a3",
+        "enron-c5ec881fb2d68b9eeb6f13ed5bef63491a98d05606a8d2812e16647cbd5efa30",
+        "enron-f2b1b533bfb1839419a1d208365b36cd33cf32a6f356d7af4df35a129e7cc592",
+        "enron-52fd5941a04bc8cd79caa014f6734e0907dc8395ec65d0b6c6e91d31bdcada1e"
+      ]
+    },
+    {
+      "first_relevant_rank": 2,
+      "id": "phase02-ret-016",
+      "question": "What did the Responses to Virginia Power email contain?",
+      "relevant_email_ids": [
+        "enron-29fc4ba46e0a4a413066a21a0a96646594cb4ea94a0d278d2c13c67700d07e92"
+      ],
+      "retrieved_email_ids": [
+        "enron-6c5513ee7de7b0048b992474bafb5f8d5eef749b0b6cd87778946996bfabee6e",
+        "enron-29fc4ba46e0a4a413066a21a0a96646594cb4ea94a0d278d2c13c67700d07e92",
+        "enron-11b813378f7ba1476dbef12d3114d7136cf3716315fb5708bc2c80bcf8854c9c",
+        "enron-eab370bd1bb73a1fa4bacabe51d22f02a228679ce2421ef15d3e70af19eae412",
+        "enron-eb45241b93dff0b0c5062b7fde1cb49a6e10e578065d685286e71a2ecb784099"
+      ]
+    },
+    {
+      "first_relevant_rank": 3,
+      "id": "phase02-ret-017",
+      "question": "What was the Demarc allocation conference call about?",
+      "relevant_email_ids": [
+        "enron-b07edec7832db149b78120788c40d16a3cb5439be6bd4d600ca1594c7bf7d0bc"
+      ],
+      "retrieved_email_ids": [
+        "enron-a341784337a0cf179d3bbf246136e90d86c8e4ae9128ed35fa19441cbad07793",
+        "enron-8e1d1eeeb02ba88fae3bc2b2651416a002149f176ef4c73d5e7862bb348a0089",
+        "enron-b07edec7832db149b78120788c40d16a3cb5439be6bd4d600ca1594c7bf7d0bc",
+        "enron-bde4ba6a3c2fbe7783a276703b64805cf976cf8d9bc1ea9585c159f0f78d43fa",
+        "enron-acc5586d0b8979da63fd31b2e580caa8d632b396de2010eefa81107ac87abe7f"
+      ]
+    },
+    {
+      "first_relevant_rank": 2,
+      "id": "phase02-ret-018",
+      "question": "What did the Office of the Chair message say about September 11, 2001?",
+      "relevant_email_ids": [
+        "enron-eb24bb1c729541fcc9d02dc22bd72d703cdab7c451a16b7a585a2a6d586d64cb"
+      ],
+      "retrieved_email_ids": [
+        "enron-99798a5fabad3465b6b3813e155f65f7dac2601195b1dcc256c540fb8d943805",
+        "enron-eb24bb1c729541fcc9d02dc22bd72d703cdab7c451a16b7a585a2a6d586d64cb",
+        "enron-0396c4bc612f5372973e023372a9f9fb6262fd6f35abdb8f2e279ab569a7ddfd",
+        "enron-8737ac9d53f767858d80331bc85137d509124248e3f5cab48416795eab055963",
+        "enron-37b4ecbe00b96da2b91afedf611d06dda10aa486043829c24429503385b182be"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-019",
+      "question": "What security changes at Enron facilities were described?",
+      "relevant_email_ids": [
+        "enron-d6708c9c476157250874831bf8054c88a6a79721ff7a323097f7aaa0de7c4272"
+      ],
+      "retrieved_email_ids": [
+        "enron-d6708c9c476157250874831bf8054c88a6a79721ff7a323097f7aaa0de7c4272",
+        "enron-be9b7789c808de06571b57917ef6e0f0476d3cd678b39e7a0752ec7a609dbda0",
+        "enron-c51e4af20b529902ec6dc211d349b69bafdfff25a08b0e2b55ce93d1038d59ce",
+        "enron-a927c52a2b7d7eabb97f0294a4d44cc6b710bdf31adb07a3c2e7582ed45abe59",
+        "enron-4092ea9ba0e223dc5d6182adcfee83c5624820be5d68d2a07c03fdb24f41f81a"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-020",
+      "question": "What instructions were given for preparing an expense report?",
+      "relevant_email_ids": [
+        "enron-6770d4edbf496863dfd8dde95671930c2326f5a1ce82b74b60b44c54eabea105"
+      ],
+      "retrieved_email_ids": [
+        "enron-6770d4edbf496863dfd8dde95671930c2326f5a1ce82b74b60b44c54eabea105",
+        "enron-4946b77ccc5e5ceded2c8f271ad81ba97c70b6a6b43f2e6000ddbf59495da626",
+        "enron-c679ee4dce9e51d5efa0f259d07c6390d327d0eb8a330504bc5ac90225ed9d53",
+        "enron-a6c28f1405e6aa9bb438329ff2f25ff04145774d6f5fd07295164511cd7fd36b",
+        "enron-e13dbd5a56ac5bcfc49568e7658cfa0242ef69f9a915875867139370fc226507"
+      ]
+    }
+  ],
+  "retriever": "dense"
+}

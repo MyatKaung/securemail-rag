@@ -1,0 +1,15 @@
+[
+  {
+    "id": "perm-001",
+    "principal": {
+      "role": "finance",
+      "department": "finance"
+    },
+    "question": "PLACEHOLDER permission question",
+    "allowed_email_ids": [],
+    "forbidden_email_ids": [
+      "PLACEHOLDER_RESTRICTED_EMAIL_ID"
+    ],
+    "expected": "deny"
+  }
+]

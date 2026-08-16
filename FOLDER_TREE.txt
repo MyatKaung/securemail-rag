@@ -1,0 +1,102 @@
+📄 .env.example
+📄 .gitignore
+📄 AGENTS.md
+📄 Makefile
+📄 README.md
+📄 architecture.md
+📁 config
+  📄 app.yaml
+  📄 models.yaml
+📁 data
+  📁 processed
+    📄 .gitkeep
+  📁 raw
+    📄 .gitkeep
+  📁 sample
+    📄 .gitkeep
+📄 decisions.md
+📁 docker
+📄 docker-compose.yml
+📁 docs
+  📄 01_problem_and_scope.md
+  📄 02_evaluation_strategy.md
+  📄 03_basic_rag.md
+  📄 04_hybrid_search.md
+  📄 05_reranking.md
+  📄 06_hyde.md
+  📄 07_crag.md
+  📄 08_self_rag.md
+  📄 09_text2sql.md
+  📄 10_caching.md
+  📄 11_security_guardrails.md
+  📄 12_permission_aware_rag.md
+  📄 13_monitoring.md
+  📄 14_rust_experiment.md
+  📄 data_design.md
+  📄 deployment_strategy.md
+  📄 model_strategy.md
+  📄 refactoring_rules.md
+  📄 rubric_compliance.md
+  📄 test_strategy.md
+📁 evals
+  📁 datasets
+    📄 generation_tests.sample.json
+    📄 permission_tests.sample.json
+    📄 retrieval_ground_truth.sample.json
+  📁 experiments
+  📁 results
+    📄 .gitkeep
+📄 implementation_plan.md
+📄 project_spec.md
+📄 pyproject.toml
+📁 scripts
+  📄 README.md
+📁 src
+  📁 securemail
+    📄 __init__.py
+    📁 agents
+      📄 __init__.py
+    📁 api
+      📄 __init__.py
+    📁 caching
+      📄 __init__.py
+    📁 config
+      📄 __init__.py
+      📄 settings.py
+    📁 evaluation
+      📄 __init__.py
+    📁 generation
+      📄 __init__.py
+    📁 ingestion
+      📄 __init__.py
+    📁 models
+      📄 __init__.py
+    📁 monitoring
+      📄 __init__.py
+    📁 reranking
+      📄 __init__.py
+    📁 retrieval
+      📄 __init__.py
+    📁 security
+      📄 __init__.py
+    📁 sql
+      📄 __init__.py
+📁 tasks
+  📄 phase_00_skeleton.md
+  📄 phase_01_ingestion.md
+  📄 phase_02_basic_rag.md
+  📄 phase_03_hybrid_search.md
+  📄 phase_04_reranking.md
+  📄 phase_05_permission_rag.md
+  📄 phase_06_generation_eval.md
+  📄 phase_07_interface.md
+  📄 phase_08_monitoring.md
+  📄 phase_09_docker_repro.md
+  📄 phase_10_optional_advanced.md
+  📄 phase_11_cloud.md
+  📄 phase_12_rust.md
+  📄 rubric_audit.md
+📁 tests
+  📁 integration
+  📁 security
+  📁 unit
