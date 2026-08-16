@@ -19,6 +19,15 @@ from .hybrid import HybridRetriever, RRFConfig, rrf_fuse
 from .index import DenseIndex, DenseSearchResult
 from .indexing import build_dense_index, load_normalized_jsonl
 from .interfaces import Retriever
+from .query_rewriting import (
+    CachedQueryRewriter,
+    OpenRouterQueryRewriter,
+    QueryRewriteConfig,
+    QueryRewriter,
+    RewritingRetriever,
+    build_query_rewrite_prompt,
+    clean_rewritten_query,
+)
 from .reranking import (
     CrossEncoderReranker,
     RerankedRetriever,
@@ -32,6 +41,7 @@ __all__ = [
     "BM25Config",
     "BM25Index",
     "BM25Retriever",
+    "CachedQueryRewriter",
     "CrossEncoderReranker",
     "DenseIndex",
     "DenseRetriever",
@@ -39,6 +49,9 @@ __all__ = [
     "Embedder",
     "EmbeddingDependencyError",
     "HybridRetriever",
+    "OpenRouterQueryRewriter",
+    "QueryRewriteConfig",
+    "QueryRewriter",
     "RRFConfig",
     "RerankedRetriever",
     "RerankedSearchResult",
@@ -46,8 +59,11 @@ __all__ = [
     "RerankerDependencyError",
     "RetrievalDocument",
     "Retriever",
+    "RewritingRetriever",
     "SentenceTransformerEmbedder",
     "build_dense_index",
+    "build_query_rewrite_prompt",
+    "clean_rewritten_query",
     "compare_retrieval_results",
     "configured_embedding_model",
     "configured_reranker_model",

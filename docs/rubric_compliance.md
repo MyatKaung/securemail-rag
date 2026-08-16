@@ -92,8 +92,16 @@ Evidence:
 `src/securemail/retrieval/reranking.py` provides the swappable reranker interface and configured CrossEncoder implementation. The Phase 04 result artifacts compare Hybrid `0.9500 / 0.8667` with Hybrid + reranker `1.0000 / 0.9500` for HitRate@5 / MRR@5 and preserve query-level rank changes.
 
 ### Query Rewriting +1
-- [ ] Implemented and evaluated.
+- [x] Implemented and evaluated.
 Evidence:
+`src/securemail/retrieval/query_rewriting.py` provides an opt-in
+`RewritingRetriever`, the `ENABLE_QUERY_REWRITE` feature flag, the versioned
+`query_rewrite_v1` prompt, provider-failure fallback, and persistent rewrite
+caching. `evals/results/phase10_query_rewriting.json` evaluates the unchanged
+20-question benchmark with the same 500-email corpus and hybrid + reranker
+baseline. Baseline and treatment both measure HitRate@5 `1.0000` and MRR@5
+`0.9500`; all provider responses were rejected or empty and safely fell back to
+the original query, so query rewriting remains disabled by default.
 
 ## Bonus
 ### Cloud Deployment +2

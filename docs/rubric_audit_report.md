@@ -15,7 +15,7 @@ not README claims alone.
 | Area | Estimated score | Maximum | Status |
 | --- | ---: | ---: | --- |
 | Core rubric | **18** | 18 | All core criteria have implementation and tracked evidence. |
-| Best-practice points | **2** | 3 | Hybrid search and reranking pass; query rewriting is not implemented. |
+| Best-practice points | **3** | 3 | Hybrid search, reranking, and an evaluated query-rewriting experiment pass; rewriting remains disabled because it did not improve results. |
 | Cloud bonus | **0** | 2 | No public cloud deployment, intentionally. |
 | Other bonus | **0** | — | No additional bonus is evidenced. |
 
@@ -269,14 +269,26 @@ improvements, 16 unchanged cases, one regression, and latency.
 
 Missing requirement: none for this point.
 
-### Query rewriting — FAIL — expected 1/1
+### Query rewriting — PASS — expected 1/1
 
-Evidence: `implementation_plan.md`, `tasks/phase_10_optional_advanced.md`, and
-`docs/rubric_compliance.md` explicitly leave query rewriting unchecked. No
-query-rewrite implementation or evaluation artifact is present.
+Evidence: `src/securemail/retrieval/query_rewriting.py` provides the optional
+feature flag, versioned rewrite prompt, OpenRouter/Qwen adapter, persistent
+cache, malformed-response fallback, and a wrapper that delegates authorization
+to the unchanged retriever. `evals/results/phase10_query_rewriting.json`
+evaluates the same 500-email corpus and unchanged 20-question benchmark.
 
-Missing requirement: implement and evaluate a query-rewriting approach.
-Impact: best-practice point only; not required for the P0 core score.
+Test/evaluation evidence: the explicit live evaluation made 20 OpenRouter calls.
+The baseline hybrid + reranker measured HitRate@5 `1.0000` / MRR@5 `0.9500`;
+the query-rewrite treatment measured `1.0000` / `0.9500`. All 20 model outputs
+were empty or invalid verbose/truncated responses and safely fell back to the
+original query. The feature therefore remains disabled by default, as required
+when the measured result is equal rather than better.
+
+Missing requirement: no measured improvement and no valid non-fallback rewrite
+was observed in this run. This is a documented experiment outcome, not an
+unreported failure.
+Impact: none; the best-practice implementation/evaluation point is supported,
+while the production default remains the stronger measured baseline.
 
 ## Cloud deployment bonus
 
@@ -318,6 +330,7 @@ the generation evaluation does not support that stronger claim.
 | Hybrid + reranker HitRate@5 / MRR@5 | tracked `evals/results/phase04_reranking_comparison.json` | `1.0000 / 0.9500000000` |
 | Permission metrics | tracked `evals/results/phase05_permission.json` | no-filter URR `1.0000`; filtered URR `0.0000`; decision accuracy `1.0000`; authorized HitRate@5 `1.0000`; authorized MRR@5 `0.9166666667` |
 | Generation metrics | tracked `evals/results/phase06_generation.json` | basic `0.4875`; structured `0.4500`; basic selected; 20 questions; 40 calls |
+| Query rewriting metrics | tracked `evals/results/phase10_query_rewriting.json` | baseline `1.0000 / 0.9500`; treatment `1.0000 / 0.9500`; 20 rewrite calls; rewriting disabled |
 
 All values match the README and rubric tracker. The generation artifact is now
 tracked and can be inspected from a fresh clone.
@@ -357,10 +370,9 @@ description checklist entries are aligned with the repository evidence.
 
 ### P2 — optional bonus/stretch
 
-1. Implement and evaluate query rewriting for the +1 best-practice point.
-2. Deploy the existing Compose application publicly for the +2 cloud bonus,
+1. Deploy the existing Compose application publicly for the +2 cloud bonus,
    with secret-safe configuration and a reproducible health check.
-3. Consider HyDE, CRAG, Self-RAG, Text2SQL, caching, or Rust only after the
+2. Consider HyDE, CRAG, Self-RAG, Text2SQL, caching, or Rust only after the
    tracked-evidence gap is fixed and only if measured results justify them.
 
 ## Final audit conclusion
@@ -370,4 +382,5 @@ especially the permission boundary: pre-retrieval filtering reduces measured
 unauthorized retrieval from 100% to 0%, while authorized HitRate@5 remains
 1.0000, and restricted records are excluded from reranking and LLM context.
 The Phase 06 result artifact is now included in the committed evidence set;
-remaining work is optional query rewriting/cloud/stretch work.
+query rewriting has also been evaluated and documented without changing the
+production default. Remaining work is optional cloud/stretch work.

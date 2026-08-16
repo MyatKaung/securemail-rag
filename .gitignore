@@ -24,6 +24,7 @@ evals/results/*
 !evals/results/.gitkeep
 !evals/results/dense_retrieval_phase02.json
 !evals/results/phase06_generation.json
+!evals/results/phase10_query_rewriting.json
 
 *.log
 .coverage

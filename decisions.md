@@ -250,3 +250,29 @@ surface with a small tracked development corpus. The first real query may
 download the configured embedding/reranker weights into the mounted cache and
 requires an OpenRouter key; `/health` does not. A fresh clone can regenerate the
 sample explicitly and can replace the sample before building an image.
+
+## ADR-011 — Keep query rewriting optional after a neutral evaluation
+**Status:** accepted
+**Date:** 2026-08-17
+
+### Context
+The LLM Zoomcamp best-practice criterion requires an evaluated query-rewriting
+experiment, but the production baseline is already measured as hybrid retrieval
+plus cross-encoder reranking. Rewriting must not silently replace that baseline
+or weaken its pre-retrieval authorization boundary.
+
+### Decision
+Implement a feature-flagged `RewritingRetriever` that rewrites only the query
+and delegates to the unchanged secure retriever. Use the existing OpenRouter
+client and Qwen model with a versioned prompt that preserves intent and exact
+terms. Persist rewrites in `evals/results/phase10_query_rewriting.json` so
+repeated evaluation runs use cached values. Empty, failed, or verbose/truncated
+provider responses fall back to the original query. Keep `ENABLE_QUERY_REWRITE`
+disabled by default.
+
+### Consequences
+The exact 20-question benchmark remains unchanged. The opt-in live evaluation
+made 20 rewrite calls and accepted no non-empty rewrites after output-contract
+validation, so treatment and baseline both measured HitRate@5 `1.0000` and MRR@5
+`0.9500`. Rewriting is evaluated and available for future provider/prompt
+experiments, but is not selected as the default without measured improvement.
