@@ -7,6 +7,9 @@ retrieval:
   top_k: 5
   candidate_k: 20
   hybrid_fusion: rrf
+  rrf_rank_constant: 60
+  bm25_k1: 1.5
+  bm25_b: 0.75
 
 security:
   enforce_pre_retrieval_authorization: true

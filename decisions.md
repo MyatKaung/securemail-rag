@@ -19,7 +19,7 @@ What was considered.
 Benefits, risks, follow-up work.
 
 ## ADR-001 — Keep Phase 00 configuration and evaluation contracts provider-neutral
-**Status:** accepted  
+**Status:** accepted
 **Date:** 2026-08-16
 
 ### Context
@@ -65,3 +65,19 @@ Use a vector database before measuring the baseline, replace the configured embe
 
 ### Consequences
 The baseline is easy to inspect, persist, test with fake embedders, and compare against later retrievers. Exact search is appropriate for the current development size; a larger production index can replace `DenseIndex` behind the same interface. No compatibility change was needed for the configured embedding model.
+
+## ADR-004 — Select RRF hybrid retrieval for the Phase 03 default
+**Status:** accepted
+**Date:** 2026-08-16
+
+### Context
+Phase 03 requires a sparse BM25 baseline and a hybrid comparison without changing the dense baseline or the 20-question ground truth. Enron messages contain exact names, abbreviations, and project terms that may favor sparse matching on some questions.
+
+### Decision
+Use `rank-bm25` with deterministic case-folded word tokens and BM25 `k1=1.5`, `b=0.75`. Fuse the independent BM25 and dense rankings with Reciprocal Rank Fusion using one-based ranks, rank constant `60`, and candidate depth `20`. Select the hybrid composition as the default retrieval strategy for the next phase because, on exactly the same 500 emails and 20 questions, it improves MRR@5 to `0.8667` versus BM25 `0.8017` and dense `0.7267`. Do not claim a HitRate gain: hybrid and dense are both `0.9500`, while BM25 is `1.0000`.
+
+### Alternatives
+Keep dense as the default because it is the original baseline, select BM25 because it has the highest HitRate@5, or tune RRF until it wins every query. The latter would violate the requirement to preserve the ground truth and report failures honestly.
+
+### Consequences
+The hybrid retriever is modular and independently testable, while dense and BM25 remain selectable for ablation. The result is evidence for this fixed development corpus and query set only; reranking and authorization are intentionally deferred.

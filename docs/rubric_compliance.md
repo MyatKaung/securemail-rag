@@ -10,6 +10,7 @@ Codex must update this file only when implementation evidence exists.
 - The Phase 00 test/lint commands pass: 10 tests and Ruff checks. No retrieval, generation, authorization, monitoring, ingestion, containerization, or full-interface rubric item is marked complete by this phase.
 - Phase 01 adds a tested CMU Enron acquisition/normalization path, stable IDs, deterministic deduplication, a synthetic RBAC overlay, and a 25-record processed sample. No retrieval ground-truth labels are claimed.
 - Phase 02 adds a modular dense embedding/index/retrieval path, a grounded OpenRouter client boundary, 20 real-email retrieval questions, and measured dense results over 500 indexed emails.
+- Phase 03 adds a tested `rank-bm25` sparse retriever and configurable RRF hybrid retriever. On the unchanged 500-email corpus and 20-question set, dense/BM25/hybrid HitRate@5 is `0.9500`/`1.0000`/`0.9500` and MRR@5 is `0.7267`/`0.8017`/`0.8667`; the machine-readable comparison is `evals/results/phase03_retrieval_comparison.json`.
 
 ## Core
 
@@ -29,12 +30,12 @@ Phase 02 indexes 500 normalized Enron emails and exercises question-to-dense-ret
 
 ### Retrieval Evaluation — target 2/2
 - [x] Ground-truth evaluation dataset exists.
-- [ ] BM25 evaluated.
+- [x] BM25 evaluated.
 - [x] Dense evaluated.
-- [ ] Hybrid evaluated.
-- [ ] Best approach selected based on results.
+- [x] Hybrid evaluated.
+- [x] Best approach selected based on results.
 Evidence:
-`evals/datasets/retrieval_ground_truth.phase02.json` contains 20 questions tied to inspected normalized emails with notes. `evals/results/dense_retrieval_phase02.json` records dense HitRate@5 `0.9500` and MRR@5 `0.7266666667` over 500 indexed emails. BM25, hybrid, and best-approach selection remain future work.
+`evals/datasets/retrieval_ground_truth.phase02.json` contains 20 questions tied to inspected normalized emails with notes. `evals/results/dense_retrieval_phase02.json` preserves the Phase 02 dense result. Phase 03 writes separate dense, BM25, and hybrid results plus a per-query comparison under `evals/results/`; hybrid is selected for its measured MRR@5 improvement, not for HitRate.
 
 ### LLM Evaluation — target 2/2
 - [ ] At least two generation approaches/prompts evaluated.
@@ -74,8 +75,9 @@ Phase 01 documents the exact source URL and streaming/offline acquisition comman
 
 ## Best-Practice Points
 ### Hybrid Search +1
-- [ ] Implemented and evaluated.
+- [x] Implemented and evaluated.
 Evidence:
+`src/securemail/retrieval/hybrid.py` implements configurable RRF over the common retriever interface. `evals/results/phase03_retrieval_comparison.json` records the exact same-corpus comparison, including query-level wins and hybrid non-improvements.
 
 ### Reranking +1
 - [ ] Implemented and evaluated.

@@ -10,6 +10,7 @@ dependencies = [
   "pyyaml",
   "openai",
   "numpy>=1.26",
+  "rank-bm25>=0.2.2",
   "sentence-transformers>=3.0,<6",
   "pydantic>=2",
   "pytest",

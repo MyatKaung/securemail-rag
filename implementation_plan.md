@@ -4,7 +4,7 @@
 - [x] Phase 00 — Skeleton + evaluation contracts
 - [x] Phase 01 — Enron ingestion + normalization
 - [x] Phase 02 — Basic dense RAG
-- [ ] Phase 03 — BM25 + hybrid search
+- [x] Phase 03 — BM25 + hybrid search
 - [ ] Phase 04 — reranking
 - [ ] Phase 05 — permission-aware retrieval
 - [ ] Phase 06 — generation + citations + LLM eval
