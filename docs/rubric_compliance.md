@@ -25,10 +25,10 @@ Phase 01 documents the exact CMU source URL, RFC 2822/MIME raw format, manageabl
 
 ### Retrieval Flow — target 2/2
 - [x] Knowledge base used.
-- [ ] LLM used.
-- [ ] End-to-end RAG demonstrated.
+- [x] LLM used.
+- [x] End-to-end RAG demonstrated.
 Evidence:
-Phase 02 indexes 500 normalized Enron emails and exercises question-to-dense-retrieval plus grounded prompt construction. Phase 06 adds a permission-aware hybrid + reranker generation boundary and a 20-case dataset, but the first live OpenRouter request returned HTTP 401 before generation. LLM-used and end-to-end claims remain open until a valid live response is obtained.
+Phase 02 indexes 500 normalized Enron emails. Phase 06 runs the permission-aware hybrid + reranker to OpenRouter/Qwen generation boundary on 20 questions; `evals/results/phase06_generation.json` records 40 successful calls and source-bearing responses.
 
 ### Retrieval Evaluation — target 2/2
 - [x] Ground-truth evaluation dataset exists.
@@ -40,11 +40,11 @@ Evidence:
 `evals/datasets/retrieval_ground_truth.phase02.json` contains 20 questions tied to inspected normalized emails with notes. `evals/results/dense_retrieval_phase02.json` preserves the Phase 02 dense result. Phase 03 writes separate dense, BM25, and hybrid results plus a per-query comparison under `evals/results/`; hybrid is selected for its measured MRR@5 improvement, not for HitRate.
 
 ### LLM Evaluation — target 2/2
-- [ ] At least two generation approaches/prompts evaluated.
-- [ ] Metrics/results documented.
-- [ ] Best approach used in final system.
+- [x] At least two generation approaches/prompts evaluated.
+- [x] Metrics/results documented.
+- [x] Best approach used in final system.
 Evidence:
-Phase 06 implements two versioned prompts (`basic_grounded_v1` and `structured_grounded_v1`), deterministic metric code, and mocked/offline boundary tests in `src/securemail/generation/` and `tests/`. The required live comparison is not claimed: OpenRouter rejected the first request with HTTP 401, so no generation scores or default selection are recorded.
+Phase 06 evaluates `basic_grounded_v1` and `structured_grounded_v1` on the same 20 cases with deterministic groundedness, relevance, citation, and refusal metrics. Basic grounded scores `0.4875` overall versus `0.4500` for structured grounded and is configured as the default. Full per-question and aggregate results are in `evals/results/phase06_generation.json`.
 
 ### Interface — target 2/2
 - [ ] FastAPI interface works.

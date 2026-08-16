@@ -115,7 +115,7 @@ Retrieve all documents and remove unauthorized results afterward, filter only th
 The filter is independently testable and all retrieval branches share the same policy path. On 24 permission cases, no-filter URR was `1.0000` and filtered URR was `0.0000`; authorization decision accuracy was `1.0000`. Authorized HitRate@5 was `1.0000` and MRR@5 `0.9167`. The policy is an experiment overlay, not a reconstruction of Enron permissions.
 
 ## ADR-007 — Use versioned grounded prompts with a deterministic first judge
-**Status:** proposed
+**Status:** accepted
 **Date:** 2026-08-16
 
 ### Context
@@ -132,8 +132,8 @@ for groundedness, answer relevance, citation correctness, and refusal
 correctness; do not use the generation prompt as a judge prompt.
 
 Keep the configured OpenRouter model `qwen/qwen3.6-27b` and expose an opt-in
-smoke/evaluation command. Do not select a default generation approach until
-both strategies have valid live results on the same 20-case dataset.
+smoke/evaluation command. Select the default only from valid live results on the
+same 20-case dataset.
 
 ### Alternatives
 
@@ -144,6 +144,8 @@ to reproduce or would claim an improvement without measured evidence.
 ### Consequences
 
 The prompt and parser contracts are testable without network calls. The live
-evaluation remains outstanding: the first OpenRouter request returned HTTP 401
-(`User not found`) before any answer was produced. A valid replacement key is
-required before Phase 06 can be marked complete.
+evaluation completed with 40 successful calls. Basic grounded scored `0.4875`
+overall versus `0.4500` for structured grounded, so `basic_grounded_v1` is
+selected as the default. The six insufficient-evidence cases had refusal
+correctness of `0.1667` for basic and `0.3333` for structured; this tradeoff is
+retained in the result artifact rather than hidden.

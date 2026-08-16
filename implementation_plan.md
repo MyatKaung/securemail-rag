@@ -7,7 +7,7 @@
 - [x] Phase 03 — BM25 + hybrid search
 - [x] Phase 04 — reranking
 - [x] Phase 05 — permission-aware retrieval
-- [ ] Phase 06 — generation + citations + LLM eval
+- [x] Phase 06 — generation + citations + LLM eval
 - [ ] Phase 07 — FastAPI + minimal UI
 - [ ] Phase 08 — monitoring + feedback
 - [ ] Phase 09 — Docker + reproducibility
@@ -32,7 +32,6 @@
 ## Rule
 P1/P2/P3 must not delay or destabilize P0.
 
-Phase 06 implementation evidence exists for versioned grounded prompts,
+Phase 06 has measured live evidence for versioned grounded prompts,
 permission-safe generation boundaries, response parsing, and deterministic
-offline scoring. The phase remains unchecked because the required live
-OpenRouter comparison was blocked by an HTTP 401 authentication failure.
+evaluation. Basic grounded is selected from the 20-question comparison.

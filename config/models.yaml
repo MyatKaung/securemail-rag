@@ -18,6 +18,6 @@ reranker:
   final_k: 5
 
 generation_prompts:
-  default_strategy: null
+  default_strategy: basic_grounded_v1
   basic_strategy: basic_grounded_v1
   structured_strategy: structured_grounded_v1

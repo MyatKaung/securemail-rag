@@ -26,8 +26,9 @@ The Phase 06 evaluation rubric is deterministic and non-LLM: groundedness,
 answer relevance, citation correctness, and refusal correctness are scored from
 case-specific expected terms/source IDs and the returned structure. This keeps
 the generation and judge prompts separate and makes the first evaluation
-reproducible. The live comparison is currently blocked by an OpenRouter HTTP 401
-before a response was generated; no approach is selected based on offline mocks.
+reproducible. On the 20-question evaluation, Basic grounded scored `0.4875`
+overall versus `0.4500` for Structured grounded, so `basic_grounded_v1` is the
+configured default.
 
 The opt-in smoke command is:
 `PYTHONPATH=src uv run python -m securemail.generation.smoke`.
