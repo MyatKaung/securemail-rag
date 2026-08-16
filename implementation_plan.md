@@ -5,7 +5,7 @@
 - [x] Phase 01 — Enron ingestion + normalization
 - [x] Phase 02 — Basic dense RAG
 - [x] Phase 03 — BM25 + hybrid search
-- [ ] Phase 04 — reranking
+- [x] Phase 04 — reranking
 - [ ] Phase 05 — permission-aware retrieval
 - [ ] Phase 06 — generation + citations + LLM eval
 - [ ] Phase 07 — FastAPI + minimal UI

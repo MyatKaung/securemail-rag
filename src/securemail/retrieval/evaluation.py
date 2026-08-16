@@ -19,6 +19,7 @@ def evaluate_retriever(
     *,
     name: str,
     k: int = 5,
+    include_result_details: bool = False,
 ) -> dict[str, Any]:
     """Evaluate any interchangeable retriever with the shared retrieval contract."""
 
@@ -51,6 +52,21 @@ def evaluate_retriever(
                 "first_relevant_rank": rank,
             }
         )
+        if include_result_details:
+            rows[-1]["result_details"] = [
+                {
+                    "email_id": result.email_id,
+                    "score": getattr(
+                        result,
+                        "score",
+                        getattr(result, "reranker_score", None),
+                    ),
+                    "retrieval_score": getattr(result, "retrieval_score", None),
+                    "retrieval_rank": getattr(result, "retrieval_rank", None),
+                    "reranker_score": getattr(result, "reranker_score", None),
+                }
+                for result in results
+            ]
     count = len(rows)
     return {
         "retriever": name,

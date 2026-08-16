@@ -11,6 +11,7 @@ Codex must update this file only when implementation evidence exists.
 - Phase 01 adds a tested CMU Enron acquisition/normalization path, stable IDs, deterministic deduplication, a synthetic RBAC overlay, and a 25-record processed sample. No retrieval ground-truth labels are claimed.
 - Phase 02 adds a modular dense embedding/index/retrieval path, a grounded OpenRouter client boundary, 20 real-email retrieval questions, and measured dense results over 500 indexed emails.
 - Phase 03 adds a tested `rank-bm25` sparse retriever and configurable RRF hybrid retriever. On the unchanged 500-email corpus and 20-question set, dense/BM25/hybrid HitRate@5 is `0.9500`/`1.0000`/`0.9500` and MRR@5 is `0.7267`/`0.8017`/`0.8667`; the machine-readable comparison is `evals/results/phase03_retrieval_comparison.json`.
+- Phase 04 adds an injected CrossEncoder reranker over 20 hybrid candidates. On the same corpus and questions, Hybrid + reranker reaches HitRate@5 `1.0000` and MRR@5 `0.9500`; `evals/results/phase04_reranking_comparison.json` records three improvements, 16 unchanged ranks, one regression, and measured latency.
 
 ## Core
 
@@ -80,8 +81,9 @@ Evidence:
 `src/securemail/retrieval/hybrid.py` implements configurable RRF over the common retriever interface. `evals/results/phase03_retrieval_comparison.json` records the exact same-corpus comparison, including query-level wins and hybrid non-improvements.
 
 ### Reranking +1
-- [ ] Implemented and evaluated.
+- [x] Implemented and evaluated.
 Evidence:
+`src/securemail/retrieval/reranking.py` provides the swappable reranker interface and configured CrossEncoder implementation. The Phase 04 result artifacts compare Hybrid `0.9500 / 0.8667` with Hybrid + reranker `1.0000 / 0.9500` for HitRate@5 / MRR@5 and preserve query-level rank changes.
 
 ### Query Rewriting +1
 - [ ] Implemented and evaluated.

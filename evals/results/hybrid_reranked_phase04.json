@@ -1,0 +1,1055 @@
+{
+  "candidate_k": 20,
+  "final_k": 5,
+  "hit_rate_at_5": 1.0,
+  "indexed_documents": 500,
+  "k": 5,
+  "mrr_at_5": 0.95,
+  "num_questions": 20,
+  "per_question": [
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-001",
+      "question": "Who expected to use the North Team tuition reimbursement in 2002?",
+      "relevant_email_ids": [
+        "enron-c8dc7660331da6e6002878df95abcb548b291287aefc150f89c4fc219546b809"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-c8dc7660331da6e6002878df95abcb548b291287aefc150f89c4fc219546b809",
+          "reranker_score": 8.905010223388672,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03278688524590164,
+          "score": 8.905010223388672
+        },
+        {
+          "email_id": "enron-cbcf44524bb909657fa544633e81917c753b5c71006b2708ac9f4c2bb8df6912",
+          "reranker_score": -6.655257701873779,
+          "retrieval_rank": 14,
+          "retrieval_score": 0.014925373134328358,
+          "score": -6.655257701873779
+        },
+        {
+          "email_id": "enron-501292f3c74171057e89ee6a32b11fe1d94708240eac9ebc40550cf90c61e178",
+          "reranker_score": -6.751196384429932,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.027071520029266508,
+          "score": -6.751196384429932
+        },
+        {
+          "email_id": "enron-4b42753015d2706c9dd2e2633a2e8d1abb3f02e8bc35a5983b44b0626b1815b6",
+          "reranker_score": -8.192058563232422,
+          "retrieval_rank": 20,
+          "retrieval_score": 0.014285714285714285,
+          "score": -8.192058563232422
+        },
+        {
+          "email_id": "enron-dd8e42d66639b3b289d9449835912903b7bb88750896449d0349f5a8cd0d5071",
+          "reranker_score": -8.981072425842285,
+          "retrieval_rank": 10,
+          "retrieval_score": 0.015384615384615385,
+          "score": -8.981072425842285
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-c8dc7660331da6e6002878df95abcb548b291287aefc150f89c4fc219546b809",
+        "enron-cbcf44524bb909657fa544633e81917c753b5c71006b2708ac9f4c2bb8df6912",
+        "enron-501292f3c74171057e89ee6a32b11fe1d94708240eac9ebc40550cf90c61e178",
+        "enron-4b42753015d2706c9dd2e2633a2e8d1abb3f02e8bc35a5983b44b0626b1815b6",
+        "enron-dd8e42d66639b3b289d9449835912903b7bb88750896449d0349f5a8cd0d5071"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-002",
+      "question": "What was the list of proposed 2002 capital IT projects about?",
+      "relevant_email_ids": [
+        "enron-f7a10991323ff392297c2c87a3d0ac147f8fd08aa7c13b2ea53e2867e2b28eb2"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-f7a10991323ff392297c2c87a3d0ac147f8fd08aa7c13b2ea53e2867e2b28eb2",
+          "reranker_score": 7.112348556518555,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03278688524590164,
+          "score": 7.112348556518555
+        },
+        {
+          "email_id": "enron-a6e1518cc51f95a40944ccefb786b089b38f0d1a4b17d039fe00ef0db9a69263",
+          "reranker_score": -8.678479194641113,
+          "retrieval_rank": 4,
+          "retrieval_score": 0.015873015873015872,
+          "score": -8.678479194641113
+        },
+        {
+          "email_id": "enron-7bb198e6c26447cf5bc3d2c37f376a5bad2fade59a5da88d18e2db308d442802",
+          "reranker_score": -9.414676666259766,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.030017921146953404,
+          "score": -9.414676666259766
+        },
+        {
+          "email_id": "enron-1791d9877a016f2ad967ab041785ba4033de9300886a69589604b1e6e087fed0",
+          "reranker_score": -9.715001106262207,
+          "retrieval_rank": 13,
+          "retrieval_score": 0.014925373134328358,
+          "score": -9.715001106262207
+        },
+        {
+          "email_id": "enron-892b1ea7ef73a214385ec7a23823783738a2af13bddeff50b47986bd972dc81d",
+          "reranker_score": -9.834489822387695,
+          "retrieval_rank": 7,
+          "retrieval_score": 0.015625,
+          "score": -9.834489822387695
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-f7a10991323ff392297c2c87a3d0ac147f8fd08aa7c13b2ea53e2867e2b28eb2",
+        "enron-a6e1518cc51f95a40944ccefb786b089b38f0d1a4b17d039fe00ef0db9a69263",
+        "enron-7bb198e6c26447cf5bc3d2c37f376a5bad2fade59a5da88d18e2db308d442802",
+        "enron-1791d9877a016f2ad967ab041785ba4033de9300886a69589604b1e6e087fed0",
+        "enron-892b1ea7ef73a214385ec7a23823783738a2af13bddeff50b47986bd972dc81d"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-003",
+      "question": "What did the NNG card list organize?",
+      "relevant_email_ids": [
+        "enron-4b42753015d2706c9dd2e2633a2e8d1abb3f02e8bc35a5983b44b0626b1815b6"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-4b42753015d2706c9dd2e2633a2e8d1abb3f02e8bc35a5983b44b0626b1815b6",
+          "reranker_score": 2.451399564743042,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03278688524590164,
+          "score": 2.451399564743042
+        },
+        {
+          "email_id": "enron-d028524dee1c5d34ace65380ad1bfa48e64558f9beadea57815741836b67e581",
+          "reranker_score": -2.137899160385132,
+          "retrieval_rank": 4,
+          "retrieval_score": 0.016129032258064516,
+          "score": -2.137899160385132
+        },
+        {
+          "email_id": "enron-9835a5fd1d6744ac357501a153371710b552f4e917c9d02f5804116e7877837a",
+          "reranker_score": -4.293205261230469,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.030536130536130537,
+          "score": -4.293205261230469
+        },
+        {
+          "email_id": "enron-93fef7cb529718b745b68271528158121199c35441f836018d77ee2fa4663817",
+          "reranker_score": -4.51381778717041,
+          "retrieval_rank": 3,
+          "retrieval_score": 0.027745885954841176,
+          "score": -4.51381778717041
+        },
+        {
+          "email_id": "enron-76a1075cf0daf8cdacf8fbe81c5b5b2ef306e2d117f80c96c07336bc61b9c827",
+          "reranker_score": -4.590354919433594,
+          "retrieval_rank": 12,
+          "retrieval_score": 0.014925373134328358,
+          "score": -4.590354919433594
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-4b42753015d2706c9dd2e2633a2e8d1abb3f02e8bc35a5983b44b0626b1815b6",
+        "enron-d028524dee1c5d34ace65380ad1bfa48e64558f9beadea57815741836b67e581",
+        "enron-9835a5fd1d6744ac357501a153371710b552f4e917c9d02f5804116e7877837a",
+        "enron-93fef7cb529718b745b68271528158121199c35441f836018d77ee2fa4663817",
+        "enron-76a1075cf0daf8cdacf8fbe81c5b5b2ef306e2d117f80c96c07336bc61b9c827"
+      ]
+    },
+    {
+      "first_relevant_rank": 2,
+      "id": "phase02-ret-004",
+      "question": "What were the proposed OneOk talking points intended for?",
+      "relevant_email_ids": [
+        "enron-6228a86998497f195bffda657a75d6fa6892b2d91def963ec39f38764edfc915"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-1d17a26542f368f603f4909bd174507e682aad6b77e52ff29156a7859fb3f607",
+          "reranker_score": 2.8965413570404053,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03200204813108039,
+          "score": 2.8965413570404053
+        },
+        {
+          "email_id": "enron-6228a86998497f195bffda657a75d6fa6892b2d91def963ec39f38764edfc915",
+          "reranker_score": 2.0518531799316406,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.03177805800756621,
+          "score": 2.0518531799316406
+        },
+        {
+          "email_id": "enron-eb6e4b81638ec8abaa183fda2193a9fee5f61e08bcbe973d6d6db67c40ba3d77",
+          "reranker_score": -0.5296196937561035,
+          "retrieval_rank": 9,
+          "retrieval_score": 0.015384615384615385,
+          "score": -0.5296196937561035
+        },
+        {
+          "email_id": "enron-582756a3dcea9e9bb54e6e2950271dbb24de54bc4bc463bdca09b963a78f87e3",
+          "reranker_score": -1.442753553390503,
+          "retrieval_rank": 3,
+          "retrieval_score": 0.02782608695652174,
+          "score": -1.442753553390503
+        },
+        {
+          "email_id": "enron-3b77f54d3342cbafad2373810fbc97aef24a4e043c5e62163231ee32df0f90b1",
+          "reranker_score": -1.4492933750152588,
+          "retrieval_rank": 6,
+          "retrieval_score": 0.015873015873015872,
+          "score": -1.4492933750152588
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-1d17a26542f368f603f4909bd174507e682aad6b77e52ff29156a7859fb3f607",
+        "enron-6228a86998497f195bffda657a75d6fa6892b2d91def963ec39f38764edfc915",
+        "enron-eb6e4b81638ec8abaa183fda2193a9fee5f61e08bcbe973d6d6db67c40ba3d77",
+        "enron-582756a3dcea9e9bb54e6e2950271dbb24de54bc4bc463bdca09b963a78f87e3",
+        "enron-3b77f54d3342cbafad2373810fbc97aef24a4e043c5e62163231ee32df0f90b1"
+      ]
+    },
+    {
+      "first_relevant_rank": 2,
+      "id": "phase02-ret-005",
+      "question": "What did the proposed Fisher Roc letter concern?",
+      "relevant_email_ids": [
+        "enron-582756a3dcea9e9bb54e6e2950271dbb24de54bc4bc463bdca09b963a78f87e3"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-55e8594e906a3e23fff74583ad3157f05a676916268dbae5c505fa7af2766d78",
+          "reranker_score": 2.3237359523773193,
+          "retrieval_rank": 9,
+          "retrieval_score": 0.016129032258064516,
+          "score": 2.3237359523773193
+        },
+        {
+          "email_id": "enron-582756a3dcea9e9bb54e6e2950271dbb24de54bc4bc463bdca09b963a78f87e3",
+          "reranker_score": 2.1904430389404297,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.032266458495966696,
+          "score": 2.1904430389404297
+        },
+        {
+          "email_id": "enron-3b77f54d3342cbafad2373810fbc97aef24a4e043c5e62163231ee32df0f90b1",
+          "reranker_score": 1.9399714469909668,
+          "retrieval_rank": 7,
+          "retrieval_score": 0.01639344262295082,
+          "score": 1.9399714469909668
+        },
+        {
+          "email_id": "enron-f182394f4459e5af879e2c46bc46bfd20a7652a8d2086ea6d3183b42f72659fe",
+          "reranker_score": -2.168130874633789,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.03125,
+          "score": -2.168130874633789
+        },
+        {
+          "email_id": "enron-4f6563b9339638ff622cb91f6a23a3d4d1e7af9e02df9a743421353932f60237",
+          "reranker_score": -4.7102251052856445,
+          "retrieval_rank": 11,
+          "retrieval_score": 0.015384615384615385,
+          "score": -4.7102251052856445
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-55e8594e906a3e23fff74583ad3157f05a676916268dbae5c505fa7af2766d78",
+        "enron-582756a3dcea9e9bb54e6e2950271dbb24de54bc4bc463bdca09b963a78f87e3",
+        "enron-3b77f54d3342cbafad2373810fbc97aef24a4e043c5e62163231ee32df0f90b1",
+        "enron-f182394f4459e5af879e2c46bc46bfd20a7652a8d2086ea6d3183b42f72659fe",
+        "enron-4f6563b9339638ff622cb91f6a23a3d4d1e7af9e02df9a743421353932f60237"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-006",
+      "question": "What was attached to the letter to ONEOK about Fisher Roc?",
+      "relevant_email_ids": [
+        "enron-f182394f4459e5af879e2c46bc46bfd20a7652a8d2086ea6d3183b42f72659fe"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-f182394f4459e5af879e2c46bc46bfd20a7652a8d2086ea6d3183b42f72659fe",
+          "reranker_score": 6.2923712730407715,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.03200204813108039,
+          "score": 6.2923712730407715
+        },
+        {
+          "email_id": "enron-582756a3dcea9e9bb54e6e2950271dbb24de54bc4bc463bdca09b963a78f87e3",
+          "reranker_score": 4.506723403930664,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03252247488101534,
+          "score": 4.506723403930664
+        },
+        {
+          "email_id": "enron-55e8594e906a3e23fff74583ad3157f05a676916268dbae5c505fa7af2766d78",
+          "reranker_score": 4.182719707489014,
+          "retrieval_rank": 7,
+          "retrieval_score": 0.015625,
+          "score": 4.182719707489014
+        },
+        {
+          "email_id": "enron-3b77f54d3342cbafad2373810fbc97aef24a4e043c5e62163231ee32df0f90b1",
+          "reranker_score": 3.8663766384124756,
+          "retrieval_rank": 6,
+          "retrieval_score": 0.01639344262295082,
+          "score": 3.8663766384124756
+        },
+        {
+          "email_id": "enron-9e308996ec5865cd0fb0898b328949860d6b014b07118f21b4e6caa057a247ce",
+          "reranker_score": 1.4791922569274902,
+          "retrieval_rank": 3,
+          "retrieval_score": 0.030158730158730156,
+          "score": 1.4791922569274902
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-f182394f4459e5af879e2c46bc46bfd20a7652a8d2086ea6d3183b42f72659fe",
+        "enron-582756a3dcea9e9bb54e6e2950271dbb24de54bc4bc463bdca09b963a78f87e3",
+        "enron-55e8594e906a3e23fff74583ad3157f05a676916268dbae5c505fa7af2766d78",
+        "enron-3b77f54d3342cbafad2373810fbc97aef24a4e043c5e62163231ee32df0f90b1",
+        "enron-9e308996ec5865cd0fb0898b328949860d6b014b07118f21b4e6caa057a247ce"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-007",
+      "question": "Who requested copies of the arbitration award in the Northern v. ONEOK matter?",
+      "relevant_email_ids": [
+        "enron-b9f9ab01ccf675b53d302d421cf817a4f120059407ffa6b6df316fee509458e0"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-b9f9ab01ccf675b53d302d421cf817a4f120059407ffa6b6df316fee509458e0",
+          "reranker_score": 6.462113857269287,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03252247488101534,
+          "score": 6.462113857269287
+        },
+        {
+          "email_id": "enron-a6ebba57710e52f38f21805ff0a9d484c3616da5698b847037cc1d465fd23046",
+          "reranker_score": 0.0077891177497804165,
+          "retrieval_rank": 4,
+          "retrieval_score": 0.029236022193768675,
+          "score": 0.0077891177497804165
+        },
+        {
+          "email_id": "enron-4eb9ee9c930baf19eba30537fbaf8f3e91a9655d2ba1376c5a1f0c7b86369ff6",
+          "reranker_score": -0.07388253509998322,
+          "retrieval_rank": 15,
+          "retrieval_score": 0.014705882352941176,
+          "score": -0.07388253509998322
+        },
+        {
+          "email_id": "enron-eb6e4b81638ec8abaa183fda2193a9fee5f61e08bcbe973d6d6db67c40ba3d77",
+          "reranker_score": -1.0262250900268555,
+          "retrieval_rank": 19,
+          "retrieval_score": 0.014285714285714285,
+          "score": -1.0262250900268555
+        },
+        {
+          "email_id": "enron-3b77f54d3342cbafad2373810fbc97aef24a4e043c5e62163231ee32df0f90b1",
+          "reranker_score": -2.301781177520752,
+          "retrieval_rank": 17,
+          "retrieval_score": 0.014492753623188406,
+          "score": -2.301781177520752
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-b9f9ab01ccf675b53d302d421cf817a4f120059407ffa6b6df316fee509458e0",
+        "enron-a6ebba57710e52f38f21805ff0a9d484c3616da5698b847037cc1d465fd23046",
+        "enron-4eb9ee9c930baf19eba30537fbaf8f3e91a9655d2ba1376c5a1f0c7b86369ff6",
+        "enron-eb6e4b81638ec8abaa183fda2193a9fee5f61e08bcbe973d6d6db67c40ba3d77",
+        "enron-3b77f54d3342cbafad2373810fbc97aef24a4e043c5e62163231ee32df0f90b1"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-008",
+      "question": "What payment issue was discussed for the Mt. Jesus drip?",
+      "relevant_email_ids": [
+        "enron-501292f3c74171057e89ee6a32b11fe1d94708240eac9ebc40550cf90c61e178"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-501292f3c74171057e89ee6a32b11fe1d94708240eac9ebc40550cf90c61e178",
+          "reranker_score": 2.8088459968566895,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03278688524590164,
+          "score": 2.8088459968566895
+        },
+        {
+          "email_id": "enron-a7651cb64ef6016154c9008c0bf7680c273947eecbf544212c0d674df0eddb3e",
+          "reranker_score": 1.97723388671875,
+          "retrieval_rank": 5,
+          "retrieval_score": 0.030776515151515152,
+          "score": 1.97723388671875
+        },
+        {
+          "email_id": "enron-e4799feb562d108176577ad9e9efc064d7dd8aba8169ae961d5fa57daaa04cc7",
+          "reranker_score": 1.0928668975830078,
+          "retrieval_rank": 7,
+          "retrieval_score": 0.030309988518943745,
+          "score": 1.0928668975830078
+        },
+        {
+          "email_id": "enron-19c9d3037b6097bbd9f81fb35dbfd124e52a766fb7d211d1f124701eb5e15f16",
+          "reranker_score": 0.9802905917167664,
+          "retrieval_rank": 4,
+          "retrieval_score": 0.031009615384615385,
+          "score": 0.9802905917167664
+        },
+        {
+          "email_id": "enron-943fccc92266933d400272373b71d0b158e2f5f2895f00cc167fffb30c09773e",
+          "reranker_score": 0.9272733926773071,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.03200204813108039,
+          "score": 0.9272733926773071
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-501292f3c74171057e89ee6a32b11fe1d94708240eac9ebc40550cf90c61e178",
+        "enron-a7651cb64ef6016154c9008c0bf7680c273947eecbf544212c0d674df0eddb3e",
+        "enron-e4799feb562d108176577ad9e9efc064d7dd8aba8169ae961d5fa57daaa04cc7",
+        "enron-19c9d3037b6097bbd9f81fb35dbfd124e52a766fb7d211d1f124701eb5e15f16",
+        "enron-943fccc92266933d400272373b71d0b158e2f5f2895f00cc167fffb30c09773e"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-009",
+      "question": "What does the Helium Volumes email say ONEOK sends monthly?",
+      "relevant_email_ids": [
+        "enron-5ec7eb4fd618f6a2ef4b9aab58fb773c1235a82fb671e0481c5fd7b8b9424485"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-5ec7eb4fd618f6a2ef4b9aab58fb773c1235a82fb671e0481c5fd7b8b9424485",
+          "reranker_score": 6.1692986488342285,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03278688524590164,
+          "score": 6.1692986488342285
+        },
+        {
+          "email_id": "enron-1d17a26542f368f603f4909bd174507e682aad6b77e52ff29156a7859fb3f607",
+          "reranker_score": 0.627620279788971,
+          "retrieval_rank": 4,
+          "retrieval_score": 0.016129032258064516,
+          "score": 0.627620279788971
+        },
+        {
+          "email_id": "enron-32e65de721bc787ce785cf18cb124ca3815367ba3c3706a15e12336357b26548",
+          "reranker_score": -1.7761962413787842,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.02813852813852814,
+          "score": -1.7761962413787842
+        },
+        {
+          "email_id": "enron-19c9d3037b6097bbd9f81fb35dbfd124e52a766fb7d211d1f124701eb5e15f16",
+          "reranker_score": -3.1321873664855957,
+          "retrieval_rank": 19,
+          "retrieval_score": 0.014285714285714285,
+          "score": -3.1321873664855957
+        },
+        {
+          "email_id": "enron-9e308996ec5865cd0fb0898b328949860d6b014b07118f21b4e6caa057a247ce",
+          "reranker_score": -3.3918206691741943,
+          "retrieval_rank": 5,
+          "retrieval_score": 0.015873015873015872,
+          "score": -3.3918206691741943
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-5ec7eb4fd618f6a2ef4b9aab58fb773c1235a82fb671e0481c5fd7b8b9424485",
+        "enron-1d17a26542f368f603f4909bd174507e682aad6b77e52ff29156a7859fb3f607",
+        "enron-32e65de721bc787ce785cf18cb124ca3815367ba3c3706a15e12336357b26548",
+        "enron-19c9d3037b6097bbd9f81fb35dbfd124e52a766fb7d211d1f124701eb5e15f16",
+        "enron-9e308996ec5865cd0fb0898b328949860d6b014b07118f21b4e6caa057a247ce"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-010",
+      "question": "What was the cause of the Bushton chromatograph problem?",
+      "relevant_email_ids": [
+        "enron-4f6563b9339638ff622cb91f6a23a3d4d1e7af9e02df9a743421353932f60237"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-4f6563b9339638ff622cb91f6a23a3d4d1e7af9e02df9a743421353932f60237",
+          "reranker_score": 1.6290587186813354,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03252247488101534,
+          "score": 1.6290587186813354
+        },
+        {
+          "email_id": "enron-d2ae2d8c85452cf707972bd6555aa01587f55aa4c5fbb263ae5a92ee146ab969",
+          "reranker_score": 1.1280580759048462,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.031754032258064516,
+          "score": 1.1280580759048462
+        },
+        {
+          "email_id": "enron-892b1ea7ef73a214385ec7a23823783738a2af13bddeff50b47986bd972dc81d",
+          "reranker_score": -7.518490791320801,
+          "retrieval_rank": 7,
+          "retrieval_score": 0.015625,
+          "score": -7.518490791320801
+        },
+        {
+          "email_id": "enron-778fec0d29e2a410eb55ce96bbe39f64f4cc8152503b7265ce6e344bd6aab054",
+          "reranker_score": -8.061741828918457,
+          "retrieval_rank": 6,
+          "retrieval_score": 0.015873015873015872,
+          "score": -8.061741828918457
+        },
+        {
+          "email_id": "enron-eb6e4b81638ec8abaa183fda2193a9fee5f61e08bcbe973d6d6db67c40ba3d77",
+          "reranker_score": -8.134591102600098,
+          "retrieval_rank": 20,
+          "retrieval_score": 0.014084507042253521,
+          "score": -8.134591102600098
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-4f6563b9339638ff622cb91f6a23a3d4d1e7af9e02df9a743421353932f60237",
+        "enron-d2ae2d8c85452cf707972bd6555aa01587f55aa4c5fbb263ae5a92ee146ab969",
+        "enron-892b1ea7ef73a214385ec7a23823783738a2af13bddeff50b47986bd972dc81d",
+        "enron-778fec0d29e2a410eb55ce96bbe39f64f4cc8152503b7265ce6e344bd6aab054",
+        "enron-eb6e4b81638ec8abaa183fda2193a9fee5f61e08bcbe973d6d6db67c40ba3d77"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-011",
+      "question": "What concern continued to affect the Northern v. ONEOK discussion?",
+      "relevant_email_ids": [
+        "enron-53f59bb96cc3c3343761e18a6bfd155f53aab4ede70806deadb0c379e49e7a0a"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-53f59bb96cc3c3343761e18a6bfd155f53aab4ede70806deadb0c379e49e7a0a",
+          "reranker_score": 1.1411577463150024,
+          "retrieval_rank": 13,
+          "retrieval_score": 0.015384615384615385,
+          "score": 1.1411577463150024
+        },
+        {
+          "email_id": "enron-a6ebba57710e52f38f21805ff0a9d484c3616da5698b847037cc1d465fd23046",
+          "reranker_score": 0.238996684551239,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.031746031746031744,
+          "score": 0.238996684551239
+        },
+        {
+          "email_id": "enron-b9f9ab01ccf675b53d302d421cf817a4f120059407ffa6b6df316fee509458e0",
+          "reranker_score": -0.6941453814506531,
+          "retrieval_rank": 8,
+          "retrieval_score": 0.01639344262295082,
+          "score": -0.6941453814506531
+        },
+        {
+          "email_id": "enron-eb6e4b81638ec8abaa183fda2193a9fee5f61e08bcbe973d6d6db67c40ba3d77",
+          "reranker_score": -1.1270424127578735,
+          "retrieval_rank": 15,
+          "retrieval_score": 0.015151515151515152,
+          "score": -1.1270424127578735
+        },
+        {
+          "email_id": "enron-3b77f54d3342cbafad2373810fbc97aef24a4e043c5e62163231ee32df0f90b1",
+          "reranker_score": -1.5815496444702148,
+          "retrieval_rank": 10,
+          "retrieval_score": 0.016129032258064516,
+          "score": -1.5815496444702148
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-53f59bb96cc3c3343761e18a6bfd155f53aab4ede70806deadb0c379e49e7a0a",
+        "enron-a6ebba57710e52f38f21805ff0a9d484c3616da5698b847037cc1d465fd23046",
+        "enron-b9f9ab01ccf675b53d302d421cf817a4f120059407ffa6b6df316fee509458e0",
+        "enron-eb6e4b81638ec8abaa183fda2193a9fee5f61e08bcbe973d6d6db67c40ba3d77",
+        "enron-3b77f54d3342cbafad2373810fbc97aef24a4e043c5e62163231ee32df0f90b1"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-012",
+      "question": "What kind of information was forwarded in the SCADA Data email?",
+      "relevant_email_ids": [
+        "enron-d1033a46f4c3c793dd5fadd6c2c4857ecf5679d3ed3b74238f41dee450968ace"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-d1033a46f4c3c793dd5fadd6c2c4857ecf5679d3ed3b74238f41dee450968ace",
+          "reranker_score": 0.40142521262168884,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03278688524590164,
+          "score": 0.40142521262168884
+        },
+        {
+          "email_id": "enron-d9d786c1382741c0de9a8c84c6f309ae8f121790acc2398bf45824a4caadbd15",
+          "reranker_score": -5.103878498077393,
+          "retrieval_rank": 7,
+          "retrieval_score": 0.015873015873015872,
+          "score": -5.103878498077393
+        },
+        {
+          "email_id": "enron-0cdb47abc25583ea77ed7bcbbcdea53f30eecb30c313351bb666d294b604c705",
+          "reranker_score": -8.765917778015137,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.0315136476426799,
+          "score": -8.765917778015137
+        },
+        {
+          "email_id": "enron-1d17a26542f368f603f4909bd174507e682aad6b77e52ff29156a7859fb3f607",
+          "reranker_score": -9.264981269836426,
+          "retrieval_rank": 16,
+          "retrieval_score": 0.014492753623188406,
+          "score": -9.264981269836426
+        },
+        {
+          "email_id": "enron-32d0fdfdef2fc5024866d3868768afef38410f2f435ab558fb7a0769e3a030d1",
+          "reranker_score": -9.655754089355469,
+          "retrieval_rank": 9,
+          "retrieval_score": 0.015625,
+          "score": -9.655754089355469
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-d1033a46f4c3c793dd5fadd6c2c4857ecf5679d3ed3b74238f41dee450968ace",
+        "enron-d9d786c1382741c0de9a8c84c6f309ae8f121790acc2398bf45824a4caadbd15",
+        "enron-0cdb47abc25583ea77ed7bcbbcdea53f30eecb30c313351bb666d294b604c705",
+        "enron-1d17a26542f368f603f4909bd174507e682aad6b77e52ff29156a7859fb3f607",
+        "enron-32d0fdfdef2fc5024866d3868768afef38410f2f435ab558fb7a0769e3a030d1"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-013",
+      "question": "What did the email say about DDVC charges at Cottage Grove?",
+      "relevant_email_ids": [
+        "enron-a6cc0996802fa9d309c157e48552bc5869755d55e4f8a33b54c6eed1b4e79ec4"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-a6cc0996802fa9d309c157e48552bc5869755d55e4f8a33b54c6eed1b4e79ec4",
+          "reranker_score": 3.999997138977051,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03278688524590164,
+          "score": 3.999997138977051
+        },
+        {
+          "email_id": "enron-8e7b2f80067b6160736e1359e8a8654036f2d6e82d97ed5cc0e5caa13fb2b89a",
+          "reranker_score": 3.999997138977051,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.03225806451612903,
+          "score": 3.999997138977051
+        },
+        {
+          "email_id": "enron-c36f716b81a70decb04b2d43134c10425fe4ff7dd8354a5396a51b4a9cfc6d81",
+          "reranker_score": -1.7203779220581055,
+          "retrieval_rank": 3,
+          "retrieval_score": 0.03149801587301587,
+          "score": -1.7203779220581055
+        },
+        {
+          "email_id": "enron-599ffdde02fc818b911fb2164ae544ae35a83d1d7b82950b15df88fbf299d798",
+          "reranker_score": -2.4335551261901855,
+          "retrieval_rank": 12,
+          "retrieval_score": 0.014705882352941176,
+          "score": -2.4335551261901855
+        },
+        {
+          "email_id": "enron-dd8e42d66639b3b289d9449835912903b7bb88750896449d0349f5a8cd0d5071",
+          "reranker_score": -3.1303138732910156,
+          "retrieval_rank": 6,
+          "retrieval_score": 0.015873015873015872,
+          "score": -3.1303138732910156
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-a6cc0996802fa9d309c157e48552bc5869755d55e4f8a33b54c6eed1b4e79ec4",
+        "enron-8e7b2f80067b6160736e1359e8a8654036f2d6e82d97ed5cc0e5caa13fb2b89a",
+        "enron-c36f716b81a70decb04b2d43134c10425fe4ff7dd8354a5396a51b4a9cfc6d81",
+        "enron-599ffdde02fc818b911fb2164ae544ae35a83d1d7b82950b15df88fbf299d798",
+        "enron-dd8e42d66639b3b289d9449835912903b7bb88750896449d0349f5a8cd0d5071"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-014",
+      "question": "What did LS Power request in the FDD overrun analysis email?",
+      "relevant_email_ids": [
+        "enron-5a88dac83bef66b9370eeac48836045dcc2b2d1d2127afe393056d17333e262b"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-5a88dac83bef66b9370eeac48836045dcc2b2d1d2127afe393056d17333e262b",
+          "reranker_score": 6.227447032928467,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.032266458495966696,
+          "score": 6.227447032928467
+        },
+        {
+          "email_id": "enron-77db770cdb626725c77fef913249f8d23471ddb1dd51d19f8679c5272fa7aa88",
+          "reranker_score": 6.227447032928467,
+          "retrieval_rank": 3,
+          "retrieval_score": 0.031754032258064516,
+          "score": 6.227447032928467
+        },
+        {
+          "email_id": "enron-ad976c7a58522b0cd90b07cc2c72fcceab7e7905eb5849ec8300142f7cdf6026",
+          "reranker_score": 5.629095077514648,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.032266458495966696,
+          "score": 5.629095077514648
+        },
+        {
+          "email_id": "enron-a8c2619e357e6bbef65227db05b74dfb7b6d60eff8741cf4db2d1b909cb62f03",
+          "reranker_score": 5.629095077514648,
+          "retrieval_rank": 4,
+          "retrieval_score": 0.031754032258064516,
+          "score": 5.629095077514648
+        },
+        {
+          "email_id": "enron-c36f716b81a70decb04b2d43134c10425fe4ff7dd8354a5396a51b4a9cfc6d81",
+          "reranker_score": -4.9011030197143555,
+          "retrieval_rank": 10,
+          "retrieval_score": 0.014705882352941176,
+          "score": -4.9011030197143555
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-5a88dac83bef66b9370eeac48836045dcc2b2d1d2127afe393056d17333e262b",
+        "enron-77db770cdb626725c77fef913249f8d23471ddb1dd51d19f8679c5272fa7aa88",
+        "enron-ad976c7a58522b0cd90b07cc2c72fcceab7e7905eb5849ec8300142f7cdf6026",
+        "enron-a8c2619e357e6bbef65227db05b74dfb7b6d60eff8741cf4db2d1b909cb62f03",
+        "enron-c36f716b81a70decb04b2d43134c10425fe4ff7dd8354a5396a51b4a9cfc6d81"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-015",
+      "question": "What activity did the LSP storage analysis compare?",
+      "relevant_email_ids": [
+        "enron-830d563070540f2161582798bbef27eb4feb177005e18e4f797ff761a75197a3"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-830d563070540f2161582798bbef27eb4feb177005e18e4f797ff761a75197a3",
+          "reranker_score": 2.655441999435425,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03252247488101534,
+          "score": 2.655441999435425
+        },
+        {
+          "email_id": "enron-52fd5941a04bc8cd79caa014f6734e0907dc8395ec65d0b6c6e91d31bdcada1e",
+          "reranker_score": -5.402446269989014,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.0315136476426799,
+          "score": -5.402446269989014
+        },
+        {
+          "email_id": "enron-59083d0f4932e974f4f7cf39d4cc335412d0170716fa37d492f0e8fe87738871",
+          "reranker_score": -7.231626987457275,
+          "retrieval_rank": 10,
+          "retrieval_score": 0.015625,
+          "score": -7.231626987457275
+        },
+        {
+          "email_id": "enron-6b130dea8481dd0a0dc634741a5c956dea24d8ea962a3247a2a9666e3df77e81",
+          "reranker_score": -8.861814498901367,
+          "retrieval_rank": 8,
+          "retrieval_score": 0.015873015873015872,
+          "score": -8.861814498901367
+        },
+        {
+          "email_id": "enron-5a88dac83bef66b9370eeac48836045dcc2b2d1d2127afe393056d17333e262b",
+          "reranker_score": -9.130385398864746,
+          "retrieval_rank": 4,
+          "retrieval_score": 0.026875901875901876,
+          "score": -9.130385398864746
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-830d563070540f2161582798bbef27eb4feb177005e18e4f797ff761a75197a3",
+        "enron-52fd5941a04bc8cd79caa014f6734e0907dc8395ec65d0b6c6e91d31bdcada1e",
+        "enron-59083d0f4932e974f4f7cf39d4cc335412d0170716fa37d492f0e8fe87738871",
+        "enron-6b130dea8481dd0a0dc634741a5c956dea24d8ea962a3247a2a9666e3df77e81",
+        "enron-5a88dac83bef66b9370eeac48836045dcc2b2d1d2127afe393056d17333e262b"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-016",
+      "question": "What did the Responses to Virginia Power email contain?",
+      "relevant_email_ids": [
+        "enron-29fc4ba46e0a4a413066a21a0a96646594cb4ea94a0d278d2c13c67700d07e92"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-29fc4ba46e0a4a413066a21a0a96646594cb4ea94a0d278d2c13c67700d07e92",
+          "reranker_score": 3.600029945373535,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03252247488101534,
+          "score": 3.600029945373535
+        },
+        {
+          "email_id": "enron-6c5513ee7de7b0048b992474bafb5f8d5eef749b0b6cd87778946996bfabee6e",
+          "reranker_score": 2.6165614128112793,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.032018442622950824,
+          "score": 2.6165614128112793
+        },
+        {
+          "email_id": "enron-9e2bae9b4cdf1c64d841a37c0a9e990854b8608507665c8bb8b8454562c35e64",
+          "reranker_score": -1.4803427457809448,
+          "retrieval_rank": 16,
+          "retrieval_score": 0.014492753623188406,
+          "score": -1.4803427457809448
+        },
+        {
+          "email_id": "enron-8e3872b5e657052e7121866fe3b8065ec21fdac757c87d2b3e511a79e384daaf",
+          "reranker_score": -2.203101634979248,
+          "retrieval_rank": 4,
+          "retrieval_score": 0.028373015873015873,
+          "score": -2.203101634979248
+        },
+        {
+          "email_id": "enron-acc5586d0b8979da63fd31b2e580caa8d632b396de2010eefa81107ac87abe7f",
+          "reranker_score": -4.100451469421387,
+          "retrieval_rank": 11,
+          "retrieval_score": 0.015151515151515152,
+          "score": -4.100451469421387
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-29fc4ba46e0a4a413066a21a0a96646594cb4ea94a0d278d2c13c67700d07e92",
+        "enron-6c5513ee7de7b0048b992474bafb5f8d5eef749b0b6cd87778946996bfabee6e",
+        "enron-9e2bae9b4cdf1c64d841a37c0a9e990854b8608507665c8bb8b8454562c35e64",
+        "enron-8e3872b5e657052e7121866fe3b8065ec21fdac757c87d2b3e511a79e384daaf",
+        "enron-acc5586d0b8979da63fd31b2e580caa8d632b396de2010eefa81107ac87abe7f"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-017",
+      "question": "What was the Demarc allocation conference call about?",
+      "relevant_email_ids": [
+        "enron-b07edec7832db149b78120788c40d16a3cb5439be6bd4d600ca1594c7bf7d0bc"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-b07edec7832db149b78120788c40d16a3cb5439be6bd4d600ca1594c7bf7d0bc",
+          "reranker_score": 5.388497352600098,
+          "retrieval_rank": 3,
+          "retrieval_score": 0.031746031746031744,
+          "score": 5.388497352600098
+        },
+        {
+          "email_id": "enron-a341784337a0cf179d3bbf246136e90d86c8e4ae9128ed35fa19441cbad07793",
+          "reranker_score": 4.792128086090088,
+          "retrieval_rank": 5,
+          "retrieval_score": 0.03047794966520434,
+          "score": 4.792128086090088
+        },
+        {
+          "email_id": "enron-acc5586d0b8979da63fd31b2e580caa8d632b396de2010eefa81107ac87abe7f",
+          "reranker_score": 4.480923652648926,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.03177805800756621,
+          "score": 4.480923652648926
+        },
+        {
+          "email_id": "enron-bde4ba6a3c2fbe7783a276703b64805cf976cf8d9bc1ea9585c159f0f78d43fa",
+          "reranker_score": 4.026459693908691,
+          "retrieval_rank": 4,
+          "retrieval_score": 0.030776515151515152,
+          "score": 4.026459693908691
+        },
+        {
+          "email_id": "enron-8e1d1eeeb02ba88fae3bc2b2651416a002149f176ef4c73d5e7862bb348a0089",
+          "reranker_score": 3.9699788093566895,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03225806451612903,
+          "score": 3.9699788093566895
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-b07edec7832db149b78120788c40d16a3cb5439be6bd4d600ca1594c7bf7d0bc",
+        "enron-a341784337a0cf179d3bbf246136e90d86c8e4ae9128ed35fa19441cbad07793",
+        "enron-acc5586d0b8979da63fd31b2e580caa8d632b396de2010eefa81107ac87abe7f",
+        "enron-bde4ba6a3c2fbe7783a276703b64805cf976cf8d9bc1ea9585c159f0f78d43fa",
+        "enron-8e1d1eeeb02ba88fae3bc2b2651416a002149f176ef4c73d5e7862bb348a0089"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-018",
+      "question": "What did the Office of the Chair message say about September 11, 2001?",
+      "relevant_email_ids": [
+        "enron-eb24bb1c729541fcc9d02dc22bd72d703cdab7c451a16b7a585a2a6d586d64cb"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-eb24bb1c729541fcc9d02dc22bd72d703cdab7c451a16b7a585a2a6d586d64cb",
+          "reranker_score": 6.495772838592529,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03252247488101534,
+          "score": 6.495772838592529
+        },
+        {
+          "email_id": "enron-dfb4f72573b0c266600ab9040bca35e1e181335816e372c029675518b2705681",
+          "reranker_score": -1.4827097654342651,
+          "retrieval_rank": 9,
+          "retrieval_score": 0.015625,
+          "score": -1.4827097654342651
+        },
+        {
+          "email_id": "enron-6b130dea8481dd0a0dc634741a5c956dea24d8ea962a3247a2a9666e3df77e81",
+          "reranker_score": -3.2743802070617676,
+          "retrieval_rank": 16,
+          "retrieval_score": 0.014705882352941176,
+          "score": -3.2743802070617676
+        },
+        {
+          "email_id": "enron-592c7837d8ce8e42671a88ffdb3fb387d3f8bf279eef6ffb117da378e42207b3",
+          "reranker_score": -4.384499549865723,
+          "retrieval_rank": 18,
+          "retrieval_score": 0.014492753623188406,
+          "score": -4.384499549865723
+        },
+        {
+          "email_id": "enron-32d0fdfdef2fc5024866d3868768afef38410f2f435ab558fb7a0769e3a030d1",
+          "reranker_score": -5.707512378692627,
+          "retrieval_rank": 11,
+          "retrieval_score": 0.015384615384615385,
+          "score": -5.707512378692627
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-eb24bb1c729541fcc9d02dc22bd72d703cdab7c451a16b7a585a2a6d586d64cb",
+        "enron-dfb4f72573b0c266600ab9040bca35e1e181335816e372c029675518b2705681",
+        "enron-6b130dea8481dd0a0dc634741a5c956dea24d8ea962a3247a2a9666e3df77e81",
+        "enron-592c7837d8ce8e42671a88ffdb3fb387d3f8bf279eef6ffb117da378e42207b3",
+        "enron-32d0fdfdef2fc5024866d3868768afef38410f2f435ab558fb7a0769e3a030d1"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-019",
+      "question": "What security changes at Enron facilities were described?",
+      "relevant_email_ids": [
+        "enron-d6708c9c476157250874831bf8054c88a6a79721ff7a323097f7aaa0de7c4272"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-d6708c9c476157250874831bf8054c88a6a79721ff7a323097f7aaa0de7c4272",
+          "reranker_score": 4.8770246505737305,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03252247488101534,
+          "score": 4.8770246505737305
+        },
+        {
+          "email_id": "enron-a927c52a2b7d7eabb97f0294a4d44cc6b710bdf31adb07a3c2e7582ed45abe59",
+          "reranker_score": 1.8423491716384888,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.03149801587301587,
+          "score": 1.8423491716384888
+        },
+        {
+          "email_id": "enron-d9d786c1382741c0de9a8c84c6f309ae8f121790acc2398bf45824a4caadbd15",
+          "reranker_score": 0.4738137423992157,
+          "retrieval_rank": 3,
+          "retrieval_score": 0.03131881575727918,
+          "score": 0.4738137423992157
+        },
+        {
+          "email_id": "enron-2a615807712097d1aedbc4980d554b8a5e80e619e61ab3039bcd20d34f1a9c4f",
+          "reranker_score": -1.4798659086227417,
+          "retrieval_rank": 6,
+          "retrieval_score": 0.015625,
+          "score": -1.4798659086227417
+        },
+        {
+          "email_id": "enron-73413c1f0f14e5426d8e00616b8006208091eed8cace8ff32a5bce5bb8b3762d",
+          "reranker_score": -2.6587507724761963,
+          "retrieval_rank": 15,
+          "retrieval_score": 0.014492753623188406,
+          "score": -2.6587507724761963
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-d6708c9c476157250874831bf8054c88a6a79721ff7a323097f7aaa0de7c4272",
+        "enron-a927c52a2b7d7eabb97f0294a4d44cc6b710bdf31adb07a3c2e7582ed45abe59",
+        "enron-d9d786c1382741c0de9a8c84c6f309ae8f121790acc2398bf45824a4caadbd15",
+        "enron-2a615807712097d1aedbc4980d554b8a5e80e619e61ab3039bcd20d34f1a9c4f",
+        "enron-73413c1f0f14e5426d8e00616b8006208091eed8cace8ff32a5bce5bb8b3762d"
+      ]
+    },
+    {
+      "first_relevant_rank": 1,
+      "id": "phase02-ret-020",
+      "question": "What instructions were given for preparing an expense report?",
+      "relevant_email_ids": [
+        "enron-6770d4edbf496863dfd8dde95671930c2326f5a1ce82b74b60b44c54eabea105"
+      ],
+      "result_details": [
+        {
+          "email_id": "enron-6770d4edbf496863dfd8dde95671930c2326f5a1ce82b74b60b44c54eabea105",
+          "reranker_score": 7.886656284332275,
+          "retrieval_rank": 1,
+          "retrieval_score": 0.03278688524590164,
+          "score": 7.886656284332275
+        },
+        {
+          "email_id": "enron-4946b77ccc5e5ceded2c8f271ad81ba97c70b6a6b43f2e6000ddbf59495da626",
+          "reranker_score": -3.4886441230773926,
+          "retrieval_rank": 2,
+          "retrieval_score": 0.03225806451612903,
+          "score": -3.4886441230773926
+        },
+        {
+          "email_id": "enron-d4f23b16d725edc91fdfab12a289da08b497000429b5666d9654058598df4b85",
+          "reranker_score": -4.828242301940918,
+          "retrieval_rank": 10,
+          "retrieval_score": 0.015625,
+          "score": -4.828242301940918
+        },
+        {
+          "email_id": "enron-c679ee4dce9e51d5efa0f259d07c6390d327d0eb8a330504bc5ac90225ed9d53",
+          "reranker_score": -7.186013221740723,
+          "retrieval_rank": 3,
+          "retrieval_score": 0.031746031746031744,
+          "score": -7.186013221740723
+        },
+        {
+          "email_id": "enron-dc81f0d25be8819a5c458b744db3b1f12d5d8c5d7ee3474376a12cc4fc3e448a",
+          "reranker_score": -10.039102554321289,
+          "retrieval_rank": 9,
+          "retrieval_score": 0.02658450704225352,
+          "score": -10.039102554321289
+        }
+      ],
+      "retrieved_email_ids": [
+        "enron-6770d4edbf496863dfd8dde95671930c2326f5a1ce82b74b60b44c54eabea105",
+        "enron-4946b77ccc5e5ceded2c8f271ad81ba97c70b6a6b43f2e6000ddbf59495da626",
+        "enron-d4f23b16d725edc91fdfab12a289da08b497000429b5666d9654058598df4b85",
+        "enron-c679ee4dce9e51d5efa0f259d07c6390d327d0eb8a330504bc5ac90225ed9d53",
+        "enron-dc81f0d25be8819a5c458b744db3b1f12d5d8c5d7ee3474376a12cc4fc3e448a"
+      ]
+    }
+  ],
+  "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+  "reranking_ms_per_question": 44.93990414994187,
+  "reranking_seconds": 0.8987980829988373,
+  "retriever": "hybrid_reranked"
+}

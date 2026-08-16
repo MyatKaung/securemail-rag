@@ -81,3 +81,19 @@ Keep dense as the default because it is the original baseline, select BM25 becau
 
 ### Consequences
 The hybrid retriever is modular and independently testable, while dense and BM25 remain selectable for ablation. The result is evidence for this fixed development corpus and query set only; reranking and authorization are intentionally deferred.
+
+## ADR-005 — Enable cross-encoder reranking after Phase 04 evaluation
+**Status:** accepted
+**Date:** 2026-08-16
+
+### Context
+Phase 03 selected hybrid retrieval for its best MRR@5, but the hybrid output can place a relevant email below other candidates. Phase 04 evaluates whether a wider candidate set and a cross-encoder improve relevant-email rank on the same corpus and ground truth.
+
+### Decision
+Use the configured `cross-encoder/ms-marco-MiniLM-L-6-v2` through the `sentence-transformers` CrossEncoder API. Generate 20 candidates with hybrid retrieval, score the original query against each original retrieval document, and return five results while preserving the stable email ID, original retrieval score/rank, and reranker score. Enable Hybrid + reranker as the default because it improves HitRate@5 from `0.9500` to `1.0000` and MRR@5 from `0.8667` to `0.9500` on 500 emails and 20 questions.
+
+### Alternatives
+Keep hybrid because reranking adds latency, use BM25 because it had the best Phase 03 HitRate, or select a different reranker without compatibility evidence. None is justified by the Phase 04 result.
+
+### Consequences
+Reranking is a separately injectable component with deterministic tie handling and test doubles, and the original retrieval evidence remains inspectable. The measured mean added reranking time was 44.94 ms per question in the local evaluation run. Authorization is still intentionally deferred to Phase 05, so this decision does not authorize unrestricted retrieval in a production system.
