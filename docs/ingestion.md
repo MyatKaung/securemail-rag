@@ -50,3 +50,17 @@ deterministically.
 
 The RBAC fields are a deterministic synthetic overlay for this experiment only;
 they do not represent Enron's historical access controls.
+
+## Fresh-clone reproducibility
+
+The 500-email normalized development file used by the API is checked in at
+`data/sample/enron_dev_500.jsonl`. A fresh clone can run immediately after
+installing dependencies. To regenerate it deterministically from the public
+CMU archive, run:
+
+```bash
+make ingest
+```
+
+This explicit command performs acquisition and normalization; neither
+`docker compose up` nor application startup downloads the raw archive.

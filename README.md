@@ -1,51 +1,142 @@
 # SecureMail RAG
 
-Permission-aware enterprise email RAG over the Enron Email Dataset.
+SecureMail RAG is a permission-aware enterprise email RAG system over a
+manageable development subset of the public Enron Email Dataset. The business
+problem is that ordinary search optimizes relevance but can retrieve information
+the requester is not authorized to see. SecureMail RAG applies a synthetic RBAC
+policy before retrieval, then answers from authorized evidence with source IDs.
 
-> Status: Phases 00–07 implemented; Phases 08–10 remain.
+Status: Phases 00–09 implemented. Optional advanced RAG, cloud deployment, and
+Rust work are intentionally not started.
 
-## Start Here for Codex
-For current development, read in order:
-1. `AGENTS.md`
-2. `project_spec.md`
-3. `architecture.md`
-4. `implementation_plan.md`
-5. `docs/rubric_compliance.md`
-6. `tasks/phase_07_interface.md`
+## Architecture
 
-Implement only the current phase; later phases remain intentionally disabled.
+```text
+API/UI -> explicit principal -> pre-retrieval RBAC filter
+      -> dense + BM25 -> RRF hybrid -> cross-encoder reranker
+      -> authorized evidence -> basic_grounded_v1 -> Qwen via OpenRouter
+      -> answer/source IDs + SQLite telemetry/feedback
+```
 
-## Model
-Generation uses Qwen3.6-27B through OpenRouter.
+The production path uses hybrid retrieval, `cross-encoder/ms-marco-MiniLM-L-6-v2`,
+pre-retrieval authorization, `basic_grounded_v1`, and
+`qwen/qwen3.6-27b`. Dense, BM25, hybrid, and hybrid+reranker baselines remain
+independently runnable.
 
-Copy:
+## Dataset and authorization limitation
+
+The exact Enron source is the CMU May 7, 2015 archive:
+`https://www.cs.cmu.edu/~enron/enron_mail_20150507.tar.gz`.
+
+The repository includes a normalized 500-email development sample at
+`data/sample/enron_dev_500.jsonl`, so normal startup does not download the full
+corpus. To reproduce it from the public source:
+
+```bash
+make ingest
+```
+
+The roles, departments, access levels, and resource scopes are a deterministic
+synthetic overlay created for this experiment. They are not Enron's historical
+permissions. See [docs/data_design.md](docs/data_design.md) and
+[docs/12_permission_aware_rag.md](docs/12_permission_aware_rag.md).
+
+## Measured results
+
+Retrieval evaluation uses the same 500-email corpus and 20-question ground
+truth set:
+
+| Retriever | HitRate@5 | MRR@5 |
+| --- | ---: | ---: |
+| Dense | 0.9500 | 0.7267 |
+| BM25 | 1.0000 | 0.8017 |
+| Hybrid | 0.9500 | 0.8667 |
+| Hybrid + reranker | 1.0000 | 0.9500 |
+
+Permission evaluation:
+
+| Metric | Result |
+| --- | ---: |
+| No-filter Unauthorized Retrieval Rate | 1.0000 |
+| Pre-retrieval filtered Unauthorized Retrieval Rate | 0.0000 |
+| Authorization decision accuracy | 1.0000 |
+| Authorized HitRate@5 | 1.0000 |
+| Authorized MRR@5 | 0.9167 |
+
+Generation evaluation on 20 questions:
+
+| Strategy | Overall score |
+| --- | ---: |
+| `basic_grounded_v1` | 0.4875 |
+| `structured_grounded` | 0.4500 |
+
+`basic_grounded_v1` remains the default. Machine-readable evaluation artifacts
+are under `evals/results/` locally; the full Enron corpus is never committed.
+
+## Local setup
+
+Requirements: Python 3.12+, `uv`, and optionally Docker Desktop.
+
+```bash
+git clone https://github.com/MyatKaung/securemail-rag.git
+cd securemail-rag
+cp .env.example .env
+# Edit .env and set OPENROUTER_API_KEY locally.
+make setup
+make test
+make lint
+```
+
+`make setup` installs the exact versions from `uv.lock`. `.env` is ignored and
+must never be committed. `make ingest` is an explicit acquisition/preprocessing
+step; application startup never downloads the Enron archive. `make eval` runs
+the offline dense/BM25/hybrid retrieval evaluation and does not make OpenRouter
+calls. The Phase 06 live generation evaluation is an explicit, paid operation.
+
+## Docker Compose
+
+The Compose project contains one `app` service. PostgreSQL is not included
+because the current P0 implementation uses SQLite for monitoring and feedback.
+
 ```bash
 cp .env.example .env
+# Set OPENROUTER_API_KEY in .env.
+docker compose up --build
 ```
 
-Then set:
+Open:
+
+- UI: <http://127.0.0.1:8000/>
+- health: <http://127.0.0.1:8000/health>
+- monitoring: <http://127.0.0.1:8000/monitoring>
+
+The image copies only the normalized 500-email sample and non-secret config.
+The retrieval index is generated lazily from that processed JSONL on the first
+query after the local embedding model is available. Hugging Face model files
+are cached in the named `huggingface_cache` volume; the Enron archive is never
+downloaded during startup. Missing processed data or config causes a clear
+startup failure. Monitoring SQLite data is persisted in the named
+`monitoring_data` volume across app-container restarts.
+
+Stop the stack with:
+
 ```bash
-OPENROUTER_API_KEY=...
+make down
 ```
 
-Never commit `.env`.
+OpenRouter values are passed as environment variables by Compose. No `.env`,
+API key, or secret is copied into the image.
 
-## Run the interface
+## Interface, monitoring, and security
 
-```bash
-PYTHONPATH=src uv run uvicorn securemail.api.app:app --reload
-```
+The FastAPI API provides `POST /query`, `POST /feedback`, and
+`GET /monitoring/metrics`; the browser UI provides demo principals, source IDs,
+and feedback buttons. Request IDs propagate through API headers, responses,
+structured logs, telemetry, and feedback. Monitoring stores only timing/status
+aggregates and feedback records; it does not log prompts, questions, email
+bodies, or credentials.
 
-Then open <http://127.0.0.1:8000/>. The interface uses the synthetic RBAC
-overlay documented in [docs/interface.md](docs/interface.md); it is not a
-reconstruction of Enron's historical permissions. `GET /health` is available
-without loading models or requiring an OpenRouter key.
-
-After a query, the UI offers thumbs-up/down feedback tied to the response
-request ID. Aggregated operational metrics are available at
-<http://127.0.0.1:8000/monitoring>.
-
-## Project Principle
-A secure enterprise RAG system must decide both:
-1. what is relevant, and
-2. what the user is authorized to retrieve.
+See [docs/interface.md](docs/interface.md),
+[docs/13_monitoring.md](docs/13_monitoring.md),
+[docs/deployment_strategy.md](docs/deployment_strategy.md), and
+[docs/rubric_compliance.md](docs/rubric_compliance.md).

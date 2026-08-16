@@ -1,5 +1,7 @@
 """FastAPI application boundary for secure end-to-end RAG queries."""
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from starlette.middleware.base import RequestResponseEndpoint
@@ -26,6 +28,7 @@ from .service import (
     QueryService,
     QueryServiceError,
     build_default_service,
+    validate_runtime_assets,
 )
 from .ui import render_ui
 
@@ -34,7 +37,12 @@ def create_app(
     service: QueryService | None = None,
     monitoring_store: MonitoringStore | None = None,
 ) -> FastAPI:
-    app = FastAPI(title="SecureMail RAG", version=__version__)
+    @asynccontextmanager
+    async def lifespan(_: FastAPI):
+        validate_runtime_assets()
+        yield
+
+    app = FastAPI(title="SecureMail RAG", version=__version__, lifespan=lifespan)
     resolved_service = service
     app_monitoring_store = monitoring_store or SQLiteMonitoringStore()
     configure_structured_logging()

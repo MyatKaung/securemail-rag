@@ -10,7 +10,7 @@
 - [x] Phase 06 — generation + citations + LLM eval
 - [x] Phase 07 — FastAPI + minimal UI
 - [x] Phase 08 — monitoring + feedback
-- [ ] Phase 09 — Docker + reproducibility
+- [x] Phase 09 — Docker + reproducibility
 - [ ] Phase 10 — final rubric audit
 
 ## P1 — High-Value Enhancements
@@ -43,3 +43,7 @@ explicit synthetic principal, and returns source IDs without email bodies.
 Phase 08 adds request-level SQLite telemetry, correlation IDs, safe structured
 logs, feedback persistence, and an aggregated monitoring dashboard. No
 retrieval or generation behavior was changed.
+
+Phase 09 adds a Python 3.12 locked Docker image, a single-service Compose
+deployment with health checks, persistent monitoring/model-cache volumes, an
+explicit data preparation path, and reviewer-oriented setup documentation.

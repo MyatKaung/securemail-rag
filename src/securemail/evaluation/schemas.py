@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, Literal, TypeVar
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -79,10 +79,7 @@ class GenerationEvaluationRecord(EvaluationRecord):
     notes: str = ""
 
 
-RecordT = TypeVar("RecordT", bound=BaseModel)
-
-
-def load_records(path: str | Path, record_type: type[RecordT]) -> list[RecordT]:
+def load_records[T: BaseModel](path: str | Path, record_type: type[T]) -> list[T]:
     """Load a JSON array and validate every item against ``record_type``."""
 
     dataset_path = Path(path)

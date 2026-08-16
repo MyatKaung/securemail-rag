@@ -65,16 +65,17 @@ Evidence:
 Phase 08 adds `POST /feedback` with request-ID validation and SQLite persistence, thumbs-up/down controls in the existing UI, and the aggregated `/monitoring` dashboard. `tests/integration/test_phase08_monitoring.py` verifies request IDs, telemetry timing fields, feedback persistence, permission-denial aggregation, refusal rate, latency metrics, request volume over time, and secret-safe JSON logs. The dashboard exposes more than five metrics without displaying prompts, email bodies, comments, or credentials.
 
 ### Containerization — target 2/2
-- [ ] Full application starts with Docker Compose.
+- [x] Full application starts with Docker Compose.
 Evidence:
+Phase 09 adds `Dockerfile`, `.dockerignore`, and a one-service `docker-compose.yml` that runs the FastAPI API/UI, hybrid retrieval, reranking, RBAC, OpenRouter generation, and SQLite monitoring/feedback. Compose includes an `/health` health check and named volumes for monitoring data and Hugging Face model cache. PostgreSQL is omitted because it is not used by the current P0 implementation.
 
 ### Reproducibility — target 2/2
 - [x] Dataset acquisition documented.
-- [ ] Dependency versions pinned.
+- [x] Dependency versions pinned.
 - [x] `.env.example` provided.
-- [ ] Fresh-clone setup tested.
+- [x] Fresh-clone setup tested.
 Evidence:
-Phase 01 documents the exact source URL and streaming/offline acquisition commands in `docs/ingestion.md`. Dependency pinning and fresh-clone verification remain future work.
+Phase 01 documents the exact source URL and streaming/offline acquisition commands in `docs/ingestion.md`. Phase 09 pins direct dependencies in `pyproject.toml`, verifies `uv.lock`, provides `make setup/test/lint/ingest/eval/up/down`, and documents the checked-in 500-email normalized sample plus explicit regeneration. Docker excludes `.env` and raw/processed archives.
 
 ## Best-Practice Points
 ### Hybrid Search +1

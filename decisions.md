@@ -217,3 +217,36 @@ scope, or dependency weight before the required local evidence exists.
 The local dashboard and feedback flow are testable offline and the storage
 backend can be replaced behind the protocol. A manual live UI feedback flow
 remains optional and was not run for this phase.
+
+## ADR-010 — Package one local app and initialize the index lazily
+**Status:** accepted
+**Date:** 2026-08-16
+
+### Context
+Phase 09 needs a reproducible local submission without adding infrastructure that
+the current implementation does not use. Retrieval model initialization is
+expensive, while `/health` should remain fast and independent of a live provider
+call.
+
+### Decision
+Use one Python 3.12 application container in Docker Compose. Omit PostgreSQL
+because monitoring and feedback already use SQLite. Copy the checked-in,
+normalized 500-email development sample into the image and build the retrieval
+index lazily from that file on the first query. Raw Enron acquisition remains an
+explicit `make ingest` step; container startup never downloads the corpus or
+model weights. Persist SQLite monitoring data and Hugging Face weights in named
+volumes. Pin direct dependencies and the Linux container's PyTorch dependency in
+`pyproject.toml`/`uv.lock`.
+
+### Alternatives
+Add a PostgreSQL service, bake a generated vector index into the image, or
+download data/models during startup. Those choices would add unused services,
+make image creation less transparent, or make ordinary startup depend on large
+network downloads.
+
+### Consequences
+`docker compose up --build` starts the complete local API/UI and monitoring
+surface with a small tracked development corpus. The first real query may
+download the configured embedding/reranker weights into the mounted cache and
+requires an OpenRouter key; `/health` does not. A fresh clone can regenerate the
+sample explicitly and can replace the sample before building an image.

@@ -44,6 +44,11 @@ from securemail.security import (
 from .schemas import QueryRequest, QueryResponse
 
 DATA_PATH = PROJECT_ROOT / "data/sample/enron_dev_500.jsonl"
+REQUIRED_RUNTIME_FILES = (
+    DATA_PATH,
+    PROJECT_ROOT / "config/app.yaml",
+    PROJECT_ROOT / "config/models.yaml",
+)
 RETRIEVAL_METHOD = "hybrid+cross_encoder_reranker"
 CANDIDATE_K = 20
 FINAL_K = 5
@@ -55,6 +60,19 @@ class QueryServiceError(RuntimeError):
 
 class MalformedPrincipalError(ValueError):
     """Raised when a request principal cannot be represented by the policy."""
+
+
+def validate_runtime_assets(data_path: str | Path = DATA_PATH) -> None:
+    """Fail clearly when a fresh checkout lacks required non-secret runtime files."""
+
+    required = (*REQUIRED_RUNTIME_FILES[1:], Path(data_path))
+    missing = [str(path) for path in required if not path.is_file()]
+    if missing:
+        raise ConfigurationError(
+            "required runtime data/config is missing: "
+            + ", ".join(missing)
+            + "; run `make ingest` for the normalized development data"
+        )
 
 
 class QueryService(Protocol):
@@ -92,6 +110,7 @@ class DefaultRAGService:
     ) -> DefaultRAGService:
         """Load production dependencies lazily; fail clearly if OpenRouter is unavailable."""
 
+        validate_runtime_assets(data_path)
         # Validate credentials before loading heavyweight local models.
         generator = OpenRouterGenerationClient()
         embedder = SentenceTransformerEmbedder()
