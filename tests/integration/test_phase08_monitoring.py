@@ -63,15 +63,17 @@ def make_service(store: SQLiteMonitoringStore) -> DefaultRAGService:
 
 
 def payload() -> dict[str, object]:
-    return {
-        "question": "What is the finance plan?",
-        "email": "finance@securemail.demo",
-    }
+    return {"question": "What is the finance plan?"}
 
 
 def test_telemetry_creation_and_request_id_propagation(tmp_path: Path) -> None:
     store = SQLiteMonitoringStore(tmp_path / "monitoring.sqlite3")
     client = TestClient(create_app(make_service(store), monitoring_store=store))
+    login = client.post(
+        "/login",
+        json={"email": "finance@securemail.demo", "password": "finance-demo"},
+    )
+    assert login.status_code == 200
 
     response = client.post("/query", json=payload(), headers={"X-Request-ID": "trace-123"})
 
@@ -138,7 +140,12 @@ def test_dashboard_page_is_aggregated_only(tmp_path: Path) -> None:
 
 
 def test_query_ui_contains_request_id_feedback_controls() -> None:
-    response = TestClient(create_app()).get("/")
+    client = TestClient(create_app())
+    assert client.post(
+        "/login",
+        json={"email": "finance@securemail.demo", "password": "finance-demo"},
+    ).status_code == 200
+    response = client.get("/")
 
     assert response.status_code == 200
     assert 'id="positive"' in response.text

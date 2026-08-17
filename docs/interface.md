@@ -11,31 +11,48 @@ OpenRouter/Qwen.
 PYTHONPATH=src uv run uvicorn securemail.api.app:app --reload
 ```
 
-Open <http://127.0.0.1:8000/> for the browser UI. The page labels the active
-email as a synthetic demo identity created for this experiment; it is not an
-Enron historical account or permission.
+Open <http://127.0.0.1:8000/login> for the browser UI. The page labels the
+login accounts as synthetic demo identities created for this experiment; they
+are not Enron historical accounts or permissions. The credentials are
+intentionally non-secret demo values stored in `config/demo_users.yaml`:
+
+| Email | Demo password |
+| --- | --- |
+| `finance@securemail.demo` | `finance-demo` |
+| `legal@securemail.demo` | `legal-demo` |
+| `employee@securemail.demo` | `employee-demo` |
+| `admin@securemail.demo` | `admin-demo` |
+
+The login creates a short-lived signed HttpOnly cookie. This is a local demo
+authentication layer, not OAuth, SSO, JWT infrastructure, or real identity
+management.
 
 ## API
 
 `GET /health` returns `{"status": "ok"}` without loading models or requiring
 OpenRouter credentials.
 
-`POST /query` accepts:
+`POST /login` accepts an allowlisted synthetic email and demo password. On
+success it sets the signed session cookie and returns display-only email,
+department, and role information. `GET /logout` clears the cookie and returns
+to `/login`.
+
+`POST /query` requires the session cookie and accepts only:
 
 ```json
 {
-  "question": "What was discussed about the finance plan?",
-  "email": "finance@securemail.demo"
+  "question": "What was discussed about the finance plan?"
 }
 ```
 
 The response contains the request ID, grounded answer, source email IDs,
 retrieval method, evidence count, refusal/insufficient-evidence flags, and
 uncertainty text. It never returns email bodies or retrieval candidates. The
-email must be one of the four server-side synthetic demo identities; the
-backend resolves it to `PrincipalContext` before constructing the authorization
-filter. Role, department, access level, and resource scope are not accepted
-from the client, and query text cannot grant access.
+authenticated session email is resolved to `PrincipalContext` before constructing the
+authorization filter. Role, department, access level, and resource scope are
+not accepted from the client, and query text cannot grant access. If no
+authorized evidence is retrieved, the service returns a safe no-evidence
+response without calling the LLM.
 
 `POST /feedback` accepts `request_id`, `positive`, and an optional short
 `comment`. The request ID must refer to a recorded query. The browser UI submits
@@ -51,7 +68,7 @@ Useful errors are returned without stack traces: `422` for malformed input,
 ## Optional live UI smoke test
 
 With a valid local `.env` and the development corpus present, start Uvicorn,
-choose a synthetic demo email identity, enter a question, and click **Query securely**. Verify
+open `/login`, use one synthetic demo credential, and click **Query securely**. Verify
 that the answer shows source IDs only and that a cross-department question does
 not expose restricted email content. This is a manual path and is intentionally
 not part of the default test suite.

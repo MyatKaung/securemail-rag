@@ -6,12 +6,28 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class QueryRequest(BaseModel):
-    """End-to-end secure RAG request using a server-resolved demo identity."""
+    """End-to-end secure RAG request using the authenticated demo session."""
 
     model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
 
     question: str = Field(min_length=1, max_length=4000)
+
+
+class LoginRequest(BaseModel):
+    """Synthetic demo login credentials; never includes principal metadata."""
+
+    model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
+
     email: str = Field(min_length=1, max_length=320)
+    password: str = Field(min_length=1, max_length=128)
+
+
+class LoginResponse(BaseModel):
+    """Safe display information for the authenticated synthetic identity."""
+
+    email: str
+    department: str
+    role: str
 
 
 class QueryResponse(BaseModel):

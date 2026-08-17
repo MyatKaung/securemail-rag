@@ -12,7 +12,7 @@ Rust work are intentionally not started.
 ## Architecture
 
 ```text
-API/UI -> server-resolved synthetic email identity -> pre-retrieval RBAC filter
+login session -> server-resolved synthetic email identity -> pre-retrieval RBAC filter
       -> dense + BM25 -> RRF hybrid -> cross-encoder reranker
       -> authorized evidence -> basic_grounded_v1 -> Qwen via OpenRouter
       -> answer/source IDs + SQLite telemetry/feedback
@@ -47,6 +47,20 @@ The browser/API demo identities are `finance@securemail.demo`,
 `PrincipalContext` values; clients cannot submit or override the role,
 department, access level, or resource scope. This is a synthetic identity
 selector for evaluation/demo use, not authentication for real Enron accounts.
+
+The local demo login uses intentionally non-secret credentials from
+`config/demo_users.yaml`:
+
+| Email | Demo password |
+| --- | --- |
+| `finance@securemail.demo` | `finance-demo` |
+| `legal@securemail.demo` | `legal-demo` |
+| `employee@securemail.demo` | `employee-demo` |
+| `admin@securemail.demo` | `admin-demo` |
+
+This is a lightweight signed-cookie demo layer, not OAuth, SSO, JWT, or a real
+identity provider. OpenRouter credentials are separate and are never used as
+login credentials.
 
 ## Measured results
 
@@ -115,7 +129,7 @@ docker compose up --build
 
 Open:
 
-- UI: <http://127.0.0.1:8000/>
+- Login/UI: <http://127.0.0.1:8000/login>
 - health: <http://127.0.0.1:8000/health>
 - monitoring: <http://127.0.0.1:8000/monitoring>
 

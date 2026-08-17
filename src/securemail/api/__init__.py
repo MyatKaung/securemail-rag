@@ -6,6 +6,8 @@ from .app import app, create_app
 from .schemas import (
     FeedbackRequest,
     FeedbackResponse,
+    LoginRequest,
+    LoginResponse,
     QueryRequest,
     QueryResponse,
 )
@@ -16,6 +18,8 @@ __all__ = [
     "DefaultRAGService",
     "FeedbackRequest",
     "FeedbackResponse",
+    "LoginRequest",
+    "LoginResponse",
     "QueryRequest",
     "QueryResponse",
     "app",

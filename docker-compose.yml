@@ -9,6 +9,7 @@ services:
       OPENROUTER_MODEL: ${OPENROUTER_MODEL:-qwen/qwen3.6-27b}
       OPENROUTER_SITE_URL: ${OPENROUTER_SITE_URL:-}
       OPENROUTER_APP_NAME: ${OPENROUTER_APP_NAME:-SecureMail RAG}
+      SECUREMAIL_SESSION_SECRET: ${SECUREMAIL_SESSION_SECRET:-securemail-local-demo-session-secret}
     ports:
       - "8000:8000"
     volumes:

@@ -76,7 +76,7 @@ def validate_runtime_assets(data_path: str | Path = DATA_PATH) -> None:
 
 
 class QueryService(Protocol):
-    def query(self, request: QueryRequest) -> QueryResponse:
+    def query(self, request: QueryRequest, *, identity_email: str) -> QueryResponse:
         """Run one secure end-to-end RAG query."""
 
 
@@ -124,7 +124,7 @@ class DefaultRAGService:
             monitoring_store=monitoring_store or SQLiteMonitoringStore(),
         )
 
-    def query(self, request: QueryRequest) -> QueryResponse:
+    def query(self, request: QueryRequest, *, identity_email: str) -> QueryResponse:
         request_id = ensure_request_id()
         started_at = datetime.now(UTC)
         started = perf_counter()
@@ -136,7 +136,7 @@ class DefaultRAGService:
         log_event("rag_request_started")
         try:
             try:
-                principal = resolve_demo_identity(request.email)
+                principal = resolve_demo_identity(identity_email)
             except (TypeError, ValueError) as exc:
                 status_code = 422
                 raise MalformedPrincipalError("unknown synthetic demo identity") from exc

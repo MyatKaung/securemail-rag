@@ -3,7 +3,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from starlette.middleware.base import RequestResponseEndpoint
 from starlette.responses import Response
 
@@ -20,9 +20,24 @@ from securemail.monitoring import (
 )
 from securemail.monitoring.dashboard import render_dashboard
 from securemail.monitoring.logging import configure_structured_logging, log_event
-from securemail.security import AuthorizationError
+from securemail.security import (
+    DEMO_IDENTITIES,
+    SESSION_COOKIE_NAME,
+    AuthorizationError,
+    DemoAuthenticator,
+    DemoIdentity,
+    DemoSessionManager,
+    InvalidDemoCredentialsError,
+)
 
-from .schemas import FeedbackRequest, FeedbackResponse, QueryRequest, QueryResponse
+from .schemas import (
+    FeedbackRequest,
+    FeedbackResponse,
+    LoginRequest,
+    LoginResponse,
+    QueryRequest,
+    QueryResponse,
+)
 from .service import (
     MalformedPrincipalError,
     QueryService,
@@ -30,12 +45,14 @@ from .service import (
     build_default_service,
     validate_runtime_assets,
 )
-from .ui import render_ui
+from .ui import render_login, render_ui
 
 
 def create_app(
     service: QueryService | None = None,
     monitoring_store: MonitoringStore | None = None,
+    demo_authenticator: DemoAuthenticator | None = None,
+    session_secret: str | None = None,
 ) -> FastAPI:
     @asynccontextmanager
     async def lifespan(_: FastAPI):
@@ -45,6 +62,8 @@ def create_app(
     app = FastAPI(title="SecureMail RAG", version=__version__, lifespan=lifespan)
     resolved_service = service
     app_monitoring_store = monitoring_store or SQLiteMonitoringStore()
+    authenticator = demo_authenticator or DemoAuthenticator.from_config()
+    session_manager = DemoSessionManager(session_secret)
     configure_structured_logging()
 
     def get_service() -> QueryService:
@@ -56,6 +75,16 @@ def create_app(
     def get_monitoring_store() -> MonitoringStore:
         service_store = getattr(resolved_service, "monitoring_store", None)
         return service_store or app_monitoring_store
+
+    def current_identity(request: Request) -> DemoIdentity | None:
+        email = session_manager.resolve_email(request.cookies.get(SESSION_COOKIE_NAME))
+        return DEMO_IDENTITIES.get(email) if email is not None else None
+
+    def require_identity(request: Request) -> DemoIdentity:
+        identity = current_identity(request)
+        if identity is None:
+            raise HTTPException(status_code=401, detail="login required")
+        return identity
 
     @app.middleware("http")
     async def correlation_middleware(
@@ -75,14 +104,41 @@ def create_app(
     def health() -> dict[str, str]:
         return {"status": "ok"}
 
-    @app.get("/", response_class=HTMLResponse, include_in_schema=False)
-    def ui() -> str:
-        return render_ui()
+    @app.get("/login", response_class=HTMLResponse, include_in_schema=False)
+    def login_page() -> str:
+        return render_login()
+
+    @app.post("/login", response_model=LoginResponse, tags=["auth"])
+    def login(request: LoginRequest, response: Response) -> LoginResponse:
+        try:
+            identity = authenticator.authenticate(request.email, request.password)
+        except InvalidDemoCredentialsError as exc:
+            raise HTTPException(status_code=401, detail="invalid demo credentials") from exc
+        session_manager.set_cookie(response, identity.email)
+        return LoginResponse(
+            email=identity.email,
+            department=identity.principal.department,
+            role=identity.principal.role,
+        )
+
+    @app.get("/logout", tags=["auth"])
+    def logout() -> RedirectResponse:
+        response = RedirectResponse(url="/login", status_code=303)
+        session_manager.clear_cookie(response)
+        return response
+
+    @app.get("/", response_class=HTMLResponse, response_model=None, include_in_schema=False)
+    def ui(request: Request) -> str | RedirectResponse:
+        identity = current_identity(request)
+        if identity is None:
+            return RedirectResponse(url="/login", status_code=303)
+        return render_ui(identity)
 
     @app.post("/query", response_model=QueryResponse, tags=["rag"])
-    def query(request: QueryRequest) -> QueryResponse:
+    def query(request: Request, payload: QueryRequest) -> QueryResponse:
         try:
-            return get_service().query(request)
+            identity = require_identity(request)
+            return get_service().query(payload, identity_email=identity.email)
         except MalformedPrincipalError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
         except ConfigurationError as exc:

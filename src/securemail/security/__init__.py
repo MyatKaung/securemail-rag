@@ -7,6 +7,13 @@ from .authorization import (
     PrincipalContext,
     SyntheticRBACPolicy,
 )
+from .demo_auth import (
+    DEMO_USERS_PATH,
+    SESSION_COOKIE_NAME,
+    DemoAuthenticator,
+    DemoSessionManager,
+    InvalidDemoCredentialsError,
+)
 from .demo_identities import (
     DEMO_IDENTITIES,
     DemoIdentity,
@@ -16,10 +23,15 @@ from .demo_identities import (
 
 __all__ = [
     "DEMO_IDENTITIES",
+    "DEMO_USERS_PATH",
+    "SESSION_COOKIE_NAME",
     "AuthorizationError",
     "AuthorizationFilter",
     "AuthorizationPolicy",
+    "DemoAuthenticator",
     "DemoIdentity",
+    "DemoSessionManager",
+    "InvalidDemoCredentialsError",
     "PrincipalContext",
     "SyntheticRBACPolicy",
     "UnknownDemoIdentityError",

@@ -1,0 +1,11 @@
+# Synthetic demo credentials only. These are not real accounts or secrets.
+# The login flow is for local UI demonstration, not authentication in production.
+users:
+  finance@securemail.demo:
+    password: finance-demo
+  legal@securemail.demo:
+    password: legal-demo
+  employee@securemail.demo:
+    password: employee-demo
+  admin@securemail.demo:
+    password: admin-demo
