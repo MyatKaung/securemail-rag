@@ -12,8 +12,8 @@ PYTHONPATH=src uv run uvicorn securemail.api.app:app --reload
 ```
 
 Open <http://127.0.0.1:8000/> for the browser UI. The page labels the active
-principal as synthetic RBAC metadata created for this experiment; it does not
-represent Enron's historical permissions.
+email as a synthetic demo identity created for this experiment; it is not an
+Enron historical account or permission.
 
 ## API
 
@@ -25,20 +25,17 @@ OpenRouter credentials.
 ```json
 {
   "question": "What was discussed about the finance plan?",
-  "principal": {
-    "role": "employee",
-    "department": "finance",
-    "access_level": "department",
-    "resource_scope": "finance"
-  }
+  "email": "finance@securemail.demo"
 }
 ```
 
 The response contains the request ID, grounded answer, source email IDs,
 retrieval method, evidence count, refusal/insufficient-evidence flags, and
 uncertainty text. It never returns email bodies or retrieval candidates. The
-principal is converted to `PrincipalContext` before constructing the
-authorization filter; the query text cannot grant access.
+email must be one of the four server-side synthetic demo identities; the
+backend resolves it to `PrincipalContext` before constructing the authorization
+filter. Role, department, access level, and resource scope are not accepted
+from the client, and query text cannot grant access.
 
 `POST /feedback` accepts `request_id`, `positive`, and an optional short
 `comment`. The request ID must refer to a recorded query. The browser UI submits
@@ -54,7 +51,7 @@ Useful errors are returned without stack traces: `422` for malformed input,
 ## Optional live UI smoke test
 
 With a valid local `.env` and the development corpus present, start Uvicorn,
-choose a demo principal, enter a question, and click **Query securely**. Verify
+choose a synthetic demo email identity, enter a question, and click **Query securely**. Verify
 that the answer shows source IDs only and that a cross-department question does
 not expose restricted email content. This is a manual path and is intentionally
 not part of the default test suite.

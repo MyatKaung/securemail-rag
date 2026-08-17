@@ -2,20 +2,17 @@
 
 from __future__ import annotations
 
-import json
 from html import escape
 
-from .schemas import DEMO_PRINCIPALS
+from securemail.security import DEMO_IDENTITIES
 
 
 def _demo_options() -> str:
     return "\n".join(
-        f'<option value="{escape(name)}">{escape(name)}</option>' for name in DEMO_PRINCIPALS
+        f'<option value="{escape(identity.email)}">{escape(identity.label)} — '
+        f'{escape(identity.email)}</option>'
+        for identity in DEMO_IDENTITIES.values()
     )
-
-
-def _demo_json() -> str:
-    return json.dumps({name: principal.model_dump() for name, principal in DEMO_PRINCIPALS.items()})
 
 
 def render_ui() -> str:
@@ -43,17 +40,11 @@ def render_ui() -> str:
 </head>
 <body>
   <h1>SecureMail RAG</h1>
-  <p class="banner"><strong>Synthetic RBAC demo:</strong> the active principal and
-  access policy are created for this experiment. They are not Enron's historical permissions.
-  Active principal: <span id="active" class="active">Finance employee</span></p>
-  <label for="demo">Demo principal</label>
+  <p class="banner"><strong>Synthetic demo identities:</strong> these email identities
+  and the access policy are created for this experiment. They are not Enron historical
+  accounts or permissions. Active identity: <span id="active" class="active">Finance employee</span></p>
+  <label for="demo">Synthetic demo email identity</label>
   <select id="demo">{_demo_options()}</select>
-  <div class="grid">
-    <div><label for="role">Role</label><input id="role"></div>
-    <div><label for="department">Department</label><input id="department"></div>
-    <div><label for="access_level">Access level</label><input id="access_level"></div>
-    <div><label for="resource_scope">Resource scope</label><input id="resource_scope"></div>
-  </div>
   <label for="question">Question</label>
   <textarea id="question" placeholder="Ask about the authorized email evidence..."></textarea>
   <button id="submit">Query securely</button>
@@ -67,23 +58,19 @@ def render_ui() -> str:
   </section>
   <p><a href="/monitoring">Open aggregated monitoring dashboard</a></p>
   <script>
-    const principals = {_demo_json()};
     const demo = document.getElementById('demo');
     const result = document.getElementById('result');
     const feedback = document.getElementById('feedback');
     let lastRequestId = null;
     function syncPrincipal() {{
-      const p = principals[demo.value];
-      for (const key of ['role', 'department', 'access_level', 'resource_scope']) document.getElementById(key).value = p[key];
-      document.getElementById('active').textContent = demo.value;
+      document.getElementById('active').textContent = demo.options[demo.selectedIndex].textContent;
     }}
     demo.addEventListener('change', syncPrincipal);
     syncPrincipal();
     document.getElementById('submit').addEventListener('click', async () => {{
       result.hidden = false;
       result.textContent = 'Querying...';
-      const principal = Object.fromEntries(['role', 'department', 'access_level', 'resource_scope'].map(key => [key, document.getElementById(key).value]));
-      const response = await fetch('/query', {{ method: 'POST', headers: {{'Content-Type': 'application/json'}}, body: JSON.stringify({{question: document.getElementById('question').value, principal}}) }});
+      const response = await fetch('/query', {{ method: 'POST', headers: {{'Content-Type': 'application/json'}}, body: JSON.stringify({{question: document.getElementById('question').value, email: demo.value}}) }});
       const data = await response.json();
       if (!response.ok) {{ result.textContent = `Error ${{response.status}}: ${{data.detail || 'request failed'}}`; return; }}
       lastRequestId = data.request_id;

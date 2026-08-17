@@ -65,12 +65,7 @@ def make_service(store: SQLiteMonitoringStore) -> DefaultRAGService:
 def payload() -> dict[str, object]:
     return {
         "question": "What is the finance plan?",
-        "principal": {
-            "role": "employee",
-            "department": "finance",
-            "access_level": "department",
-            "resource_scope": "finance",
-        },
+        "email": "finance@securemail.demo",
     }
 
 

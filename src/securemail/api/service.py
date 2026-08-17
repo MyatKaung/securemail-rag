@@ -37,8 +37,8 @@ from securemail.retrieval.reranking import CrossEncoderReranker, RerankedRetriev
 from securemail.security import (
     AuthorizationError,
     AuthorizationFilter,
-    PrincipalContext,
     SyntheticRBACPolicy,
+    resolve_demo_identity,
 )
 
 from .schemas import QueryRequest, QueryResponse
@@ -59,7 +59,7 @@ class QueryServiceError(RuntimeError):
 
 
 class MalformedPrincipalError(ValueError):
-    """Raised when a request principal cannot be represented by the policy."""
+    """Raised when a request identity cannot be represented by the policy."""
 
 
 def validate_runtime_assets(data_path: str | Path = DATA_PATH) -> None:
@@ -136,10 +136,10 @@ class DefaultRAGService:
         log_event("rag_request_started")
         try:
             try:
-                principal = PrincipalContext(**request.principal.model_dump())
+                principal = resolve_demo_identity(request.email)
             except (TypeError, ValueError) as exc:
                 status_code = 422
-                raise MalformedPrincipalError("malformed principal context") from exc
+                raise MalformedPrincipalError("unknown synthetic demo identity") from exc
 
             authorization_filter = AuthorizationFilter(principal, SyntheticRBACPolicy())
             log_event("authorization_filter_applied")
@@ -178,7 +178,7 @@ class DefaultRAGService:
                 get_prompt_strategy(BASIC_GROUNDED_V1),
             ).answer(request.question, top_k=self.final_k)
             refused = result.parsed.refused
-            insufficient_evidence = result.parsed.refused
+            insufficient_evidence = not result.retrieved or result.parsed.refused
             return QueryResponse(
                 request_id=request_id,
                 answer=result.answer,

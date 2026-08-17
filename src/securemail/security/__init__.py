@@ -7,11 +7,21 @@ from .authorization import (
     PrincipalContext,
     SyntheticRBACPolicy,
 )
+from .demo_identities import (
+    DEMO_IDENTITIES,
+    DemoIdentity,
+    UnknownDemoIdentityError,
+    resolve_demo_identity,
+)
 
 __all__ = [
+    "DEMO_IDENTITIES",
     "AuthorizationError",
     "AuthorizationFilter",
     "AuthorizationPolicy",
+    "DemoIdentity",
     "PrincipalContext",
     "SyntheticRBACPolicy",
+    "UnknownDemoIdentityError",
+    "resolve_demo_identity",
 ]

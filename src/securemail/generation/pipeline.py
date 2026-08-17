@@ -8,7 +8,7 @@ from typing import Protocol
 from securemail.retrieval import DenseSearchResult, Retriever
 from securemail.security import AuthorizationFilter
 
-from .responses import ParsedGeneration
+from .responses import NO_AUTHORIZED_EVIDENCE_MESSAGE, ParsedGeneration
 from .strategies import PromptStrategy
 
 
@@ -58,6 +58,22 @@ class PermissionAwareGenerationPipeline:
         retrieved = self.retriever.retrieve(question, top_k=top_k)
         # Fail closed before prompt construction or any provider call.
         self.authorization_filter.assert_allowed([result.document for result in retrieved])
+        if not retrieved:
+            parsed = ParsedGeneration(
+                raw_text=NO_AUTHORIZED_EVIDENCE_MESSAGE,
+                answer=NO_AUTHORIZED_EVIDENCE_MESSAGE,
+                source_email_ids=[],
+                uncertainty=NO_AUTHORIZED_EVIDENCE_MESSAGE,
+                refused=False,
+            )
+            return GroundedGenerationResult(
+                question=question,
+                strategy_name=self.strategy.name,
+                prompt="",
+                prompt_version=self.strategy.version,
+                retrieved=[],
+                parsed=parsed,
+            )
         prompt = self.strategy.build_prompt(
             question,
             retrieved,

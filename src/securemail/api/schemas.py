@@ -5,24 +5,13 @@ from __future__ import annotations
 from pydantic import BaseModel, ConfigDict, Field
 
 
-class PrincipalRequest(BaseModel):
-    """Explicit synthetic principal context supplied by the caller."""
-
-    model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
-
-    role: str = Field(min_length=1, max_length=64)
-    department: str = Field(min_length=1, max_length=64)
-    access_level: str = Field(min_length=1, max_length=32)
-    resource_scope: str = Field(min_length=1, max_length=64)
-
-
 class QueryRequest(BaseModel):
-    """End-to-end secure RAG request."""
+    """End-to-end secure RAG request using a server-resolved demo identity."""
 
     model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
 
     question: str = Field(min_length=1, max_length=4000)
-    principal: PrincipalRequest
+    email: str = Field(min_length=1, max_length=320)
 
 
 class QueryResponse(BaseModel):
@@ -53,31 +42,3 @@ class FeedbackRequest(BaseModel):
 class FeedbackResponse(BaseModel):
     request_id: str
     recorded: bool
-
-
-DEMO_PRINCIPALS: dict[str, PrincipalRequest] = {
-    "Finance employee": PrincipalRequest(
-        role="employee",
-        department="finance",
-        access_level="department",
-        resource_scope="finance",
-    ),
-    "Legal employee": PrincipalRequest(
-        role="employee",
-        department="legal",
-        access_level="department",
-        resource_scope="legal",
-    ),
-    "Shared/general employee": PrincipalRequest(
-        role="employee",
-        department="general",
-        access_level="standard",
-        resource_scope="shared",
-    ),
-    "Admin": PrincipalRequest(
-        role="admin",
-        department="global",
-        access_level="global",
-        resource_scope="global",
-    ),
-}

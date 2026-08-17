@@ -53,7 +53,7 @@ Phase 06 evaluates `basic_grounded_v1` and `structured_grounded_v1` on the same 
 - [x] FastAPI interface works.
 - [x] Minimal user-facing interface works.
 Evidence:
-Phase 07 adds `POST /query` with validated question/principal schemas and a lazy production service using permission-aware hybrid + reranking + `basic_grounded_v1`. `tests/integration/test_phase07_interface.py` verifies health, successful mocked end-to-end queries, validation errors, authorization failures, missing OpenRouter configuration, and restricted-content exclusion. A dependency-free browser UI is served at `/` and its synthetic-principal labels are tested; the manual live UI smoke path is documented in `docs/interface.md` but was not run.
+Phase 07 adds `POST /query` with validated question/email schemas and a lazy production service using permission-aware hybrid + reranking + `basic_grounded_v1`. The server resolves only the four allowlisted synthetic demo email identities to `PrincipalContext`; client-supplied role fields are rejected. `tests/integration/test_phase07_interface.py` and `tests/unit/test_demo_identities.py` verify health, successful mocked end-to-end queries, identity validation, authorization boundaries, missing OpenRouter configuration, restricted-content exclusion, and zero-evidence LLM short-circuiting. A dependency-free browser UI is served at `/` and its synthetic identity labels are tested; the manual live UI smoke path is documented in `docs/interface.md` but was not run.
 
 ### Ingestion Pipeline — target 2/2
 - [x] Repeatable/automated ingestion pipeline exists.

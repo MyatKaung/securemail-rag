@@ -12,7 +12,7 @@ Rust work are intentionally not started.
 ## Architecture
 
 ```text
-API/UI -> explicit principal -> pre-retrieval RBAC filter
+API/UI -> server-resolved synthetic email identity -> pre-retrieval RBAC filter
       -> dense + BM25 -> RRF hybrid -> cross-encoder reranker
       -> authorized evidence -> basic_grounded_v1 -> Qwen via OpenRouter
       -> answer/source IDs + SQLite telemetry/feedback
@@ -40,6 +40,13 @@ The roles, departments, access levels, and resource scopes are a deterministic
 synthetic overlay created for this experiment. They are not Enron's historical
 permissions. See [docs/data_design.md](docs/data_design.md) and
 [docs/12_permission_aware_rag.md](docs/12_permission_aware_rag.md).
+
+The browser/API demo identities are `finance@securemail.demo`,
+`legal@securemail.demo`, `employee@securemail.demo`, and
+`admin@securemail.demo`. The server resolves these emails to trusted
+`PrincipalContext` values; clients cannot submit or override the role,
+department, access level, or resource scope. This is a synthetic identity
+selector for evaluation/demo use, not authentication for real Enron accounts.
 
 ## Measured results
 
@@ -132,8 +139,8 @@ API key, or secret is copied into the image.
 ## Interface, monitoring, and security
 
 The FastAPI API provides `POST /query`, `POST /feedback`, and
-`GET /monitoring/metrics`; the browser UI provides demo principals, source IDs,
-and feedback buttons. Request IDs propagate through API headers, responses,
+`GET /monitoring/metrics`; the browser UI provides synthetic demo email
+identities, source IDs, and feedback buttons. Request IDs propagate through API headers, responses,
 structured logs, telemetry, and feedback. Monitoring stores only timing/status
 aggregates and feedback records; it does not log prompts, questions, email
 bodies, or credentials.

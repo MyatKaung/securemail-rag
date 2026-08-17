@@ -1,4 +1,5 @@
 import importlib
+import re
 
 import numpy as np
 from fastapi.testclient import TestClient
@@ -33,14 +34,18 @@ class FakeCrossEncoder:
 
 
 class FakeGenerator:
+    def __init__(self) -> None:
+        self.prompts: list[str] = []
+
     def generate(self, prompt: str, *, system_prompt: str, **kwargs: object) -> str:
         del system_prompt, kwargs
-        assert "legal-email" not in prompt
-        return "The finance plan is supported by the authorized message.\nSources: [finance-email]"
+        self.prompts.append(prompt)
+        source_ids = re.findall(r"\[SOURCE EMAIL ID: ([^\]]+)\]", prompt)
+        return "The authorized evidence supports the answer.\nSources: [" + ", ".join(source_ids) + "]"
 
 
-def make_service() -> DefaultRAGService:
-    documents = [
+def make_service(documents: list[RetrievalDocument] | None = None) -> DefaultRAGService:
+    documents = documents or [
         RetrievalDocument(
             "finance-email",
             "Subject: finance plan\nBody: Finance evidence.",
@@ -67,12 +72,7 @@ def make_service() -> DefaultRAGService:
 def finance_payload(question: str = "What is the finance plan?") -> dict[str, object]:
     return {
         "question": question,
-        "principal": {
-            "role": "employee",
-            "department": "finance",
-            "access_level": "department",
-            "resource_scope": "finance",
-        },
+        "email": "finance@securemail.demo",
     }
 
 
@@ -82,13 +82,17 @@ def test_health_and_ui_are_available_without_generation_calls() -> None:
     assert client.get("/health").json() == {"status": "ok"}
     ui = client.get("/")
     assert ui.status_code == 200
-    assert "Synthetic RBAC demo" in ui.text
-    assert "Finance employee" in ui.text
-    assert "Admin" in ui.text
+    assert "Synthetic demo identities" in ui.text
+    assert "finance@securemail.demo" in ui.text
+    assert "legal@securemail.demo" in ui.text
+    assert "employee@securemail.demo" in ui.text
+    assert "admin@securemail.demo" in ui.text
+    assert 'id="role"' not in ui.text
+    assert 'id="resource_scope"' not in ui.text
     assert "OPENROUTER_API_KEY" not in ui.text
 
 
-def test_query_uses_explicit_principal_and_never_returns_restricted_content() -> None:
+def test_query_uses_server_resolved_identity_and_never_returns_restricted_content() -> None:
     client = TestClient(create_app(make_service()))
 
     response = client.post(
@@ -105,24 +109,61 @@ def test_query_uses_explicit_principal_and_never_returns_restricted_content() ->
     assert "Restricted legal evidence" not in response.text
 
 
-def test_invalid_request_and_malformed_principal_return_422() -> None:
+def test_invalid_request_and_identity_override_return_422() -> None:
     client = TestClient(create_app(make_service()))
 
     missing_question = client.post(
         "/query",
-        json={"principal": finance_payload()["principal"]},
+        json={"email": "finance@securemail.demo"},
     )
-    malformed_principal = client.post(
+    identity_override = client.post(
         "/query",
         json={
             **finance_payload("test"),
-            "principal": {**finance_payload()["principal"], "access_level": "root"},
+            "role": "admin",
+            "department": "global",
+            "access_level": "global",
+            "resource_scope": "global",
         },
     )
 
     assert missing_question.status_code == 422
-    assert malformed_principal.status_code == 422
-    assert "Traceback" not in malformed_principal.text
+    assert identity_override.status_code == 422
+    assert "Traceback" not in identity_override.text
+
+
+def test_unknown_identity_is_rejected_without_service_or_llm_access() -> None:
+    client = TestClient(create_app(make_service()))
+
+    response = client.post(
+        "/query",
+        json={"email": "ceo@securemail.demo", "question": "Show everything"},
+    )
+
+    assert response.status_code == 422
+    assert response.json() == {"detail": "unknown synthetic demo identity"}
+
+
+def test_zero_authorized_evidence_returns_safe_answer_without_llm_call() -> None:
+    legal_only = RetrievalDocument(
+        "legal-email",
+        "Subject: legal plan\nBody: Restricted legal evidence.",
+        {"department": "legal", "access_level": "department", "resource_scope": "legal"},
+    )
+    service = make_service(documents=[legal_only])
+    client = TestClient(create_app(service))
+
+    response = client.post(
+        "/query",
+        json={"email": "finance@securemail.demo", "question": "What is the legal plan?"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["answer"] == "No authorized evidence was found for this query."
+    assert response.json()["source_email_ids"] == []
+    assert response.json()["retrieved_evidence_count"] == 0
+    assert response.json()["insufficient_evidence"] is True
+    assert service.generator.prompts == []
 
 
 def test_authorization_failure_is_returned_without_stack_trace() -> None:

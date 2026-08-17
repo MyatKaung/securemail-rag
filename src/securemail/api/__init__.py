@@ -1,22 +1,21 @@
 """HTTP API public API."""
 
+from securemail.security import DEMO_IDENTITIES
+
 from .app import app, create_app
 from .schemas import (
-    DEMO_PRINCIPALS,
     FeedbackRequest,
     FeedbackResponse,
-    PrincipalRequest,
     QueryRequest,
     QueryResponse,
 )
 from .service import DefaultRAGService
 
 __all__ = [
-    "DEMO_PRINCIPALS",
+    "DEMO_IDENTITIES",
     "DefaultRAGService",
     "FeedbackRequest",
     "FeedbackResponse",
-    "PrincipalRequest",
     "QueryRequest",
     "QueryResponse",
     "app",

@@ -9,6 +9,7 @@ from securemail.security import AuthorizationFilter
 
 from .openrouter import OpenRouterGenerationClient
 from .prompts import build_grounded_prompt
+from .responses import NO_AUTHORIZED_EVIDENCE_MESSAGE
 
 
 @dataclass(frozen=True)
@@ -39,6 +40,15 @@ class BasicDenseRAG:
 
     def answer(self, question: str, *, top_k: int | None = None) -> BasicRAGResponse:
         retrieved = self.retriever.retrieve(question, top_k=top_k)
+        if self.authorization_filter is not None:
+            self.authorization_filter.assert_allowed([result.document for result in retrieved])
+        if not retrieved:
+            return BasicRAGResponse(
+                answer=NO_AUTHORIZED_EVIDENCE_MESSAGE,
+                source_email_ids=[],
+                retrieved=[],
+                prompt="",
+            )
         prompt = build_grounded_prompt(
             question,
             retrieved,

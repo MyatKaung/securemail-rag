@@ -12,6 +12,7 @@ REFUSAL_PATTERN = re.compile(
     r"not enough evidence|not authorized|do not have enough|refuse to)",
     re.IGNORECASE,
 )
+NO_AUTHORIZED_EVIDENCE_MESSAGE = "No authorized evidence was found for this query."
 
 
 @dataclass(frozen=True)

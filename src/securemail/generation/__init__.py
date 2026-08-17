@@ -5,6 +5,7 @@ from .pipeline import GroundedGenerationResult, PermissionAwareGenerationPipelin
 from .prompts import GROUNDED_SYSTEM_PROMPT, build_evidence_text, build_grounded_prompt
 from .rag import BasicDenseRAG, BasicRAGResponse
 from .responses import (
+    NO_AUTHORIZED_EVIDENCE_MESSAGE,
     ParsedGeneration,
     parse_basic_response,
     parse_source_email_ids,
@@ -23,6 +24,7 @@ __all__ = [
     "BASIC_GROUNDED_STRATEGY",
     "BASIC_GROUNDED_V1",
     "GROUNDED_SYSTEM_PROMPT",
+    "NO_AUTHORIZED_EVIDENCE_MESSAGE",
     "STRUCTURED_GROUNDED_STRATEGY",
     "STRUCTURED_GROUNDED_V1",
     "BasicDenseRAG",
