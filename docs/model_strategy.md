@@ -5,6 +5,12 @@ Provider: OpenRouter
 Model: `qwen/qwen3.6-27b`
 
 Configuration comes from environment variables and `config/models.yaml`.
+The production generation controls are explicitly set in
+`config/models.yaml`: `temperature: 0.1`, `max_tokens: 500`, and
+`reasoning_effort: none`. `OpenRouterGenerationClient` sends the latter as
+`extra_body.reasoning.effort`, so disabling Qwen reasoning is explicit in the
+request payload rather than an implicit provider default. API credentials
+remain environment-only.
 
 ## Why One Primary Model
 The assignment should spend evaluation effort on:
@@ -25,10 +31,16 @@ sections and refuses unsupported or restricted requests.
 The Phase 06 evaluation rubric is deterministic and non-LLM: groundedness,
 answer relevance, citation correctness, and refusal correctness are scored from
 case-specific expected terms/source IDs and the returned structure. This keeps
-the generation and judge prompts separate and makes the first evaluation
-reproducible. On the 20-question evaluation, Basic grounded scored `0.4875`
-overall versus `0.4500` for Structured grounded, so `basic_grounded_v1` is the
-configured default.
+the generation and judge prompts separate. The historical 20-question result
+scored Basic grounded `0.4875` overall versus `0.4500` for Structured grounded.
+After a controlled five-question reasoning experiment, the full 20-question
+rerun with explicit reasoning disabled and a 500-token budget improved Basic
+grounded to `0.7917` overall, with a 1.0000 non-empty-answer rate. Structured
+grounded scored `0.7292`. Therefore `basic_grounded_v1` remains the default and
+the reasoning-disabled configuration is now the production default. Historical
+and current machine-readable results are preserved separately at
+`evals/results/phase06_generation.json` and
+`evals/results/phase06_generation_reasoning_none.json`.
 
 The opt-in smoke command is:
 `PYTHONPATH=src uv run python -m securemail.generation.smoke`.

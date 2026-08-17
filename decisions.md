@@ -276,3 +276,37 @@ made 20 rewrite calls and accepted no non-empty rewrites after output-contract
 validation, so treatment and baseline both measured HitRate@5 `1.0000` and MRR@5
 `0.9500`. Rewriting is evaluated and available for future provider/prompt
 experiments, but is not selected as the default without measured improvement.
+
+## ADR-012 — Disable Qwen reasoning for production grounded generation
+**Status:** accepted
+**Date:** 2026-08-18
+
+### Context
+
+The historical Phase 06 client used an implicit provider reasoning mode with an
+800-token completion budget. In a controlled five-question comparison, Qwen
+spent the output budget on reasoning for several cases, returning an empty
+final answer with `finish_reason=length`. The reasoning-disabled variant used
+the same retrieved evidence and prompts with `max_tokens=500` and improved
+groundedness, relevance, citation correctness, refusal correctness, and
+latency.
+
+### Decision
+
+Set the non-secret production controls in `config/models.yaml` to
+`temperature: 0.1`, `max_tokens: 500`, and `reasoning_effort: none`.
+`OpenRouterGenerationClient` sends `reasoning.effort` explicitly in the
+OpenRouter request payload. Retrieval, reranking, authorization, and prompts
+are unchanged. Keep the historical result at
+`evals/results/phase06_generation.json` and write the new full evaluation to
+`evals/results/phase06_generation_reasoning_none.json`.
+
+### Evidence
+
+The new full 20-question run made 40 OpenRouter calls. Basic grounded improved
+from overall `0.4875` to `0.7917`, with groundedness `0.3500 -> 0.7083`,
+relevance `0.3500 -> 0.7583`, citation correctness `0.5500 -> 0.9000`, refusal
+correctness `0.7000 -> 0.8000`, and non-empty answers `0.3500 -> 1.0000`.
+The new artifact records average basic latency of 3.742 seconds. The old full
+artifact did not record latency; the controlled five-question comparison
+recorded 18.119 seconds old versus 4.359 seconds with reasoning disabled.

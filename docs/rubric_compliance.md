@@ -31,7 +31,7 @@ synthetic-permissions limitation in `docs/data_design.md` and `docs/ingestion.md
 - [x] LLM used.
 - [x] End-to-end RAG demonstrated.
 Evidence:
-Phase 02 indexes 500 normalized Enron emails. Phase 06 runs the permission-aware hybrid + reranker to OpenRouter/Qwen generation boundary on 20 questions; `evals/results/phase06_generation.json` records 40 successful calls and source-bearing responses.
+Phase 02 indexes 500 normalized Enron emails. Phase 06 runs the permission-aware hybrid + reranker to OpenRouter/Qwen generation boundary on 20 questions; the historical `evals/results/phase06_generation.json` and the current production-settings `evals/results/phase06_generation_reasoning_none.json` each record 40 calls and per-question responses.
 
 ### Retrieval Evaluation — target 2/2
 - [x] Ground-truth evaluation dataset exists.
@@ -47,7 +47,7 @@ Evidence:
 - [x] Metrics/results documented.
 - [x] Best approach used in final system.
 Evidence:
-Phase 06 evaluates `basic_grounded_v1` and `structured_grounded_v1` on the same 20 cases with deterministic groundedness, relevance, citation, and refusal metrics. Basic grounded scores `0.4875` overall versus `0.4500` for structured grounded and is configured as the default. Full per-question and aggregate results are in `evals/results/phase06_generation.json`.
+Phase 06 evaluates `basic_grounded_v1` and `structured_grounded_v1` on the same 20 cases with deterministic groundedness, relevance, citation, and refusal metrics. The historical artifact scores Basic `0.4875` overall versus Structured `0.4500`. The current production-settings artifact records Basic `0.7917` versus Structured `0.7292`, with 1.0000 non-empty-answer rate for both; Basic remains the default. Production requests are configured as `temperature=0.1`, `max_tokens=500`, and explicit `reasoning.effort="none"` in `config/models.yaml` and `src/securemail/generation/openrouter.py`. Full per-question and aggregate results are preserved in both `evals/results/phase06_generation.json` and `evals/results/phase06_generation_reasoning_none.json`.
 
 ### Interface — target 2/2
 - [x] FastAPI interface works.

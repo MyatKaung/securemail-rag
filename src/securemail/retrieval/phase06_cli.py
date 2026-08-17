@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from datetime import UTC, datetime
 from pathlib import Path
+from time import perf_counter
 from typing import Any
 
 from securemail.evaluation import GenerationEvaluationRecord, load_records
@@ -96,7 +97,9 @@ def _evaluate_strategy(
             candidate_k=candidate_k,
             final_k=final_k,
         )
+        started = perf_counter()
         result = pipeline.answer(case.question, top_k=final_k)
+        latency_ms = (perf_counter() - started) * 1000
         evidence_ids = [item.email_id for item in result.retrieved]
         evidence_text = "\n".join(item.document.text for item in result.retrieved)
         scores = score_generation_output(
@@ -118,12 +121,21 @@ def _evaluate_strategy(
                 "refused": result.parsed.refused,
                 "prompt_version": result.prompt_version,
                 "scores": scores,
+                "latency_ms": round(latency_ms, 3),
+                "complete_non_empty_answer": bool(result.answer.strip()),
             }
         )
+    metrics = aggregate_generation_scores(rows)
+    metrics["complete_non_empty_answer_rate"] = (
+        sum(row["complete_non_empty_answer"] for row in rows) / len(rows) if rows else 0.0
+    )
+    metrics["average_latency_ms"] = (
+        sum(row["latency_ms"] for row in rows) / len(rows) if rows else 0.0
+    )
     return {
         "strategy": strategy_name,
         "prompt_version": get_prompt_strategy(strategy_name).version,
-        "metrics": aggregate_generation_scores(rows),
+        "metrics": metrics,
         "per_question": rows,
     }
 
@@ -137,7 +149,9 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path("evals/datasets/generation_ground_truth.phase06.json"),
     )
     parser.add_argument(
-        "--output", type=Path, default=Path("evals/results/phase06_generation.json")
+        "--output",
+        type=Path,
+        default=Path("evals/results/phase06_generation_reasoning_none.json"),
     )
     parser.add_argument("--candidate-k", type=int, default=20)
     parser.add_argument("--final-k", type=int, default=5)
@@ -169,8 +183,15 @@ def main() -> None:
         )
         for label, strategy_name in approaches.items()
     }
+    quality_metric_names = (
+        "groundedness",
+        "answer_relevance",
+        "citation_correctness",
+        "refusal_correctness",
+    )
     overall_scores = {
-        label: sum(result["metrics"].values()) / len(result["metrics"])
+        label: sum(result["metrics"][metric] for metric in quality_metric_names)
+        / len(quality_metric_names)
         for label, result in evaluated.items()
     }
     selected = max(overall_scores, key=overall_scores.get)
@@ -182,6 +203,11 @@ def main() -> None:
         "timestamp_utc": datetime.now(UTC).isoformat(),
         "model": generator.settings.model,
         "base_url": generator.settings.base_url,
+        "generation_configuration": {
+            "temperature": generator.generation_config.temperature,
+            "max_tokens": generator.generation_config.max_tokens,
+            "reasoning_effort": generator.generation_config.reasoning_effort,
+        },
         "corpus_size": len(index.documents),
         "question_count": len(cases),
         "candidate_k": args.candidate_k,

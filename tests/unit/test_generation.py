@@ -63,6 +63,9 @@ def test_openrouter_client_uses_configured_model_without_live_call():
     assert answer == "Grounded answer [email-1]"
     assert call["model"] == "test/model"
     assert call["messages"][0]["content"] == GROUNDED_SYSTEM_PROMPT
+    assert call["temperature"] == 0.1
+    assert call["max_tokens"] == 500
+    assert call["extra_body"] == {"reasoning": {"effort": "none"}}
     assert "test-secret" not in repr(client)
 
 

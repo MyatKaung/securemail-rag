@@ -84,17 +84,26 @@ Permission evaluation:
 | Authorized HitRate@5 | 1.0000 |
 | Authorized MRR@5 | 0.9167 |
 
-Generation evaluation on 20 questions:
+Generation evaluation on the same 20 questions (deterministic rubric):
 
-| Strategy | Overall score |
-| --- | ---: |
-| `basic_grounded_v1` | 0.4875 |
-| `structured_grounded` | 0.4500 |
+| Artifact / strategy | Overall | Groundedness | Relevance | Citation correctness | Refusal correctness | Non-empty answers |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Historical `phase06_generation.json` / `basic_grounded_v1` | 0.4875 | 0.3500 | 0.3500 | 0.5500 | 0.7000 | 0.3500 |
+| Historical `phase06_generation.json` / `structured_grounded_v1` | 0.4500 | 0.2750 | 0.2750 | 0.4500 | 0.8000 | 0.3500 |
+| Current `phase06_generation_reasoning_none.json` / `basic_grounded_v1` | 0.7917 | 0.7083 | 0.7583 | 0.9000 | 0.8000 | 1.0000 |
+| Current `phase06_generation_reasoning_none.json` / `structured_grounded_v1` | 0.7292 | 0.6583 | 0.6583 | 0.9000 | 0.7000 | 1.0000 |
 
-`basic_grounded_v1` remains the default. The tracked machine-readable LLM
-evaluation artifact is `evals/results/phase06_generation.json`; other generated
-evaluation outputs remain ignored by default. The full Enron corpus is never
-committed.
+`basic_grounded_v1` remains the default. Production Qwen requests use
+`temperature=0.1`, `max_tokens=500`, and explicit
+`reasoning.effort="none"`. The historical machine-readable artifact is
+`evals/results/phase06_generation.json`; the current production-settings
+artifact is `evals/results/phase06_generation_reasoning_none.json`. The new
+full run recorded average latency of 3.742 seconds for basic and 3.867 seconds
+for structured. The historical artifact did not record latency; the controlled
+five-question comparison recorded 18.119 seconds with the old implicit
+reasoning behavior versus 4.359 seconds with reasoning disabled. Other
+generated evaluation outputs remain ignored by default. The full Enron corpus
+is never committed.
 
 ## Local setup
 

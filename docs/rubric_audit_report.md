@@ -107,7 +107,8 @@ Evidence:
   answer relevance, citation correctness, and refusal correctness scoring.
 - `tasks/phase_06_generation_eval.md`, `docs/model_strategy.md`, and
   `docs/rubric_compliance.md` document 40 successful OpenRouter calls.
-- The tracked `evals/results/phase06_generation.json` contains model, base URL,
+- The tracked historical `evals/results/phase06_generation.json` and current
+  `evals/results/phase06_generation_reasoning_none.json` contain model, base URL,
   timestamp, prompt versions, configuration, per-question results, and scores.
 
 Test/evaluation evidence from the local JSON artifact:
@@ -117,11 +118,23 @@ Test/evaluation evidence from the local JSON artifact:
 | Basic grounded | 0.4875 | 0.3500 | 0.3500 | 0.5500 | 0.7000 |
 | Structured grounded | 0.4500 | 0.2750 | 0.2750 | 0.4500 | 0.8000 |
 
+The current production-settings artifact uses explicit
+`reasoning.effort="none"`, `max_tokens=500`, and `temperature=0.1` without
+changing retrieval or prompts:
+
+| Approach | Overall | Groundedness | Relevance | Citation correctness | Refusal correctness | Non-empty answers | Average latency |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Basic grounded | 0.7917 | 0.7083 | 0.7583 | 0.9000 | 0.8000 | 1.0000 | 3.742 s |
+| Structured grounded | 0.7292 | 0.6583 | 0.6583 | 0.9000 | 0.7000 | 1.0000 | 3.867 s |
+
 `basic_grounded` is selected because its measured overall score is higher. Six
-cases expected insufficient-evidence/refusal behavior; the artifact reports
-refusal correctness of 0.1667 for basic and 0.3333 for structured on those
-cases. This is a real limitation of answer behavior, although it does not
-weaken the pre-retrieval authorization boundary.
+cases expected insufficient-evidence/refusal behavior; the new artifact reports
+refusal correctness of 0.3333 for basic and 0.0000 for structured on those
+cases. This remains a generation-quality limitation, although it does not
+weaken the pre-retrieval authorization boundary. The historical artifact is
+preserved for comparison; it did not record average latency. A controlled
+five-question comparison recorded 18.119 s old versus 4.359 s with reasoning
+disabled.
 
 Missing requirement: none for the rubric criterion. The exact final artifact is
 allowed through `.gitignore`, tracked, and referenced by the README and rubric
@@ -329,15 +342,16 @@ the generation evaluation does not support that stronger claim.
 | Hybrid HitRate@5 / MRR@5 | tracked `evals/results/phase03_retrieval_comparison.json` | `0.9500 / 0.8666666667` |
 | Hybrid + reranker HitRate@5 / MRR@5 | tracked `evals/results/phase04_reranking_comparison.json` | `1.0000 / 0.9500000000` |
 | Permission metrics | tracked `evals/results/phase05_permission.json` | no-filter URR `1.0000`; filtered URR `0.0000`; decision accuracy `1.0000`; authorized HitRate@5 `1.0000`; authorized MRR@5 `0.9166666667` |
-| Generation metrics | tracked `evals/results/phase06_generation.json` | basic `0.4875`; structured `0.4500`; basic selected; 20 questions; 40 calls |
+| Generation metrics | tracked `evals/results/phase06_generation.json` and `evals/results/phase06_generation_reasoning_none.json` | historical basic `0.4875` / structured `0.4500`; current basic `0.7917` / structured `0.7292`; basic selected; 20 questions; 40 calls per artifact |
 | Query rewriting metrics | tracked `evals/results/phase10_query_rewriting.json` | baseline `1.0000 / 0.9500`; treatment `1.0000 / 0.9500`; 20 rewrite calls; rewriting disabled |
 
-All values match the README and rubric tracker. The generation artifact is now
-tracked and can be inspected from a fresh clone.
+All values match the README, rubric tracker, and the two tracked generation
+artifacts. The historical result remains available for reproducibility and the
+new production-settings result can be inspected from a fresh clone.
 
 ## Repository and security checks
 
-- **Tests:** `uv run pytest -q` → `73 passed in 0.41s`.
+- **Tests:** `uv run pytest -q` → `88 passed` for the current repository.
 - **Ruff:** `uv run ruff check src tests` → `All checks passed!`.
 - **Formatting:** `uv run ruff format --check src tests` → 75 files already formatted.
 - **Lockfile:** `uv lock --check` passed.
@@ -345,7 +359,7 @@ tracked and can be inspected from a fresh clone.
 - **`.env`:** ignored by `.gitignore`; only `.env.example` is tracked.
 - **Secret scan:** no real OpenRouter key pattern or private-key file is tracked. `git grep` found only intentional dummy test strings such as `test-secret` and `dotenv-secret` in `tests/unit/test_config.py`; these are not credentials.
 - **Dataset scope:** tracked data contains only `.gitkeep`, a 59.6 KB 25-email sample, and a 1.17 MB normalized 500-email sample. No full Enron archive is tracked.
-- **Phase 06 artifact safety:** `evals/results/phase06_generation.json` contains no API-key, secret, credential, or private-key values; only the configured public endpoint/model, evaluation metadata, scores, and generated evaluation records are tracked.
+- **Phase 06 artifact safety:** both tracked Phase 06 artifacts contain no API-key, secret, credential, or private-key values; only the configured public endpoint/model, generation controls, evaluation metadata, scores, timings, and generated evaluation records are tracked.
 - **Synthetic RBAC disclosure:** clearly stated in `README.md`, `docs/data_design.md`, `docs/ingestion.md`, and the policy docstring; it is not presented as Enron historical authorization.
 - **Reviewer setup:** `README.md` includes clone, `.env`, setup, test, lint, ingest, evaluation, Docker, UI, health, and monitoring instructions.
 

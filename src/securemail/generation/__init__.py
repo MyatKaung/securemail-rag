@@ -1,6 +1,10 @@
 """Generation and basic grounded RAG public API."""
 
-from .openrouter import OpenRouterGenerationClient
+from .openrouter import (
+    OpenRouterGenerationClient,
+    OpenRouterGenerationConfig,
+    load_generation_config,
+)
 from .pipeline import GroundedGenerationResult, PermissionAwareGenerationPipeline
 from .prompts import GROUNDED_SYSTEM_PROMPT, build_evidence_text, build_grounded_prompt
 from .rag import BasicDenseRAG, BasicRAGResponse
@@ -31,12 +35,14 @@ __all__ = [
     "BasicRAGResponse",
     "GroundedGenerationResult",
     "OpenRouterGenerationClient",
+    "OpenRouterGenerationConfig",
     "ParsedGeneration",
     "PermissionAwareGenerationPipeline",
     "PromptStrategy",
     "build_evidence_text",
     "build_grounded_prompt",
     "get_prompt_strategy",
+    "load_generation_config",
     "parse_basic_response",
     "parse_source_email_ids",
     "parse_structured_response",
